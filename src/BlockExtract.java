@@ -45,16 +45,16 @@ public class BlockExtract extends BlockContainer implements ITextureProvider {
   }
 
   public int getBlockTexture(IBlockAccess iblockaccess, int i, int j, int k, int l) {
-    if(l == 1) return extractTop;
+    if (l == 1) return extractTop;
     int i1 = iblockaccess.getBlockMetadata(i, j, k);
-    if(l != i1) return blockIndexInTexture;
+    if (l != i1) return blockIndexInTexture;
     
     return extractFront;
   }
 
   public int getBlockTextureFromSide(int i) {
-    if(i == 1) return extractTop;
-    if(i == 3) return extractFront;
+    if (i == 1) return extractTop;
+    if (i == 3) return extractFront;
     
     return blockIndexInTexture;
   }
@@ -96,10 +96,10 @@ public class BlockExtract extends BlockContainer implements ITextureProvider {
   public void onBlockPlacedBy(World world, int i, int j, int k, EntityLiving entityliving) {
     int l = MathHelper.floor_double((double)((entityliving.rotationYaw * 4F) / 360F) + 0.5D) & 3;
         
-    if(l == 0) world.setBlockMetadataWithNotify(i, j, k, 2);
-    if(l == 1) world.setBlockMetadataWithNotify(i, j, k, 5);
-    if(l == 2) world.setBlockMetadataWithNotify(i, j, k, 3);
-    if(l == 3) world.setBlockMetadataWithNotify(i, j, k, 4);
+    if (l == 0) world.setBlockMetadataWithNotify(i, j, k, 2);
+    if (l == 1) world.setBlockMetadataWithNotify(i, j, k, 5);
+    if (l == 2) world.setBlockMetadataWithNotify(i, j, k, 3);
+    if (l == 3) world.setBlockMetadataWithNotify(i, j, k, 4);
   }
   
   public void onBlockRemoval(World world, int i, int j, int k) {
@@ -130,7 +130,7 @@ public class BlockExtract extends BlockContainer implements ITextureProvider {
           entityitem.motionY = (float)world.rand.nextGaussian() * f3 + 0.2F;
           entityitem.motionZ = (float)world.rand.nextGaussian() * f3;
           world.entityJoinedWorld(entityitem);
-        } while(true);
+        } while (true);
       }
     }
     
