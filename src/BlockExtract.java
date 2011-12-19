@@ -14,7 +14,7 @@ public class BlockExtract extends BlockContainer implements ITextureProvider {
     setResistance(1500F);
     setStepSound(soundPowderFootstep);
     setBlockName("pExtractor");
-    blockIndexInTexture = mod_PlasticCraft.blockMicrowaveIdle.blockIndexInTexture;
+    blockIndexInTexture = mod_PlasticCraft.blockMicrowave.blockIndexInTexture;
   }
 
   public void onBlockAdded(World world, int i, int j, int k) {

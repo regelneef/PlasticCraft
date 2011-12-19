@@ -8,21 +8,21 @@ public class BlockMicrowave extends BlockContainer implements ITextureProvider {
   private static int microwaveFront = 8;
   public static int microwaveAnim = 255;
   private static int spr[] = new int[3];
-  private final boolean isCooking;
   private static boolean keepMicrowaveInventory = false;
   
-  public BlockMicrowave(int i, boolean flag) {
+  public BlockMicrowave(int i) {
     super(i, Material.sponge);
     setHardness(2.0F);
     setResistance(1500F);
     setStepSound(soundPowderFootstep);
     setBlockName("pMicrowave");
     blockIndexInTexture = plasticIndex;
-    isCooking = flag;
+    setRequiresSelfNotify();
+    setTickOnLoad(true);
   }
 
   public int idDropped(int i, Random random) {
-    return mod_PlasticCraft.blockMicrowaveIdle.blockID;
+    return mod_PlasticCraft.blockMicrowave.blockID;
   }
 
   public void onBlockAdded(World world, int i, int j, int k) {
@@ -41,34 +41,38 @@ public class BlockMicrowave extends BlockContainer implements ITextureProvider {
     byte byte0 = 3;
           
     if (Block.opaqueCubeLookup[l] && !Block.opaqueCubeLookup[i1])
-      byte0 = 3;
+      byte0 = 1;
     if (Block.opaqueCubeLookup[i1] && !Block.opaqueCubeLookup[l])
-      byte0 = 2;
+      byte0 = 0;
     if (Block.opaqueCubeLookup[j1] && !Block.opaqueCubeLookup[k1])
-      byte0 = 5;
+      byte0 = 3;
     if (Block.opaqueCubeLookup[k1] && !Block.opaqueCubeLookup[j1])
-      byte0 = 4;
+      byte0 = 2;
       
     world.setBlockMetadataWithNotify(i, j, k, byte0);
   }
-
-  public int getBlockTexture(IBlockAccess iblockaccess, int i, int j, int k, int l) {
-    if (l == 1) return plasticIndex;
-    if (l == 0) return plasticIndex;
-    int i1 = iblockaccess.getBlockMetadata(i, j, k);
-    if (l != i1) return plasticIndex;
+  
+  public int getBlockTexture(IBlockAccess iblockaccess, int i, int j, int k, int side) {
+    if (side == 1 || side == 0) return plasticIndex;
+    int meta = iblockaccess.getBlockMetadata(i, j, k);
+    int meta1 = meta & 4;
     
-    if (isCooking) return microwaveAnim;
+    if (side != (meta & 3) + 2) return plasticIndex;
+    if (meta1 != 0) return microwaveAnim;
       
     return microwaveFront;
   }
 
-  public int getBlockTextureFromSide(int i) {
-    if (i == 0) return plasticIndex;
-    if (i == 1) return plasticIndex;
-    if (i == 3) return microwaveFront;
+  public int getBlockTextureFromSide(int side) {
+  	if (side == 3) return microwaveFront;
     
     return plasticIndex;
+  }
+  
+  public int getLightValue(IBlockAccess iblockaccess, int i, int j, int k) {
+  	int meta = iblockaccess.getBlockMetadata(i, j, k);
+  	if ((meta & 4) != 0) return 13;
+  	return 0;
   }
 
   public boolean blockActivated(World world, int i, int j, int k, EntityPlayer entityplayer) {
@@ -86,10 +90,11 @@ public class BlockMicrowave extends BlockContainer implements ITextureProvider {
     TileEntity tileentity = world.getBlockTileEntity(i, j, k);
     keepMicrowaveInventory = true;
         
+    // metadata 1 is on-state
     if (flag)
-      world.setBlockWithNotify(i, j, k, mod_PlasticCraft.blockMicrowaveOn.blockID);
+      l |= 4;
     else
-      world.setBlockWithNotify(i, j, k, mod_PlasticCraft.blockMicrowaveIdle.blockID);
+    	l &= 11; // (1 + 2 + 8 = 11)
         
     keepMicrowaveInventory = false;
         
@@ -107,14 +112,14 @@ public class BlockMicrowave extends BlockContainer implements ITextureProvider {
 
   public void onBlockPlacedBy(World world, int i, int j, int k, EntityLiving entityliving) {
     int l = MathHelper.floor_double((double)((entityliving.rotationYaw * 4F) / 360F) + 0.5D) & 3;
-    if (l == 0) world.setBlockMetadataWithNotify(i, j, k, 2);
-    if (l == 1) world.setBlockMetadataWithNotify(i, j, k, 5);
-    if (l == 2) world.setBlockMetadataWithNotify(i, j, k, 3);
-    if (l == 3) world.setBlockMetadataWithNotify(i, j, k, 4);
+    if (l == 0) world.setBlockMetadataWithNotify(i, j, k, 0);
+    if (l == 1) world.setBlockMetadataWithNotify(i, j, k, 3);
+    if (l == 2) world.setBlockMetadataWithNotify(i, j, k, 1);
+    if (l == 3) world.setBlockMetadataWithNotify(i, j, k, 2);
   }
 
   public void onBlockRemoval(World world, int i, int j, int k) {
-    if(!keepMicrowaveInventory) {
+    if (!keepMicrowaveInventory) {
       TileEntityMicrowave tileentitymicrowave = (TileEntityMicrowave)world.getBlockTileEntity(i, j, k);
       label0:
       for (int l=0; l<tileentitymicrowave.getSizeInventory(); l++) {
@@ -141,7 +146,7 @@ public class BlockMicrowave extends BlockContainer implements ITextureProvider {
           entityitem.motionY = (float)world.rand.nextGaussian() * f3 + 0.2F;
           entityitem.motionZ = (float)world.rand.nextGaussian() * f3;
           world.entityJoinedWorld(entityitem);
-        } while(true);
+        } while (true);
       }
     }
     

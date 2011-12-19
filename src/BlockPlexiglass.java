@@ -17,7 +17,7 @@ public class BlockPlexiglass extends BlockBreakable implements ITextureProvider 
   public int getLightValue(IBlockAccess iblockaccess, int i, int j, int k) {
   	int meta = iblockaccess.getBlockMetadata(i, j, k);
   	if (meta == 1) return 15;
-  	else return 0;
+  	return 0;
   }
   
   public int getBlockTextureFromSideAndMetadata(int side, int meta) {
