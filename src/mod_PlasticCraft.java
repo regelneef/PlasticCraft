@@ -6,11 +6,12 @@ import java.lang.reflect.Field;
 import java.util.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.src.forge.*;
+import net.minecraft.src.plasticcraft.*;
 import org.lwjgl.opengl.GL11;
 
 public class mod_PlasticCraft extends BaseMod {
   public String getVersion() { return "v2.4 (for 1.0.0)"; }
-  public static String modDir = "/TehKrush/PlasticCraft/";
+  public static String modDir = "/plasticcraft/images/";
   private static String getAppdata() { return Minecraft.getMinecraftDir().getPath(); }
   private static Props props = new Props((new File((new StringBuilder()).append(getAppdata()).append("/config/").append("mod_PlasticCraft.props").toString())).getPath());
   private static void console(String s) { System.out.println("[PlasticCraft] " + s); }
@@ -538,7 +539,11 @@ public class mod_PlasticCraft extends BaseMod {
     return false;
   }
   
-  static class OreHandler implements IOreHandler {
+  public static boolean getIsJumping(EntityLiving entityliving) {
+  	return entityliving.isJumping;
+  }
+  
+  public static class OreHandler implements IOreHandler {
     public void registerOre(String oreClass, ItemStack item) {
       if (oreClass.equals("itemRubber")) {
         ModLoader.AddRecipe(new ItemStack(blockTrampoline), new Object[] { "RRR", "WWW", 
@@ -553,7 +558,7 @@ public class mod_PlasticCraft extends BaseMod {
     }
   }
     
-  static class Stun {
+  public static class Stun {
   	private static ArrayList shockedMobs = new ArrayList();
     private static ArrayList shockedMobsTime = new ArrayList();
     private static ArrayList shockedMobsCantTime = new ArrayList();
@@ -593,7 +598,7 @@ public class mod_PlasticCraft extends BaseMod {
       }
     }
 
-    static void shockMob(EntityLiving entityliving, double d, double d1) {
+    public static void shockMob(EntityLiving entityliving, double d, double d1) {
       if (!shockedMobs.contains(entityliving)) {
         shockedMobs.add(entityliving);
         shockedMobsTime.add(Double.valueOf(d));
