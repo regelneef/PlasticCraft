@@ -18,7 +18,7 @@ public class GuiExtract extends GuiContainer {
   }
 
   protected void drawGuiContainerBackgroundLayer(float f, int i, int j) {
-    int k = mc.renderEngine.getTexture("/TehKrush/PlasticCraft/guiExtractor.png");
+    int k = mc.renderEngine.getTexture(mod_PlasticCraft.modDir + "guiExtractor.png");
     GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
     mc.renderEngine.bindTexture(k);
     int l = (width - xSize) / 2;
