@@ -141,7 +141,7 @@ public class TileEntityMicrowave extends TileEntity implements IInventory {
       
       if (flag != (microwaveBurnTime > 0)) {
         flag1 = true;
-        BlockMicrowave.updateFurnaceBlockState(microwaveBurnTime > 0, worldObj, xCoord, yCoord, zCoord);
+        BlockPlasticMachine.updateBlockState(microwaveBurnTime > 0, worldObj, xCoord, yCoord, zCoord);
       }
     }
     

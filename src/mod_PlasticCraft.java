@@ -32,12 +32,11 @@ public class mod_PlasticCraft extends BaseMod {
   public static Block blockPlasticGoo = new BlockGooPlastic(props.getInt("blockPlasticGoo"));
   public static Block blockC4 = new BlockC4(props.getInt("blockC4"));
   public static Block blockPlexiglass = new BlockPlexiglass(props.getInt("blockPlexiglass"));
-  public static Block blockTap = new BlockTap(props.getInt("blockLatexTap"));
   public static Block blockPlexidoor = new BlockPlasticDoor(props.getInt("blockPlexiglassDoor"));
-  public static Block blockMicrowave = new BlockMicrowave(props.getInt("blockMicrowave"));
+  public static Block blockPlasticMachine = new BlockPlasticMachine(props.getInt("blockPlasticMachine"));
+  public static Block blockTap = new BlockTap(props.getInt("blockLatexTap"));
   public static Block blockTrampoline = new BlockTrampoline(props.getInt("blockTrampoline"));
   public static Block blockAccelerator = new BlockAccelerator(props.getInt("blockAccelerator"));
-  public static Block blockExtractor = new BlockExtract(props.getInt("blockExtractor"));
   public static Block blockRope = new BlockRope(props.getInt("blockRope"));
   // Items
   public static Item itemPlastic = new Item_PC(props.getInt("itemPlasticBall") - iOff).setIconIndex(0).setItemName("pPlasticBall");
@@ -138,12 +137,11 @@ public class mod_PlasticCraft extends BaseMod {
     ModLoader.RegisterBlock(blockPlasticGoo);
     ModLoader.RegisterBlock(blockC4);
     ModLoader.RegisterBlock(blockPlexiglass, ItemBlockPlexiglass.class);
-    ModLoader.RegisterBlock(blockTap);
     ModLoader.RegisterBlock(blockPlexidoor);
-    ModLoader.RegisterBlock(blockMicrowave);
+    ModLoader.RegisterBlock(blockPlasticMachine, ItemBlockMicrowave.class);
+    ModLoader.RegisterBlock(blockTap);
     ModLoader.RegisterBlock(blockTrampoline);
     ModLoader.RegisterBlock(blockAccelerator);
-    ModLoader.RegisterBlock(blockExtractor);
     ModLoader.RegisterBlock(blockRope);
     
     ModLoader.AddName(new ItemStack(Item.itemsList[blockPlastic.blockID], 1, 0), "Plain Plastic");
@@ -166,11 +164,11 @@ public class mod_PlasticCraft extends BaseMod {
     ModLoader.AddName(blockC4, "C4 Explosive");
     ModLoader.AddName(new ItemStack(Item.itemsList[blockPlexiglass.blockID], 1, 0), "Plexiglass");
     ModLoader.AddName(new ItemStack(Item.itemsList[blockPlexiglass.blockID], 1, 1), "Glowing Plexiglass");
+    ModLoader.AddName(new ItemStack(Item.itemsList[blockPlasticMachine.blockID], 1, 0), "Microwave Oven");
+    ModLoader.AddName(new ItemStack(Item.itemsList[blockPlasticMachine.blockID], 1, 8), "Extracting Furnace");
     ModLoader.AddName(blockTap, "Latex Extractor");
-    ModLoader.AddName(blockMicrowave, "Microwave Oven");
     ModLoader.AddName(blockTrampoline, "Trampoline");
     ModLoader.AddName(blockAccelerator, "Accelerator");
-    ModLoader.AddName(blockExtractor, "Extracting Furnace");
     
     ModLoader.AddName(itemPlastic, "Plastic Ball");
     ModLoader.AddName(itemPlasticClear, "Clear Plastic Ball");
@@ -225,9 +223,9 @@ public class mod_PlasticCraft extends BaseMod {
       'P', new ItemStack(blockPlexiglass, 1, 0), 'L', Item.lightStoneDust });
     ModLoader.AddRecipe(new ItemStack(blockTap), new Object[] { "P", "P", "P",
       'P', itemPlastic, });
-    ModLoader.AddRecipe(new ItemStack(blockMicrowave), new Object[] { "IPI", "GSG", "IPI", 
+    ModLoader.AddRecipe(new ItemStack(blockPlasticMachine, 1, 0), new Object[] { "IPI", "GSG", "IPI", // Microwave
       'P', blockPlastic, 'I', Item.ingotIron, 'G', Block.glass, 'S', itemIntegratedCircuit });
-    ModLoader.AddRecipe(new ItemStack(blockExtractor), new Object[] { "PXP", "PFP", "PEP", 
+    ModLoader.AddRecipe(new ItemStack(blockPlasticMachine, 1, 8), new Object[] { "PXP", "PFP", "PEP", // Extractor
       'P', blockPlastic, 'F', Block.stoneOvenIdle, 'E', blockTap, 'X', itemIntegratedCircuit });
     
     // Items
@@ -398,7 +396,7 @@ public class mod_PlasticCraft extends BaseMod {
   }
   
   public void RegisterAnimation(Minecraft minecraft) {
-    ModLoader.addAnimation(new TextureFrameAnimFX(BlockMicrowave.microwaveAnim, modDir + "blockMicrowaveAnim.png"));
+    ModLoader.addAnimation(new TextureFrameAnimFX(BlockPlasticMachine.microwaveAnim, modDir + "blockMicrowaveAnim.png"));
   }
 
   public boolean DispenseEntity(World world, double d, double d1, double d2, int i, int j, ItemStack itemstack) {
@@ -476,12 +474,11 @@ public class mod_PlasticCraft extends BaseMod {
     props.getInt("blockPlasticGoo", 126);
     props.getInt("blockC4", 127);
     props.getInt("blockPlexiglass", 128);
-    props.getInt("blockLatexTap", 129);
-    props.getInt("blockPlexiglassDoor", 130);
-    props.getInt("blockMicrowave", 131);
+    props.getInt("blockPlexiglassDoor", 129);
+    props.getInt("blockPlasticMachine", 130);
+    props.getInt("blockLatexTap", 131);
     props.getInt("blockTrampoline", 132);
     props.getInt("blockAccelerator", 133);
-    props.getInt("blockExtractor", 134);
     props.getInt("blockRope", 135);
     
     props.getInt("itemPlasticBall", 1001);
