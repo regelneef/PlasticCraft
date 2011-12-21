@@ -138,7 +138,7 @@ public class mod_PlasticCraft extends BaseMod {
     ModLoader.RegisterBlock(blockC4);
     ModLoader.RegisterBlock(blockPlexiglass, ItemBlockPlexiglass.class);
     ModLoader.RegisterBlock(blockPlexidoor);
-    ModLoader.RegisterBlock(blockPlasticMachine, ItemBlockMicrowave.class);
+    ModLoader.RegisterBlock(blockPlasticMachine, ItemBlockPlasticMachine.class);
     ModLoader.RegisterBlock(blockTap);
     ModLoader.RegisterBlock(blockTrampoline);
     ModLoader.RegisterBlock(blockAccelerator);

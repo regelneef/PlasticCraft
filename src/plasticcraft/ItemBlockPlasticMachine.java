@@ -2,8 +2,8 @@ package net.minecraft.src.plasticcraft;
 
 import net.minecraft.src.*;
 
-public class ItemBlockMicrowave extends ItemBlock {
-  public ItemBlockMicrowave(int i) {
+public class ItemBlockPlasticMachine extends ItemBlock {
+  public ItemBlockPlasticMachine(int i) {
     super(i);
     setMaxDamage(0);
     setHasSubtypes(true);
