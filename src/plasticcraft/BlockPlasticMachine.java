@@ -17,7 +17,7 @@ public class BlockPlasticMachine extends BlockContainer implements ITextureProvi
     setHardness(2.0F);
     setResistance(1500F);
     setStepSound(soundPowderFootstep);
-    setBlockName("pMicrowave");
+    setBlockName("pPlasticMachine");
     blockIndexInTexture = plasticIndex;
     setRequiresSelfNotify();
     setTickOnLoad(true);

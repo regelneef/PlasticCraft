@@ -7,7 +7,7 @@ public class ItemBlockPlasticMachine extends ItemBlock {
     super(i);
     setMaxDamage(0);
     setHasSubtypes(true);
-    setItemName("pMicrowave");
+    setItemName("pPlasticMachine");
   }
 
   public int getPlacedBlockMetadata(int i) {
