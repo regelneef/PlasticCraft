@@ -31,11 +31,12 @@ public class BlockPlasticMachine extends BlockContainer implements ITextureProvi
   private void setDefaultDirection(World world, int i, int j, int k) {
     if (world.multiplayerWorld)
       return;
-      
+    
     int l = world.getBlockId(i, j, k - 1);
     int i1 = world.getBlockId(i, j, k + 1);
     int j1 = world.getBlockId(i - 1, j, k);
     int k1 = world.getBlockId(i + 1, j, k);
+    int m = world.getBlockMetadata(i, j, k) & 8;
     byte byte0 = 3;
           
     if (Block.opaqueCubeLookup[l] && !Block.opaqueCubeLookup[i1])
@@ -46,6 +47,8 @@ public class BlockPlasticMachine extends BlockContainer implements ITextureProvi
       byte0 = 3;
     if (Block.opaqueCubeLookup[k1] && !Block.opaqueCubeLookup[j1])
       byte0 = 2;
+    
+    byte0 |= m;
       
     world.setBlockMetadataWithNotify(i, j, k, byte0);
   }
@@ -53,9 +56,9 @@ public class BlockPlasticMachine extends BlockContainer implements ITextureProvi
   public int getBlockTexture(IBlockAccess iblockaccess, int i, int j, int k, int side) {
     int meta = iblockaccess.getBlockMetadata(i, j, k);
     int powered = meta & 4; // 0 = off, 4 = on
-    TileEntity tl = ModLoader.getMinecraftInstance().theWorld.getBlockTileEntity(i, j, k);
+    int type = meta & 8;
   	
-    if (tl instanceof TileEntityMicrowave) { // microwave
+    if (type == 0) { // microwave
       if (side == 1 || side == 0) return plasticIndex;
     
       if (side != (meta & 3) + 2) return plasticIndex;
@@ -86,11 +89,11 @@ public class BlockPlasticMachine extends BlockContainer implements ITextureProvi
   }
 
   public boolean blockActivated(World world, int i, int j, int k, EntityPlayer entityplayer) {
-    TileEntity tl = world.getBlockTileEntity(i, j, k);
+  	int type = world.getBlockMetadata(i, j, k) & 8;
     if (world.multiplayerWorld)
       return true;
     else {
-      if (tl instanceof TileEntityMicrowave) {
+      if (type == 0) {
         TileEntityMicrowave tileentity = (TileEntityMicrowave)world.getBlockTileEntity(i, j, k);
         ModLoader.OpenGUI(entityplayer, new GuiMicrowave(entityplayer.inventory, tileentity));
         return true;
@@ -123,11 +126,12 @@ public class BlockPlasticMachine extends BlockContainer implements ITextureProvi
   }
   
   public void onBlockPlacedBy(World world, int i, int j, int k, EntityLiving entityliving) {
+  	int m = world.getBlockMetadata(i, j, k) & 8;
     int l = MathHelper.floor_double((double)((entityliving.rotationYaw * 4F) / 360F) + 0.5D) & 3;
-    if (l == 0) world.setBlockMetadataWithNotify(i, j, k, 0);
-    if (l == 1) world.setBlockMetadataWithNotify(i, j, k, 3);
-    if (l == 2) world.setBlockMetadataWithNotify(i, j, k, 1);
-    if (l == 3) world.setBlockMetadataWithNotify(i, j, k, 2);
+    if (l == 0) world.setBlockMetadataWithNotify(i, j, k, 0 + m);
+    if (l == 1) world.setBlockMetadataWithNotify(i, j, k, 3 + m);
+    if (l == 2) world.setBlockMetadataWithNotify(i, j, k, 1 + m);
+    if (l == 3) world.setBlockMetadataWithNotify(i, j, k, 2 + m);
   }
   
   public TileEntity getBlockEntity() {
@@ -142,11 +146,11 @@ public class BlockPlasticMachine extends BlockContainer implements ITextureProvi
   }
 
   public void onBlockRemoval(World world, int i, int j, int k) {
-    TileEntity tl = world.getBlockTileEntity(i, j, k);
+  	int type = world.getBlockMetadata(i, j, k) & 8;
   	
-    if (tl instanceof TileEntityMicrowave) {
+    if (type == 0) {
       if (!keepInventory) {
-        TileEntityMicrowave tileentity = (TileEntityMicrowave)tl;
+        TileEntityMicrowave tileentity = (TileEntityMicrowave)world.getBlockTileEntity(i, j, k);
     	
         label0:
         for (int l=0; l < tileentity.getSizeInventory(); l++) {
@@ -178,7 +182,7 @@ public class BlockPlasticMachine extends BlockContainer implements ITextureProvi
       }
     } else {
       if (!keepInventory) {
-        TileEntityExtract tileentity = (TileEntityExtract)tl;
+        TileEntityExtract tileentity = (TileEntityExtract)world.getBlockTileEntity(i, j, k);
     	
         label0:
         for (int l=0; l < tileentity.getSizeInventory(); l++) {
@@ -218,7 +222,7 @@ public class BlockPlasticMachine extends BlockContainer implements ITextureProvi
   }
   
   protected int damageDropped(int i) {
-    return i;
+    return i & 8;
   }
   
   public String getTextureFile() {

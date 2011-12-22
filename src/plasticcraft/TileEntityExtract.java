@@ -140,7 +140,7 @@ public class TileEntityExtract extends TileEntity implements IInventory {
             
       if (flag != (extractorBurnTime > 0)) {
       	flag1 = true;
-//      	BlockPlasticMachine.updateBlockState(extractorBurnTime > 0, worldObj, xCoord, yCoord, zCoord);
+      	BlockPlasticMachine.updateBlockState(extractorBurnTime > 0, worldObj, xCoord, yCoord, zCoord);
       }
     }
     
