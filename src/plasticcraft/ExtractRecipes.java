@@ -1,5 +1,6 @@
 package net.minecraft.src.plasticcraft;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import net.minecraft.src.*;
@@ -8,10 +9,15 @@ public class ExtractRecipes {
   private static final ExtractRecipes smeltingBase = new ExtractRecipes();
   private Map smeltingList;
   private Map extractionList;
+  private Map metaSmeltingList;
+  private Map metaExtractionList;
   
   private ExtractRecipes() {
     smeltingList = new HashMap();
     extractionList = new HashMap();
+    metaSmeltingList = new HashMap();
+    metaExtractionList = new HashMap();
+    
     addSmelting(Block.oreCoal.blockID, new ItemStack(Item.coal));
     addSmelting(Block.oreIron.blockID, new ItemStack(Item.ingotIron));
     addSmelting(Block.oreGold.blockID, new ItemStack(Item.ingotGold));
@@ -47,17 +53,36 @@ public class ExtractRecipes {
   public final void addSmelting(int i, ItemStack itemstack) {
     smeltingList.put(Integer.valueOf(i), itemstack);
   }
+  
+  public void addSmelting(int i, int meta, ItemStack itemstack) {
+    metaSmeltingList.put(Arrays.asList(i, meta), itemstack);
+  }
 
   public final void addExtraction(int i, ItemStack itemstack) {
     extractionList.put(Integer.valueOf(i), itemstack);
   }
-
-  public ItemStack getSmeltingResult(int i) {
-    return (ItemStack)smeltingList.get(Integer.valueOf(i));
+  
+  public void addExtraction(int i, int meta, ItemStack itemstack) {
+    metaExtractionList.put(Arrays.asList(i, meta), itemstack);
   }
+  
+  public ItemStack getSmeltingResult(ItemStack src) {
+    ItemStack tr;
 
-  public ItemStack getExtractionResult(int i) {
-    return (ItemStack)extractionList.get(Integer.valueOf(i));
+    if (src == null) return null;
+    
+    tr = (ItemStack)metaSmeltingList.get(Arrays.asList(src.itemID, src.getItemDamage()));
+    if (tr != null) return tr;
+    return (ItemStack)smeltingList.get(Integer.valueOf(src.itemID));
+  }
+  
+  public ItemStack getExtractionResult(ItemStack src) {
+    ItemStack tr;
+
+    if (src == null) return null;
+    tr = (ItemStack)metaExtractionList.get(Arrays.asList(src.itemID, src.getItemDamage()));
+    if (tr != null) return tr;
+    return (ItemStack)extractionList.get(Integer.valueOf(src.itemID));
   }
 
   public Map getSmeltingList() {

@@ -364,6 +364,7 @@ public class mod_PlasticCraft extends BaseMod {
     }     
   }
   
+  // For adding duct-tape compatible items.
   public static void addRepairs(int i, Item item) {
     if (i == 1) class1.add(item);
     if (i == 2) class2.add(item);
@@ -371,13 +372,20 @@ public class mod_PlasticCraft extends BaseMod {
     if (i == 4) class4.add(item);
   }
   
-  public static void addExtractorSmelting(int i, ItemStack itemstack, ItemStack itemstack1) {
-    ExtractRecipes.smelting().addSmelting(i, itemstack);
-    ExtractRecipes.smelting().addExtraction(i, itemstack1);
+  // For adding a normal item to the extractor recipes.
+  public static void addExtractorSmelting(int i, ItemStack... itemstack) {
+    ExtractRecipes.smelting().addSmelting(i, itemstack[0]);
+    try {
+      ExtractRecipes.smelting().addExtraction(i, itemstack[1]);
+    } catch (Exception e) {}
   }
   
-  public static void addExtractorSmelting(int i, ItemStack itemstack) {
-    ExtractRecipes.smelting().addSmelting(i, itemstack);
+  // Metadata-aware version of above method.
+  public static void addExtractorSmelting(int i, int meta, ItemStack... itemstack) {
+    ExtractRecipes.smelting().addSmelting(i, meta, itemstack[0]);
+    try {
+      ExtractRecipes.smelting().addExtraction(i, meta, itemstack[1]);
+    } catch (Exception e) {}
   }
   
   public boolean OnTickInGame(float f, Minecraft minecraft) {

@@ -149,8 +149,8 @@ public class TileEntityExtract extends TileEntity implements IInventory {
 
   private boolean canSmelt() {
     if (extractorItemStacks[0] == null) return false;
-    ItemStack itemstack = ExtractRecipes.smelting().getSmeltingResult(extractorItemStacks[0].getItem().shiftedIndex);
-    ItemStack itemstack1 = ExtractRecipes.smelting().getExtractionResult(extractorItemStacks[0].getItem().shiftedIndex);
+    ItemStack itemstack = ExtractRecipes.smelting().getSmeltingResult(extractorItemStacks[0]);
+    ItemStack itemstack1 = ExtractRecipes.smelting().getExtractionResult(extractorItemStacks[0]);
         
     if(itemstack == null) return false;
     if(extractorItemStacks[2] == null || extractorItemStacks[3] == null) return true;
@@ -164,8 +164,8 @@ public class TileEntityExtract extends TileEntity implements IInventory {
   public void smeltItem() {
     if (!canSmelt()) return;
 
-    ItemStack itemstack = ExtractRecipes.smelting().getSmeltingResult(extractorItemStacks[0].getItem().shiftedIndex);
-    ItemStack itemstack1 = ExtractRecipes.smelting().getExtractionResult(extractorItemStacks[0].getItem().shiftedIndex);
+    ItemStack itemstack = ExtractRecipes.smelting().getSmeltingResult(extractorItemStacks[0]);
+    ItemStack itemstack1 = ExtractRecipes.smelting().getExtractionResult(extractorItemStacks[0]);
         
     if (extractorItemStacks[2] == null)
       extractorItemStacks[2] = itemstack.copy();

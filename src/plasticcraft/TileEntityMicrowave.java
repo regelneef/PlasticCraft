@@ -150,7 +150,7 @@ public class TileEntityMicrowave extends TileEntity implements IInventory {
 
   private boolean canSmelt() {
     if (microwaveItemStacks[0] == null) return false;
-    ItemStack itemstack = FurnaceRecipes.smelting().getSmeltingResult(microwaveItemStacks[0].getItem().shiftedIndex);
+    ItemStack itemstack = FurnaceRecipes.smelting().getSmeltingResult(microwaveItemStacks[0]);
     if (itemstack == null) return false;
     
     if (microwaveItemStacks[2] == null) return true;
@@ -164,7 +164,7 @@ public class TileEntityMicrowave extends TileEntity implements IInventory {
   public void smeltItem() {
     if (!canSmelt()) return;
         
-    ItemStack itemstack = FurnaceRecipes.smelting().getSmeltingResult(microwaveItemStacks[0].getItem().shiftedIndex);
+    ItemStack itemstack = FurnaceRecipes.smelting().getSmeltingResult(microwaveItemStacks[0]);
     if (microwaveItemStacks[2] == null)
       microwaveItemStacks[2] = itemstack.copy();
     else if(microwaveItemStacks[2].itemID == itemstack.itemID)
