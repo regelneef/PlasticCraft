@@ -38,7 +38,7 @@ public class ItemPlasticBoat extends Item_PC {
         if (world.getBlockId(i, j, k) == Block.snow.blockID)
           j--;
         
-        world.entityJoinedWorld(new EntityPlasticBoat(world, (float)i + 0.5F, (float)j + 1.0F, (float)k + 0.5F));
+        world.spawnEntityInWorld(new EntityPlasticBoat(world, (float)i + 0.5F, (float)j + 1.0F, (float)k + 0.5F));
       }
       
       itemstack.stackSize--;

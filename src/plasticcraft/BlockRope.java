@@ -42,7 +42,7 @@ public class BlockRope extends Block_PC {
         ItemStack itemstack = new ItemStack(mod_PlasticCraft.itemRope, 1);
         EntityItem entityitem = new EntityItem(world, (double)i + d, (double)j + d1, (double)k + d2, itemstack);
         entityitem.delayBeforeCanPickup = 10;
-        world.entityJoinedWorld(entityitem);
+        world.spawnEntityInWorld(entityitem);
       }
           
       boolean removeBelow = true;

@@ -67,7 +67,7 @@ public class BlockC4 extends Block_PC {
       entityc4primed.yOffset = entityc4primed.height / 2.0F;
     }
     
-    world.entityJoinedWorld(entityc4primed);
+    world.spawnEntityInWorld(entityc4primed);
     world.playSoundAtEntity(entityc4primed, "random.fuse", 1.0F, 1.0F);
 
     return entityc4primed;

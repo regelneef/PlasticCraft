@@ -102,8 +102,8 @@ public class mod_PlasticCraft extends BaseMod {
     Item.swordDiamond, Item.shovelDiamond, Item.pickaxeDiamond, Item.axeDiamond, Item.hoeDiamond, Item.helmetDiamond, Item.plateDiamond, Item.legsDiamond, Item.bootsDiamond
   }));
   
-  public void load() {
-  	MinecraftForge.versionDetect("PlasticCraft", 1, 2, 1);
+	public void load() {
+  	MinecraftForge.versionDetect("PlasticCraft", 1, 2, 3);
     MinecraftForgeClient.preloadTexture(itemSheet);
     MinecraftForgeClient.preloadTexture(blockSheet);
     
@@ -114,11 +114,16 @@ public class mod_PlasticCraft extends BaseMod {
     
     MinecraftForge.registerOreHandler(oreHandler);
     MinecraftForge.registerOre("itemRubber", new ItemStack(itemRubber, 1));
-        
+    
     MinecraftForge.setToolClass(toolPlasticShovel, "shovel", 1);
     MinecraftForge.setToolClass(toolPlasticPickaxe, "pickaxe", 1);
     MinecraftForge.setToolClass(toolPlasticAxe, "axe", 1);
     MinecraftForge.setBlockHarvestLevel(blockPlasticGoo, "shovel", 0);
+    
+    MinecraftForge.addDungeonLoot(new ItemStack(itemSynthString), 1, 1, 5);
+    MinecraftForge.addDungeonLoot(new ItemStack(itemRubber), 0.8F, 1, 2);
+    MinecraftForge.addDungeonLoot(new ItemStack(itemNeedleHealth), 0.5F);
+    MinecraftForge.addDungeonLoot(new ItemStack(armorNightGoggles), 0.15F);
 
     ModLoader.SetInGameHook(this, true, false);
     
@@ -364,7 +369,7 @@ public class mod_PlasticCraft extends BaseMod {
     }     
   }
   
-  // For adding duct-tape compatible items.
+  /** For adding duct-tape compatible items. **/
   public static void addRepairs(int i, Item item) {
     if (i == 1) class1.add(item);
     if (i == 2) class2.add(item);
@@ -372,7 +377,7 @@ public class mod_PlasticCraft extends BaseMod {
     if (i == 4) class4.add(item);
   }
   
-  // For adding a normal item to the extractor recipes.
+  /** For adding a normal item to the extractor recipes. **/
   public static void addExtractorSmelting(int i, ItemStack... itemstack) {
     ExtractRecipes.smelting().addSmelting(i, itemstack[0]);
     try {
@@ -380,22 +385,12 @@ public class mod_PlasticCraft extends BaseMod {
     } catch (Exception e) {}
   }
   
-  // Metadata-aware version of above method.
+  /** Metadata-aware version of above method. **/
   public static void addExtractorSmelting(int i, int meta, ItemStack... itemstack) {
     ExtractRecipes.smelting().addSmelting(i, meta, itemstack[0]);
     try {
       ExtractRecipes.smelting().addExtraction(i, meta, itemstack[1]);
     } catch (Exception e) {}
-  }
-  
-  public boolean OnTickInGame(float f, Minecraft minecraft) {
-    if (minecraft.currentScreen == null) {
-      renderNightvisionOverlay(minecraft);
-    }
-
-    enableShockAbsorbing(minecraft);
-    Stun.tick();
-    return true;
   }
   
   public void AddRenderer(Map map) {
@@ -427,11 +422,20 @@ public class mod_PlasticCraft extends BaseMod {
       block.posZ = (double)i * (random.nextDouble() * 3D + 2D) + (double)(random.nextFloat() - 0.5F);
       block.motionX = 1.0D;
       block.motionY = (double)j * (random.nextDouble() * 3D + 2D) + (double)(random.nextFloat() - 0.5F);
-      world.entityJoinedWorld((Entity)block);
+      world.spawnEntityInWorld((Entity)block);
       world.playSoundEffect(d, d1, d2, "random.bow", 1.0F, 1.2F);
       return true;
     } else
     return false;
+  }
+  
+  public boolean OnTickInGame(float f, Minecraft minecraft) {
+    if (minecraft.currentScreen == null)
+      renderNightvisionOverlay(minecraft);
+
+    enableShockAbsorbing(minecraft);
+    Stun.tick();
+    return true;
   }
 
   private void enableShockAbsorbing(Minecraft minecraft) {
