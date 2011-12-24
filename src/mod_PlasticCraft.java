@@ -56,7 +56,7 @@ public class mod_PlasticCraft extends BaseMod {
   public static Item itemBattery = new Item_PC(props.getInt("itemBattery") - iOff).setIconIndex(14).setItemName("pBattery");
   public static Item itemSilicon = new Item_PC(props.getInt("itemSilicon") - iOff).setIconIndex(15).setItemName("pSilicon");
   public static Item itemPlasticBoat = new ItemPlasticBoat(props.getInt("itemPlasticBoat") - iOff).setIconIndex(16).setItemName("pBoat");
-  public static Item itemC4Defuser = new ItemC4Defuser(props.getInt("itemC4Defuser") - iOff).setIconIndex(17).setItemName("pC4Defuser");
+  public static Item itemC4Remote = new ItemC4Remote(props.getInt("itemC4Remote") - iOff).setIconIndex(17).setItemName("pC4Remote");
   public static Item itemSynthCloth = new Item_PC(props.getInt("itemSynthCloth") - iOff).setIconIndex(35).setItemName("pPlasticCloth");
   public static Item itemRope = new ItemRope(props.getInt("itemRope") - iOff).setIconIndex(36).setItemName("pRope");
   // Foods and Bucket/Bottles
@@ -192,7 +192,8 @@ public class mod_PlasticCraft extends BaseMod {
     ModLoader.AddName(itemBattery, "Battery");
     ModLoader.AddName(itemSilicon, "Rough Silicon");
     ModLoader.AddName(itemPlasticBoat, "Plastic Boat");
-    ModLoader.AddName(itemC4Defuser, "Handheld C4 Defuser");
+    ModLoader.AddName(new ItemStack(Item.itemsList[itemC4Remote.shiftedIndex], 1, 0), "Handheld C4 Defuser");
+    ModLoader.AddName(new ItemStack(Item.itemsList[itemC4Remote.shiftedIndex], 1, 1), "Handheld C4 Detonator");
     ModLoader.AddName(itemSynthCloth, "Synthetic Fiber");
     ModLoader.AddName(itemRope, "Synthetic Rope");
     ModLoader.AddName(itemPlasticBucket, "Plastic Bucket");
@@ -278,7 +279,7 @@ public class mod_PlasticCraft extends BaseMod {
       'F', itemSynthCloth, 'I', Item.ingotIron, 'R', Item.redstoneRepeater, 'P', blockPlastic, 'S', itemSilicon });
     ModLoader.AddRecipe(new ItemStack(itemPlasticBoat), new Object[] { "P P", "PGP", 
       'P', blockPlastic, 'G', new ItemStack(blockPlexiglass, 1, 0) });
-    ModLoader.AddRecipe(new ItemStack(itemC4Defuser), new Object[] { "PBP", "RCG", "IS ", 
+    ModLoader.AddRecipe(new ItemStack(itemC4Remote, 1, 0), new Object[] { "PBP", "RCG", "IS ", 
       'P', itemPlastic, 'R', Item.redstone, 'I', Item.ingotIron, 'C', itemIntegratedCircuit, 'G', Block.glass, 'B', Block.button, 'S', itemBattery });
     ModLoader.AddRecipe(new ItemStack(itemRope), new Object[] { "/I", "SS", "SS", 
       'S', itemSynthCloth, '/', itemSynthString, 'I', Item.ingotIron });
@@ -377,7 +378,7 @@ public class mod_PlasticCraft extends BaseMod {
     if (i == 4) class4.add(item);
   }
   
-  /** For adding a normal item to the extractor recipes. **/
+  /** Method for adding items to the extractor recipes. **/
   public static void addExtractorSmelting(int i, ItemStack... itemstack) {
     ExtractRecipes.smelting().addSmelting(i, itemstack[0]);
     try {
@@ -385,7 +386,7 @@ public class mod_PlasticCraft extends BaseMod {
     } catch (Exception e) {}
   }
   
-  /** Metadata-aware version of above method. **/
+  /** Metadata-aware method for adding items to the extractor recipes. **/
   public static void addExtractorSmelting(int i, int meta, ItemStack... itemstack) {
     ExtractRecipes.smelting().addSmelting(i, meta, itemstack[0]);
     try {
@@ -510,7 +511,7 @@ public class mod_PlasticCraft extends BaseMod {
     props.getInt("itemBattery", 1015);
     props.getInt("itemSilicon", 1016);
     props.getInt("itemPlasticBoat", 1017);
-    props.getInt("itemC4Defuser", 1018);
+    props.getInt("itemC4Remote", 1018);
     props.getInt("itemPlasticBucket", 1019);
     props.getInt("itemPlasticWaterBucket", 1020);
     props.getInt("itemPlasticMilkBucket", 1021);
@@ -563,6 +564,8 @@ public class mod_PlasticCraft extends BaseMod {
           'R', item, 'G', itemPlasticGoo });
         ModLoader.AddRecipe(new ItemStack(armorFallBoots), new Object[] { "O O", " C ", "R R", 
           'R', item, 'O', Block.obsidian, 'C', itemIntegratedCircuit });
+      } else if (oreClass.equals("woodRubber")) {
+        addExtractorSmelting(item.itemID, new ItemStack(itemRubber), new ItemStack(itemWoodDust));
       }
     }
   }

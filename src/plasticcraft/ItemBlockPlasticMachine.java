@@ -15,7 +15,7 @@ public class ItemBlockPlasticMachine extends ItemBlock {
   }
 
   public String getItemNameIS(ItemStack itemstack) {
-    if (itemstack.getItemDamage() == 8) return "machine.extract";
-    return "machine.microwave";
+    if (itemstack.getItemDamage() == 8) return "plastic.extractor";
+    return "plastic.microwave";
   }
 }

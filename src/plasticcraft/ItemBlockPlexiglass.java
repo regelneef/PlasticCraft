@@ -15,9 +15,7 @@ public class ItemBlockPlexiglass extends ItemBlock {
   }
   
   public String getItemNameIS(ItemStack itemstack) {
-  	if(itemstack.getItemDamage() == 1)
-      return "glowplexiglass";
-    
-  	return "plexiglass";
+    if (itemstack.getItemDamage() == 1) return "plastic.glowplexiglass";
+  	return "plastic.plexiglass";
   }
 }

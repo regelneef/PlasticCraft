@@ -152,10 +152,10 @@ public class TileEntityExtract extends TileEntity implements IInventory {
     ItemStack itemstack = ExtractRecipes.smelting().getSmeltingResult(extractorItemStacks[0]);
     ItemStack itemstack1 = ExtractRecipes.smelting().getExtractionResult(extractorItemStacks[0]);
         
-    if(itemstack == null) return false;
-    if(extractorItemStacks[2] == null || extractorItemStacks[3] == null) return true;
-    if(!extractorItemStacks[2].isItemEqual(itemstack) || !extractorItemStacks[3].isItemEqual(itemstack1)) return false;
-    if(extractorItemStacks[2].stackSize < getInventoryStackLimit() && extractorItemStacks[2].stackSize < extractorItemStacks[2].getMaxStackSize() || extractorItemStacks[3].stackSize < getInventoryStackLimit() && extractorItemStacks[3].stackSize < extractorItemStacks[3].getMaxStackSize())
+    if (itemstack == null) return false;
+    if (extractorItemStacks[2] == null || extractorItemStacks[3] == null) return true;
+    if (!extractorItemStacks[2].isItemEqual(itemstack) || !extractorItemStacks[3].isItemEqual(itemstack1)) return false;
+    if (extractorItemStacks[2].stackSize < getInventoryStackLimit() && extractorItemStacks[2].stackSize < extractorItemStacks[2].getMaxStackSize() || extractorItemStacks[3].stackSize < getInventoryStackLimit() && extractorItemStacks[3].stackSize < extractorItemStacks[3].getMaxStackSize())
       return true;
     else
       return extractorItemStacks[2].stackSize < itemstack.getMaxStackSize();

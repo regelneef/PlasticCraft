@@ -118,11 +118,11 @@ public class TileEntityMicrowave extends TileEntity implements IInventory {
         if (microwaveBurnTime > 0) {
           flag1 = true;
           if (microwaveItemStacks[1] != null) {
-            if (microwaveItemStacks[1].getItem().hasContainerItem()) {
+            if (microwaveItemStacks[1].getItem().hasContainerItem())
               microwaveItemStacks[1] = new ItemStack(microwaveItemStacks[1].getItem().getContainerItem());
-            } else {
+            else
               microwaveItemStacks[1].stackSize--;
-            }
+            
             if (microwaveItemStacks[1].stackSize == 0)
               microwaveItemStacks[1] = null;
           }
@@ -182,8 +182,8 @@ public class TileEntityMicrowave extends TileEntity implements IInventory {
     if (itemstack == null) return 0;
     
     int i = itemstack.getItem().shiftedIndex;
-    if(i == Item.redstone.shiftedIndex) return 2000;
-    if(i == Item.lightStoneDust.shiftedIndex) return 4800;
+    if (i == Item.redstone.shiftedIndex) return 2000;
+    if (i == Item.lightStoneDust.shiftedIndex) return 4800;
     return i != mod_PlasticCraft.itemBattery.shiftedIndex ? 0 : 25000;
   }
 

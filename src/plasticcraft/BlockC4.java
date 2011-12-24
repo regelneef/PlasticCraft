@@ -9,7 +9,7 @@ public class BlockC4 extends Block_PC {
   
   public BlockC4(int i) {
     super(i, Material.tnt);
-    setHardness(0.5F);
+    setHardness(0.3F);
     setStepSound(soundGrassFootstep);
     setBlockName("pC4");
     blockIndexInTexture = 13;
@@ -78,7 +78,7 @@ public class BlockC4 extends Block_PC {
       return false;
     
     ItemStack itemstack = entityplayer.getCurrentEquippedItem();
-    if (itemstack != null && (itemstack.itemID == blockID || itemstack.itemID == mod_PlasticCraft.itemC4Defuser.shiftedIndex))
+    if (itemstack != null && (itemstack.itemID == blockID || itemstack.itemID == mod_PlasticCraft.itemC4Remote.shiftedIndex))
       return false;
     
     int l = countAdjacent(world, i, j, k, false);

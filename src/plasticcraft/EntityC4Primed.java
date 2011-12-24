@@ -6,7 +6,6 @@ public class EntityC4Primed extends Entity {
   public int fuse;
   public int power;
   public int connectedCount;
-  public static BlockC4 c4 = (BlockC4)mod_PlasticCraft.blockC4;
   public float renderScale;
   
   public EntityC4Primed(World world) {
