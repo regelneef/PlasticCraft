@@ -279,8 +279,12 @@ public class mod_PlasticCraft extends BaseMod {
       'F', itemSynthCloth, 'I', Item.ingotIron, 'R', Item.redstoneRepeater, 'P', blockPlastic, 'S', itemSilicon });
     ModLoader.AddRecipe(new ItemStack(itemPlasticBoat), new Object[] { "P P", "PGP", 
       'P', blockPlastic, 'G', new ItemStack(blockPlexiglass, 1, 0) });
-    ModLoader.AddRecipe(new ItemStack(itemC4Remote, 1, 0), new Object[] { "PBP", "RCG", "IS ", 
+    ModLoader.AddRecipe(new ItemStack(itemC4Remote, 1, 1), new Object[] { "PBP", "RCG", "IS ", 
       'P', itemPlastic, 'R', Item.redstone, 'I', Item.ingotIron, 'C', itemIntegratedCircuit, 'G', Block.glass, 'B', Block.button, 'S', itemBattery });
+    ModLoader.AddRecipe(new ItemStack(itemC4Remote, 1, 0), new Object[] { "R",
+      'R', new ItemStack(itemC4Remote, 1, 1) });
+    ModLoader.AddRecipe(new ItemStack(itemC4Remote, 1, 1), new Object[] { "R",
+      'R', new ItemStack(itemC4Remote, 1, 0) });
     ModLoader.AddRecipe(new ItemStack(itemRope), new Object[] { "/I", "SS", "SS", 
       'S', itemSynthCloth, '/', itemSynthString, 'I', Item.ingotIron });
     ModLoader.AddRecipe(new ItemStack(itemPlasticBucket), new Object[] { "P P", " P ", 
@@ -370,27 +374,27 @@ public class mod_PlasticCraft extends BaseMod {
     }     
   }
   
-  /** For adding duct-tape compatible items. **/
-  public static void addRepairs(int i, Item item) {
-    if (i == 1) class1.add(item);
-    if (i == 2) class2.add(item);
-    if (i == 3) class3.add(item);
-    if (i == 4) class4.add(item);
+  /** Method for adding duct-tape compatible items. **/
+  public static void addRepairs(int repairClass, Item item) {
+    if (repairClass == 1) class1.add(item);
+    if (repairClass == 2) class2.add(item);
+    if (repairClass == 3) class3.add(item);
+    if (repairClass == 4) class4.add(item);
   }
   
   /** Method for adding items to the extractor recipes. **/
-  public static void addExtractorSmelting(int i, ItemStack... itemstack) {
-    ExtractRecipes.smelting().addSmelting(i, itemstack[0]);
+  public static void addExtractorSmelting(int id, ItemStack... itemstack) {
+    ExtractRecipes.smelting().addSmelting(id, itemstack[0]);
     try {
-      ExtractRecipes.smelting().addExtraction(i, itemstack[1]);
+      ExtractRecipes.smelting().addExtraction(id, itemstack[1]);
     } catch (Exception e) {}
   }
   
   /** Metadata-aware method for adding items to the extractor recipes. **/
-  public static void addExtractorSmelting(int i, int meta, ItemStack... itemstack) {
-    ExtractRecipes.smelting().addSmelting(i, meta, itemstack[0]);
+  public static void addExtractorSmelting(int id, int meta, ItemStack... itemstack) {
+    ExtractRecipes.smelting().addSmelting(id, meta, itemstack[0]);
     try {
-      ExtractRecipes.smelting().addExtraction(i, meta, itemstack[1]);
+      ExtractRecipes.smelting().addExtraction(id, meta, itemstack[1]);
     } catch (Exception e) {}
   }
   

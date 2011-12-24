@@ -6,6 +6,7 @@ import net.minecraft.client.Minecraft;
 
 public class ItemC4Remote extends Item_PC {
   public static BlockC4 c4 = (BlockC4)mod_PlasticCraft.blockC4;
+  public static BlockTNT tnt = (BlockTNT)Block.tnt;
 
   public ItemC4Remote(int i) {
     super(i);
@@ -21,9 +22,7 @@ public class ItemC4Remote extends Item_PC {
     	
       for (int j=0; j<list.size(); j++) {
         Entity entity = (Entity)list.get(j);
-      
-        if (!(entity instanceof EntityC4Primed))
-          continue;
+        if (!(entity instanceof EntityC4Primed)) continue;
       
         EntityC4Primed entityc4primed = (EntityC4Primed)entity;
         entityc4primed.setEntityDead();
@@ -41,9 +40,7 @@ public class ItemC4Remote extends Item_PC {
 
       String s = String.format("Defused %d active C4.", new Object[] { Integer.valueOf(i) });
         
-      if (i > 0)
-        ModLoader.getMinecraftInstance().ingameGUI.addChatMessage(s);
-      
+      if (i > 0) ModLoader.getMinecraftInstance().ingameGUI.addChatMessage(s);
     } else if (itemstack.getItemDamage() == 1) { // detonator
       MovingObjectPosition mop = rayTrace(world, 150.0D, 1.0F, entityplayer);
     	
@@ -54,6 +51,10 @@ public class ItemC4Remote extends Item_PC {
           c4.onBlockDestroyedByPlayer(world, mop.blockX, mop.blockY, mop.blockZ, 1);
           world.setBlockWithNotify(mop.blockX, mop.blockY, mop.blockZ, 0);
           ModLoader.getMinecraftInstance().ingameGUI.addChatMessage("Detonated C4.");
+        } else if (id == Block.tnt.blockID) {
+        	tnt.onBlockDestroyedByPlayer(world, mop.blockX, mop.blockY, mop.blockZ, 1);
+          world.setBlockWithNotify(mop.blockX, mop.blockY, mop.blockZ, 0);
+        	ModLoader.getMinecraftInstance().ingameGUI.addChatMessage("Detonated TNT.");
         }
       }
     }
