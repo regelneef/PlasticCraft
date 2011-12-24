@@ -1,8 +1,9 @@
 package net.minecraft.src.plasticcraft;
 
 import net.minecraft.src.*;
+import net.minecraft.src.forge.*;
 
-public class TileEntityMicrowave extends TileEntity implements IInventory {
+public class TileEntityMicrowave extends TileEntity implements IInventory, ISidedInventory {
   private ItemStack microwaveItemStacks[];
   public int microwaveBurnTime;
   public int currentItemBurnTime;
@@ -19,6 +20,16 @@ public class TileEntityMicrowave extends TileEntity implements IInventory {
 
   public int getSizeInventory() {
     return microwaveItemStacks.length;
+  }
+  
+  public int getStartInventorySide(int side) {
+    if (side == 0) return 1;
+    if (side == 1) return 0;
+    return 2;
+  }
+
+  public int getSizeInventorySide(int side) {
+    return 1;
   }
 
   public ItemStack getStackInSlot(int i) {
