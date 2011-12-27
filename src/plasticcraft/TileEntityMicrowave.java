@@ -1,7 +1,7 @@
 package net.minecraft.src.plasticcraft;
 
 import net.minecraft.src.*;
-import net.minecraft.src.forge.*;
+import net.minecraft.src.forge.ISidedInventory;
 
 public class TileEntityMicrowave extends TileEntity implements IInventory, ISidedInventory {
   private ItemStack microwaveItemStacks[];

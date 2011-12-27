@@ -40,8 +40,6 @@ public class ItemPlasticBucket extends Item_PC {
         return itemstack;
             
       if (world.getBlockId(i, j, k) == mod_PlasticCraft.blockTap.blockID) {
-        if (world.getBlockMetadata(i, j, k) == 0)
-          world.setBlock(i, j, k, 1);
         if (itemstack.itemID == mod_PlasticCraft.itemPlasticBottle.shiftedIndex)
           return new ItemStack(mod_PlasticCraft.itemPlasticBottle);
         if (itemstack.itemID == mod_PlasticCraft.itemPlasticBucket.shiftedIndex)

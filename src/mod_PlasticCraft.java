@@ -15,13 +15,15 @@ public class mod_PlasticCraft extends BaseMod {
   private static String getAppdata() { return Minecraft.getMinecraftDir().getPath(); }
   private static Props props = new Props((new File((new StringBuilder()).append(getAppdata()).append("/config/").append("mod_PlasticCraft.props").toString())).getPath());
   private static void console(String s) { System.out.println("[PlasticCraft] " + s); }
-  public static int iOff = 256;
+  public static int iOff = 256; // item id offset
+  public static String itemSheet = modDir + "pc_items.png"; // item sprite sheet
+  public static String blockSheet = modDir + "pc_terrain.png"; // block sprite sheet
   
-  private static mod_PlasticCraft.OreHandler oreHandler = new mod_PlasticCraft.OreHandler();
+  // Handlers
+  private static net.minecraft.src.plasticcraft.HandlerOre oreHandler = new HandlerOre();
+  private static net.minecraft.src.plasticcraft.HandlerBucket bucketHandler = new HandlerBucket();
   
-  public static String itemSheet = modDir + "pc_items.png";
-  public static String blockSheet = modDir + "pc_terrain.png";
-  
+  // Enums
   private static EnumToolMaterial PLASTIC = EnumHelper.addToolMaterial("Plastic", 1, 400, 3F, 0, 5);
   private static EnumArmorMaterial KEVLAR = EnumHelper.addArmorMaterial("Kevlar", 18, new int[] {0, 8, 6, 0}, 12);
   private static EnumArmorMaterial UTILITY = EnumHelper.addArmorMaterial("Utility", 0, new int[] {0, 0, 0, 0}, 5);
@@ -67,6 +69,7 @@ public class mod_PlasticCraft extends BaseMod {
   public static Item itemPlasticBottle = new ItemPlasticBucket(props.getInt("itemEmptyBottle") - iOff, 0).setIconIndex(22).setItemName("pEmptyBottle");
   public static Item itemPlasticBottleW = new ItemConsumable(props.getInt("itemWaterBottle") - iOff, 3, 0.8F, false).setIconIndex(23).setItemName("pWaterBottle");
   public static Item itemPlasticBottleM = new ItemConsumable(props.getInt("itemMilkBottle") - iOff, 6, 0.6F, true).setIconIndex(24).setItemName("pMilkBottle");
+  public static Item itemIronBucketL = new Item_PC(props.getInt("itemIronLatexBucket") - iOff).setIconIndex(37).setItemName("pIronLatexBucket");
   public static Item itemNeedle = new Item_PC(props.getInt("itemNeedle") - iOff).setIconIndex(25).setItemName("pNeedle");
   public static Item itemNeedleHealth = new ItemConsumable(props.getInt("itemRedNeedle") - iOff, 0, 0, true).setIconIndex(26).setItemName("pHealthNeedle");
   public static Item itemJello = new ItemFood_PC(props.getInt("itemJello") - iOff, 6, 0.7F, false).setIconIndex(34).setItemName("pJello");
@@ -102,8 +105,8 @@ public class mod_PlasticCraft extends BaseMod {
     Item.swordDiamond, Item.shovelDiamond, Item.pickaxeDiamond, Item.axeDiamond, Item.hoeDiamond, Item.helmetDiamond, Item.plateDiamond, Item.legsDiamond, Item.bootsDiamond
   }));
   
-	public void load() {
-  	MinecraftForge.versionDetect("PlasticCraft", 1, 2, 3);
+  public void load() {
+    MinecraftForge.versionDetect("PlasticCraft", 1, 2, 3);
     MinecraftForgeClient.preloadTexture(itemSheet);
     MinecraftForgeClient.preloadTexture(blockSheet);
     
@@ -113,6 +116,8 @@ public class mod_PlasticCraft extends BaseMod {
     console("Registering recipes.");
     
     MinecraftForge.registerOreHandler(oreHandler);
+    MinecraftForge.registerCustomBucketHandler(bucketHandler);
+    
     MinecraftForge.registerOre("itemRubber", new ItemStack(itemRubber, 1));
     
     MinecraftForge.setToolClass(toolPlasticShovel, "shovel", 1);
@@ -203,6 +208,7 @@ public class mod_PlasticCraft extends BaseMod {
     ModLoader.AddName(itemPlasticBottle, "Plastic Bottle");
     ModLoader.AddName(itemPlasticBottleW, "Water Bottle");
     ModLoader.AddName(itemPlasticBottleM, "Milk Bottle");
+    ModLoader.AddName(itemIronBucketL, "Iron Latex Bucket");
     ModLoader.AddName(itemNeedle, "Needle");
     ModLoader.AddName(itemNeedleHealth, "Health Needle");
     ModLoader.AddName(itemJello, "Jello");
@@ -346,10 +352,12 @@ public class mod_PlasticCraft extends BaseMod {
     ModLoader.AddSmelting(itemPlastic.shiftedIndex, new ItemStack(itemPlasticGoo));
     ModLoader.AddSmelting(itemBowlGelatin.shiftedIndex, new ItemStack(itemGelatin, 4));
     ModLoader.AddSmelting(itemPlasticBucketL.shiftedIndex, new ItemStack(itemRubber, 2));
+    ModLoader.AddSmelting(itemIronBucketL.shiftedIndex, new ItemStack(itemRubber, 2));
     addExtractorSmelting(itemMouldFull.shiftedIndex, new ItemStack(itemPlastic, 3), new ItemStack(itemMould));
     addExtractorSmelting(itemPlastic.shiftedIndex, new ItemStack(itemPlasticGoo));
     addExtractorSmelting(itemBowlGelatin.shiftedIndex, new ItemStack(itemGelatin, 4), new ItemStack(Item.bowlEmpty));
     addExtractorSmelting(itemPlasticBucketL.shiftedIndex, new ItemStack(itemRubber, 2), new ItemStack(itemPlasticBucket));
+    addExtractorSmelting(itemIronBucketL.shiftedIndex, new ItemStack(itemRubber, 2), new ItemStack(Item.bucketEmpty));
     
     // Repair
     for (int i=0; i<class1.size(); i++) {
@@ -528,6 +536,7 @@ public class mod_PlasticCraft extends BaseMod {
     props.getInt("itemJello", 1028);
     props.getInt("itemSynthCloth", 1029);
     props.getInt("itemRope", 1030);
+    props.getInt("itemIronLatexBucket", 1031);
     
     props.getInt("armorNightVisionGoggles", 1040);
     props.getInt("armorKevlarVest", 1041);
@@ -555,23 +564,6 @@ public class mod_PlasticCraft extends BaseMod {
   
   public static boolean getIsJumping(EntityLiving entityliving) {
   	return entityliving.isJumping;
-  }
-  
-  public static class OreHandler implements IOreHandler {
-    public void registerOre(String oreClass, ItemStack item) {
-      if (oreClass.equals("itemRubber")) {
-        ModLoader.AddRecipe(new ItemStack(blockTrampoline), new Object[] { "RRR", "WWW", 
-          'R', item, 'W', Block.planks });
-        ModLoader.AddRecipe(new ItemStack(blockAccelerator, 4), new Object[] { "RXR", "XSX", "RXR", 
-          'R', item, 'X', Item.redstone, 'S', itemIntegratedCircuit });
-        ModLoader.AddRecipe(new ItemStack(itemDuctTape, 4), new Object[] { "RRR", "GGG", 
-          'R', item, 'G', itemPlasticGoo });
-        ModLoader.AddRecipe(new ItemStack(armorFallBoots), new Object[] { "O O", " C ", "R R", 
-          'R', item, 'O', Block.obsidian, 'C', itemIntegratedCircuit });
-      } else if (oreClass.equals("woodRubber")) {
-        addExtractorSmelting(item.itemID, new ItemStack(itemRubber), new ItemStack(itemWoodDust));
-      }
-    }
   }
     
   public static class Stun {

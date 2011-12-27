@@ -25,8 +25,8 @@ public class TileEntityExtract extends TileEntity implements IInventory, ISidedI
   public int getStartInventorySide(int side) {
     if (side == 0) return 1;
     if (side == 1) return 0;
-    if (side == 3) return 3;
-    return 2;
+    if (side == 3) return 2;
+    return 3;
   }
 
   public int getSizeInventorySide(int side) {
