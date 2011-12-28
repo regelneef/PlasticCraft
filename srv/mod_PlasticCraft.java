@@ -4,20 +4,15 @@ import java.io.File;
 import java.io.PrintStream;
 import java.lang.reflect.Field;
 import java.util.*;
-import net.minecraft.client.Minecraft;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.src.forge.*;
 import net.minecraft.src.plasticcraft.*;
-import org.lwjgl.opengl.GL11;
 
 public class mod_PlasticCraft extends BaseModMp {
-  public String getVersion() { return "v2.4 (for 1.0.0)"; }
-  public static String modDir = "/plasticcraft/images/";
-  private static String getAppdata() { return Minecraft.getMinecraftDir().getPath(); }
-  private static Props props = new Props(new File(getAppdata() + "/config/" + "mod_PlasticCraft.props").getPath());
+  public String Version() { return "v2.4 (for 1.0.0)"; }
+  private static Props props = new Props(new File("config/" + "mod_PlasticCraft.props").getPath());
   private static void console(String s) { System.out.println("[PlasticCraft] " + s); }
   private static int iOff = 256; // item id offset
-  public static String itemSheet = modDir + "pc_items.png"; // item sprite sheet
-  public static String blockSheet = modDir + "pc_terrain.png"; // block sprite sheet
   
   // Handlers
   private net.minecraft.src.plasticcraft.HandlerOre oreHandler = new HandlerOre();
@@ -41,38 +36,38 @@ public class mod_PlasticCraft extends BaseModMp {
   public static final Block blockAccelerator = new BlockAccelerator(props.getInt("blockAccelerator"));
   public static final Block blockRope = new BlockRope(props.getInt("blockRope"));
   // Items
-  public static final Item itemPlastic = new Item_PC(props.getInt("itemPlasticBall") - iOff).setIconIndex(0).setItemName("pPlasticBall");
-  public static final Item itemPlasticClear = new Item_PC(props.getInt("itemClearBall") - iOff).setIconIndex(1).setItemName("pClearBall");
-  public static final Item itemPlasticStick = new Item_PC(props.getInt("itemPlasticStick") - iOff).setIconIndex(2).setItemName("pPlasticStick");
-  public static final Item itemMould = new Item_PC(props.getInt("itemMould") - iOff).setIconIndex(3).setItemName("pMould");
-  public static final Item itemMouldFull = new Item_PC(props.getInt("itemFilledMould") - iOff).setIconIndex(4).setItemName("pFilledMould");
-  public static final Item itemWoodDust = new Item_PC(props.getInt("itemWoodFlour") - iOff).setIconIndex(5).setItemName("pWoodFlour");
-  public static final Item itemSynthString = new Item_PC(props.getInt("itemPlasticString") - iOff).setIconIndex(6).setItemName("pPlasticString");
-  public static final Item itemIntegratedCircuit = new Item_PC(props.getInt("itemSiliconChip") - iOff).setIconIndex(7).setItemName("pSiliconChip");
-  public static final Item itemBowlGelatin = new Item_PC(props.getInt("itemGelatinBowl") - iOff).setIconIndex(8).setItemName("pGelatinBowl");
-  public static final Item itemGelatin = new Item_PC(props.getInt("itemGelatin") - iOff).setIconIndex(9).setItemName("pGelatin");
-  public static final Item itemPlasticGoo = new Item_PC(props.getInt("itemGooPlastic") - iOff).setIconIndex(10).setItemName("pGooPlastic");
-  public static final Item itemRubber = new Item_PC(props.getInt("itemRubberBall") - iOff).setIconIndex(11).setItemName("pRubberBall");
-  public static final Item itemDuctTape = new Item_PC(props.getInt("itemTape") - iOff).setIconIndex(12).setItemName("pTape");
+  public static final Item itemPlastic = new Item(props.getInt("itemPlasticBall") - iOff).setIconIndex(0).setItemName("pPlasticBall");
+  public static final Item itemPlasticClear = new Item(props.getInt("itemClearBall") - iOff).setIconIndex(1).setItemName("pClearBall");
+  public static final Item itemPlasticStick = new Item(props.getInt("itemPlasticStick") - iOff).setIconIndex(2).setItemName("pPlasticStick");
+  public static final Item itemMould = new Item(props.getInt("itemMould") - iOff).setIconIndex(3).setItemName("pMould");
+  public static final Item itemMouldFull = new Item(props.getInt("itemFilledMould") - iOff).setIconIndex(4).setItemName("pFilledMould");
+  public static final Item itemWoodDust = new Item(props.getInt("itemWoodFlour") - iOff).setIconIndex(5).setItemName("pWoodFlour");
+  public static final Item itemSynthString = new Item(props.getInt("itemPlasticString") - iOff).setIconIndex(6).setItemName("pPlasticString");
+  public static final Item itemIntegratedCircuit = new Item(props.getInt("itemSiliconChip") - iOff).setIconIndex(7).setItemName("pSiliconChip");
+  public static final Item itemBowlGelatin = new Item(props.getInt("itemGelatinBowl") - iOff).setIconIndex(8).setItemName("pGelatinBowl");
+  public static final Item itemGelatin = new Item(props.getInt("itemGelatin") - iOff).setIconIndex(9).setItemName("pGelatin");
+  public static final Item itemPlasticGoo = new Item(props.getInt("itemGooPlastic") - iOff).setIconIndex(10).setItemName("pGooPlastic");
+  public static final Item itemRubber = new Item(props.getInt("itemRubberBall") - iOff).setIconIndex(11).setItemName("pRubberBall");
+  public static final Item itemDuctTape = new Item(props.getInt("itemTape") - iOff).setIconIndex(12).setItemName("pTape");
   public static final Item itemPlexidoor = new ItemPlasticDoor(props.getInt("itemPlexiglassDoor") - iOff).setIconIndex(13).setItemName("pItemPlasticDoor");
-  public static final Item itemBattery = new Item_PC(props.getInt("itemBattery") - iOff).setIconIndex(14).setItemName("pBattery");
-  public static final Item itemSilicon = new Item_PC(props.getInt("itemSilicon") - iOff).setIconIndex(15).setItemName("pSilicon");
+  public static final Item itemBattery = new Item(props.getInt("itemBattery") - iOff).setIconIndex(14).setItemName("pBattery");
+  public static final Item itemSilicon = new Item(props.getInt("itemSilicon") - iOff).setIconIndex(15).setItemName("pSilicon");
   public static final Item itemPlasticBoat = new ItemPlasticBoat(props.getInt("itemPlasticBoat") - iOff).setIconIndex(16).setItemName("pBoat");
   public static final Item itemC4Remote = new ItemC4Remote(props.getInt("itemC4Remote") - iOff).setIconIndex(17).setItemName("pC4Remote");
-  public static final Item itemSynthCloth = new Item_PC(props.getInt("itemSynthCloth") - iOff).setIconIndex(35).setItemName("pPlasticCloth");
+  public static final Item itemSynthCloth = new Item(props.getInt("itemSynthCloth") - iOff).setIconIndex(35).setItemName("pPlasticCloth");
   public static final Item itemRope = new ItemRope(props.getInt("itemRope") - iOff).setIconIndex(36).setItemName("pRope");
   // Foods and Bucket/Bottles
   public static final Item itemPlasticBucket = new ItemPlasticBucket(props.getInt("itemPlasticBucket") - iOff, 0).setIconIndex(18).setItemName("pPlasticBucket");
   public static final Item itemPlasticBucketW = new ItemPlasticBucket(props.getInt("itemPlasticWaterBucket") - iOff, Block.waterMoving.blockID).setIconIndex(19).setItemName("pPlasticWaterBucket").setContainerItem(itemPlasticBucket);
   public static final Item itemPlasticBucketM = new ItemPlasticBucket(props.getInt("itemPlasticMilkBucket") - iOff, -1).setIconIndex(20).setItemName("pPlasticMilkBucket").setContainerItem(itemPlasticBucket);
-  public static final Item itemPlasticBucketL = new Item_PC(props.getInt("itemPlasticLatexBucket") - iOff).setIconIndex(21).setItemName("pPlasticLatexBucket");
+  public static final Item itemPlasticBucketL = new Item(props.getInt("itemPlasticLatexBucket") - iOff).setIconIndex(21).setItemName("pPlasticLatexBucket");
   public static final Item itemPlasticBottle = new ItemPlasticBucket(props.getInt("itemEmptyBottle") - iOff, 0).setIconIndex(22).setItemName("pEmptyBottle");
   public static final Item itemPlasticBottleW = new ItemConsumable(props.getInt("itemWaterBottle") - iOff, 3, 0.8F, false).setIconIndex(23).setItemName("pWaterBottle");
   public static final Item itemPlasticBottleM = new ItemConsumable(props.getInt("itemMilkBottle") - iOff, 6, 0.6F, true).setIconIndex(24).setItemName("pMilkBottle");
-  public static final Item itemIronBucketL = new Item_PC(props.getInt("itemIronLatexBucket") - iOff).setIconIndex(37).setItemName("pIronLatexBucket");
-  public static final Item itemNeedle = new Item_PC(props.getInt("itemNeedle") - iOff).setIconIndex(25).setItemName("pNeedle");
+  public static final Item itemIronBucketL = new Item(props.getInt("itemIronLatexBucket") - iOff).setIconIndex(37).setItemName("pIronLatexBucket");
+  public static final Item itemNeedle = new Item(props.getInt("itemNeedle") - iOff).setIconIndex(25).setItemName("pNeedle");
   public static final Item itemNeedleHealth = new ItemConsumable(props.getInt("itemRedNeedle") - iOff, 0, 0, true).setIconIndex(26).setItemName("pHealthNeedle");
-  public static final Item itemJello = new ItemFood_PC(props.getInt("itemJello") - iOff, 6, 0.7F, false).setIconIndex(34).setItemName("pJello");
+  public static final Item itemJello = new ItemFood(props.getInt("itemJello") - iOff, 6, 0.7F, false).setIconIndex(34).setItemName("pJello");
   // Tools and Armor
   public static final Item armorNightGoggles = new ItemArmor_PC(props.getInt("armorNightVisionGoggles") - iOff, UTILITY, ModLoader.AddArmor("NVGoggles"), 0, false).setIconIndex(27).setItemName("pNVGoggles");
   public static final Item armorKevlarVest = new ItemArmor_PC(props.getInt("armorKevlarVest") - iOff, KEVLAR, ModLoader.AddArmor("Kevlar"), 1, true).setIconIndex(28).setItemName("pKevlarVest");
@@ -86,8 +81,6 @@ public class mod_PlasticCraft extends BaseModMp {
   public static int c4Power = props.getInt("c4Power");
   public static int c4Fuse = props.getInt("c4Fuse") * 20;
   public static boolean c4Enhanced = props.getBoolean("c4Enhanced");
-  private static String nightvisionStyle = props.getString("nightvisionStyle");
-  public static boolean isWearingFallBoots;
   static { props.save(); }
   
   // Repair Lists
@@ -105,10 +98,8 @@ public class mod_PlasticCraft extends BaseModMp {
     Item.swordDiamond, Item.shovelDiamond, Item.pickaxeDiamond, Item.axeDiamond, Item.hoeDiamond, Item.helmetDiamond, Item.plateDiamond, Item.legsDiamond, Item.bootsDiamond
   }));
   
-  public void load() {
+  public void ModsLoaded() {
     MinecraftForge.versionDetect("PlasticCraft", 1, 2, 3);
-    MinecraftForgeClient.preloadTexture(itemSheet);
-    MinecraftForgeClient.preloadTexture(blockSheet);
     
     registerItems();
     console("Registering items.");
@@ -153,72 +144,6 @@ public class mod_PlasticCraft extends BaseModMp {
     ModLoader.RegisterBlock(blockTrampoline);
     ModLoader.RegisterBlock(blockAccelerator);
     ModLoader.RegisterBlock(blockRope);
-    
-    ModLoader.AddName(new ItemStack(Item.itemsList[blockPlastic.blockID], 1, 0), "Plain Plastic");
-    ModLoader.AddName(new ItemStack(Item.itemsList[blockPlastic.blockID], 1, 1), "Orange Plastic");
-    ModLoader.AddName(new ItemStack(Item.itemsList[blockPlastic.blockID], 1, 2), "Magenta Plastic");
-    ModLoader.AddName(new ItemStack(Item.itemsList[blockPlastic.blockID], 1, 3), "Light Blue Plastic");
-    ModLoader.AddName(new ItemStack(Item.itemsList[blockPlastic.blockID], 1, 4), "Yellow Plastic");
-    ModLoader.AddName(new ItemStack(Item.itemsList[blockPlastic.blockID], 1, 5), "Lime Plastic");
-    ModLoader.AddName(new ItemStack(Item.itemsList[blockPlastic.blockID], 1, 6), "Pink Plastic");
-    ModLoader.AddName(new ItemStack(Item.itemsList[blockPlastic.blockID], 1, 7), "Grey Plastic");
-    ModLoader.AddName(new ItemStack(Item.itemsList[blockPlastic.blockID], 1, 8), "Teal Plastic");
-    ModLoader.AddName(new ItemStack(Item.itemsList[blockPlastic.blockID], 1, 9), "Cyan Plastic");
-    ModLoader.AddName(new ItemStack(Item.itemsList[blockPlastic.blockID], 1, 10), "Purple Plastic");
-    ModLoader.AddName(new ItemStack(Item.itemsList[blockPlastic.blockID], 1, 11), "Blue Plastic");
-    ModLoader.AddName(new ItemStack(Item.itemsList[blockPlastic.blockID], 1, 12), "Brown Plastic");
-    ModLoader.AddName(new ItemStack(Item.itemsList[blockPlastic.blockID], 1, 13), "Green Plastic");
-    ModLoader.AddName(new ItemStack(Item.itemsList[blockPlastic.blockID], 1, 14), "Red Plastic");
-    ModLoader.AddName(new ItemStack(Item.itemsList[blockPlastic.blockID], 1, 15), "Black Plastic");
-    ModLoader.AddName(blockPlasticGoo, "Gooey Plastic Block");
-    ModLoader.AddName(blockC4, "C4 Explosive");
-    ModLoader.AddName(new ItemStack(Item.itemsList[blockPlexiglass.blockID], 1, 0), "Plexiglass");
-    ModLoader.AddName(new ItemStack(Item.itemsList[blockPlexiglass.blockID], 1, 1), "Glowing Plexiglass");
-    ModLoader.AddName(new ItemStack(Item.itemsList[blockPlasticMachine.blockID], 1, 0), "Microwave Oven");
-    ModLoader.AddName(new ItemStack(Item.itemsList[blockPlasticMachine.blockID], 1, 8), "Extracting Furnace");
-    ModLoader.AddName(blockTap, "Latex Extractor");
-    ModLoader.AddName(blockTrampoline, "Trampoline");
-    ModLoader.AddName(blockAccelerator, "Accelerator");
-    
-    ModLoader.AddName(itemPlastic, "Plastic Ball");
-    ModLoader.AddName(itemPlasticClear, "Clear Plastic Ball");
-    ModLoader.AddName(itemPlasticStick, "Plastic Stick");
-    ModLoader.AddName(itemWoodDust, "Wood Flour");
-    ModLoader.AddName(itemMould, "Mould");
-    ModLoader.AddName(itemMouldFull, "Filled Mould");
-    ModLoader.AddName(itemSynthString, "Sythetic String");
-    ModLoader.AddName(itemIntegratedCircuit, "Integrated Circuit");
-    ModLoader.AddName(itemBowlGelatin, "Bowl of Gelatin");
-    ModLoader.AddName(itemGelatin, "Gelatin Powder");
-    ModLoader.AddName(itemPlasticGoo, "Plastic Goo");
-    ModLoader.AddName(itemRubber, "Rubber Ball");
-    ModLoader.AddName(itemDuctTape, "Duct Tape");
-    ModLoader.AddName(itemPlexidoor, "Plexiglass Door");
-    ModLoader.AddName(itemBattery, "Battery");
-    ModLoader.AddName(itemSilicon, "Rough Silicon");
-    ModLoader.AddName(itemPlasticBoat, "Plastic Boat");
-    ModLoader.AddName(new ItemStack(Item.itemsList[itemC4Remote.shiftedIndex], 1, 0), "Handheld C4 Defuser");
-    ModLoader.AddName(new ItemStack(Item.itemsList[itemC4Remote.shiftedIndex], 1, 1), "Handheld C4 Detonator");
-    ModLoader.AddName(itemSynthCloth, "Synthetic Fiber");
-    ModLoader.AddName(itemRope, "Synthetic Rope");
-    ModLoader.AddName(itemPlasticBucket, "Plastic Bucket");
-    ModLoader.AddName(itemPlasticBucketW, "Plastic Water Bucket");
-    ModLoader.AddName(itemPlasticBucketM, "Plastic Milk Bucket");
-    ModLoader.AddName(itemPlasticBucketL, "Plastic Latex Bucket");
-    ModLoader.AddName(itemPlasticBottle, "Plastic Bottle");
-    ModLoader.AddName(itemPlasticBottleW, "Water Bottle");
-    ModLoader.AddName(itemPlasticBottleM, "Milk Bottle");
-    ModLoader.AddName(itemIronBucketL, "Iron Latex Bucket");
-    ModLoader.AddName(itemNeedle, "Needle");
-    ModLoader.AddName(itemNeedleHealth, "Health Needle");
-    ModLoader.AddName(itemJello, "Jello");
-    ModLoader.AddName(armorNightGoggles, "Night-Vision Goggles");
-    ModLoader.AddName(armorKevlarVest, "Kevlar Vest");
-    ModLoader.AddName(armorKevlarLegs, "Kevlar Pants");
-    ModLoader.AddName(armorFallBoots, "Shock-Absorbing Boots");
-    ModLoader.AddName(toolPlasticShovel, "Plastic Shovel");
-    ModLoader.AddName(toolPlasticPickaxe, "Plastic Pickaxe");
-    ModLoader.AddName(toolPlasticAxe, "Plastic Axe");
   }
 
   public static void addRecipes() {
@@ -405,15 +330,6 @@ public class mod_PlasticCraft extends BaseModMp {
       ExtractRecipes.smelting().addExtraction(id, meta, itemstack[1]);
     } catch (Exception e) {}
   }
-  
-  public void AddRenderer(Map map) {
-    map.put(EntityC4Primed.class, new RenderC4Primed());
-    map.put(EntityPlasticBoat.class, new RenderPlasticBoat());
-  }
-  
-  public void RegisterAnimation(Minecraft minecraft) {
-    ModLoader.addAnimation(new TextureFrameAnimFX(BlockPlasticMachine.microwaveAnim, modDir + "blockMicrowaveAnim.png"));
-  }
 
   public boolean DispenseEntity(World world, double d, double d1, double d2, int i, int j, ItemStack itemstack) {
     int k = itemstack.itemID;
@@ -439,56 +355,6 @@ public class mod_PlasticCraft extends BaseModMp {
       return true;
     } else
     return false;
-  }
-  
-  public boolean OnTickInGame(float f, Minecraft minecraft) {
-    if (minecraft.currentScreen == null)
-      renderNightvisionOverlay(minecraft);
-
-    enableShockAbsorbing(minecraft);
-    Stun.tick();
-    return true;
-  }
-
-  private void enableShockAbsorbing(Minecraft minecraft) {
-    ItemStack itemstack = minecraft.thePlayer.inventory.armorItemInSlot(0);
-    
-    if (itemstack != null && itemstack.itemID == armorFallBoots.shiftedIndex) {
-      minecraft.thePlayer.fallDistance = -1F;
-      isWearingFallBoots = true;
-    } else
-      isWearingFallBoots = false;
-  }
-
-  private void renderNightvisionOverlay(Minecraft minecraft) {
-    ItemStack itemstack = minecraft.thePlayer.inventory.armorItemInSlot(3);
-        
-    if (!minecraft.gameSettings.hideGUI && itemstack != null && itemstack.itemID == armorNightGoggles.shiftedIndex)
-      renderTextureOverlay(minecraft, "%blur%/TehKrush/PlasticCraft/guiNightVision" + nightvisionStyle + ".png", 1.0F);
-  }
-
-  private void renderTextureOverlay(Minecraft minecraft, String s, float f) {
-    ScaledResolution scaledresolution = new ScaledResolution(minecraft.gameSettings, minecraft.displayWidth, minecraft.displayHeight);
-    int i = scaledresolution.getScaledWidth();
-    int j = scaledresolution.getScaledHeight();
-    GL11.glEnable(3042 /*GL_BLEND*/);
-    GL11.glDisable(2929 /*GL_DEPTH_TEST*/);
-    GL11.glDepthMask(false);
-    GL11.glBlendFunc(770, 771);
-    GL11.glColor4f(1.0F, 1.0F, 1.0F, f);
-    GL11.glDisable(3008 /*GL_ALPHA_TEST*/);
-    GL11.glBindTexture(3553 /*GL_TEXTURE_2D*/, minecraft.renderEngine.getTexture(s));
-    Tessellator tessellator = Tessellator.instance;
-    tessellator.startDrawingQuads();
-    tessellator.addVertexWithUV(0.0D, j, -90D, 0.0D, 1.0D);
-    tessellator.addVertexWithUV(i, j, -90D, 1.0D, 1.0D);
-    tessellator.addVertexWithUV(i, 0.0D, -90D, 1.0D, 0.0D);
-    tessellator.addVertexWithUV(0.0D, 0.0D, -90D, 0.0D, 0.0D);
-    tessellator.draw();
-    GL11.glDepthMask(true);
-    GL11.glEnable(2929 /*GL_DEPTH_TEST*/);
-    GL11.glEnable(3008 /*GL_ALPHA_TEST*/);
-    GL11.glColor4f(1.0F, 1.0F, 1.0F, f);
   }
 
   private static void prepareProps() {
@@ -548,7 +414,6 @@ public class mod_PlasticCraft extends BaseModMp {
     props.getInt("c4Power", 10);
     props.getInt("c4Fuse", 6);
     props.getBoolean("c4Enhanced", true);
-    props.getString("nightvisionStyle", "SDK");
   }
   
   public static boolean getIsJumping(EntityLiving entityliving) {
