@@ -9,10 +9,11 @@ import net.minecraft.src.forge.*;
 import net.minecraft.src.plasticcraft.*;
 
 public class mod_PlasticCraft extends BaseModMp {
-  public String Version() { return "v2.4a (for 1.0.0)"; }
+  public String Version() { return "v2.4 (for 1.0.0)"; }
   private static Props props = new Props(new File("config/" + "mod_PlasticCraft.props").getPath());
   private static void console(String s) { System.out.println("[PlasticCraft] " + s); }
   private static int iOff = 256; // item id offset
+  public static mod_PlasticCraft instance;
   
   // Handlers
   private net.minecraft.src.plasticcraft.HandlerOre oreHandler = new HandlerOre();
@@ -98,6 +99,10 @@ public class mod_PlasticCraft extends BaseModMp {
   private static ArrayList class4 = new ArrayList(Arrays.asList(new Item[] {
     Item.swordDiamond, Item.shovelDiamond, Item.pickaxeDiamond, Item.axeDiamond, Item.hoeDiamond, Item.helmetDiamond, Item.plateDiamond, Item.legsDiamond, Item.bootsDiamond
   }));
+  
+  public mod_PlasticCraft() {
+  	instance = this;
+  }
   
   public void ModsLoaded() {
     MinecraftForge.versionDetect("PlasticCraft", 1, 2, 3);
@@ -334,6 +339,24 @@ public class mod_PlasticCraft extends BaseModMp {
     try {
       ExtractRecipes.smelting().addExtraction(id, meta, itemstack[1]);
     } catch (Exception e) {}
+  }
+  
+  public void HandlePacket(Packet230ModLoader packet, EntityPlayerMP entityplayermp) {
+    int x = (int)packet.dataFloat[0];
+    int y = (int)packet.dataFloat[1];
+    int z = (int)packet.dataFloat[2];
+    
+    BlockC4 c4 = (BlockC4)blockC4;
+    BlockTNT tnt = (BlockTNT)Block.tnt;
+
+    int id = entityplayermp.worldObj.getBlockId(x, y, z);
+    if (id == mod_PlasticCraft.blockC4.blockID) {
+      c4.onBlockDestroyedByPlayer(entityplayermp.worldObj, x, y, z, 1);
+      entityplayermp.worldObj.setBlockWithNotify(x, y, z, 0);
+    } else if (id == Block.tnt.blockID) {
+      tnt.onBlockDestroyedByPlayer(entityplayermp.worldObj, x, y, z, 1);
+      entityplayermp.worldObj.setBlockWithNotify(x, y, z, 0);
+    }
   }
 
   public boolean DispenseEntity(World world, double d, double d1, double d2, int i, int j, ItemStack itemstack) {

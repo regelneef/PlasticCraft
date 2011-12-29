@@ -59,9 +59,6 @@ public class BlockC4 extends Block {
     if (mod_PlasticCraft.c4Enhanced) {
       entityc4primed.connectedCount = countAdjacent(world, i, j, k, true);
       entityc4primed.power = getPower(entityc4primed.connectedCount);
-      entityc4primed.renderScale = (float)Math.pow(entityc4primed.connectedCount, 0.3333333432674408D);
-      entityc4primed.height *= entityc4primed.renderScale;
-      entityc4primed.width *= entityc4primed.renderScale;
       entityc4primed.yOffset = entityc4primed.height / 2.0F;
     }
     

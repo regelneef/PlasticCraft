@@ -33,20 +33,8 @@ public class ItemC4Remote extends Item {
           entityplayer.dropItem(mod_PlasticCraft.blockC4.blockID, i1);
         }
       }
-    } else if (itemstack.getItemDamage() == 1) { // detonator
-      MovingObjectPosition mop = rayTrace(world, 150.0D, 1.0F, entityplayer);
-    	
-      if (mop != null && mop.typeOfHit == EnumMovingObjectType.TILE) {
-        int id = world.getBlockId(mop.blockX, mop.blockY, mop.blockZ);
-        
-        if (id == mod_PlasticCraft.blockC4.blockID) {
-          c4.onBlockDestroyedByPlayer(world, mop.blockX, mop.blockY, mop.blockZ, 1);
-          world.setBlockWithNotify(mop.blockX, mop.blockY, mop.blockZ, 0);
-        } else if (id == Block.tnt.blockID) {
-          tnt.onBlockDestroyedByPlayer(world, mop.blockX, mop.blockY, mop.blockZ, 1);
-          world.setBlockWithNotify(mop.blockX, mop.blockY, mop.blockZ, 0);
-        }
-      }
+    } else if (itemstack.getItemDamage() == 1) { // detonator, handled by client
+      return itemstack;
     }
     
     return itemstack;
@@ -68,13 +56,6 @@ public class ItemC4Remote extends Item {
     }
     
     return false;
-  }
-  
-  private MovingObjectPosition rayTrace(World world, double d, float f, EntityLiving entity) {
-    Vec3D vec3d = Vec3D.createVector(entity.posX, entity.posY, entity.posZ);
-    Vec3D vec3d1 = entity.getLook(f);
-    Vec3D vec3d2 = vec3d.addVector(vec3d1.xCoord * d, vec3d1.yCoord * d, vec3d1.zCoord * d);
-    return world.rayTraceBlocks(vec3d, vec3d2);
   }
   
   public String getItemNameIS(ItemStack itemstack) {

@@ -9,6 +9,7 @@ public class ItemConsumable extends ItemFood {
   }
   
   public ItemStack onFoodEaten(ItemStack itemstack, World world, EntityPlayer entityplayer) {
+  	entityplayer.getFoodStats().eatFood(this);
     world.playSoundAtEntity(entityplayer, "random.burp", 0.5F, world.rand.nextFloat() * 0.1F + 0.9F);
     
     if (itemstack != null && itemstack.itemID == mod_PlasticCraft.itemPlasticBottleW.shiftedIndex)

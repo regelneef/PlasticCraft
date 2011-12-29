@@ -39,7 +39,7 @@ public class EntityC4Primed extends Entity {
   }
 
   public boolean canBeCollidedWith() {
-    return !field_9293_aM;
+    return !isDead;
   }
 
   public void onUpdate() {

@@ -10,7 +10,7 @@ import net.minecraft.src.plasticcraft.*;
 import org.lwjgl.opengl.GL11;
 
 public class mod_PlasticCraft extends BaseModMp {
-  public String getVersion() { return "v2.4a (for 1.0.0)"; }
+  public String getVersion() { return "v2.4 (for 1.0.0)"; }
   public static String modDir = "/plasticcraft/images/";
   private static String getAppdata() { return Minecraft.getMinecraftDir().getPath(); }
   private static Props props = new Props(new File(getAppdata() + "/config/" + "mod_PlasticCraft.props").getPath());
@@ -18,6 +18,7 @@ public class mod_PlasticCraft extends BaseModMp {
   private static int iOff = 256; // item id offset
   public static String itemSheet = modDir + "pc_items.png"; // item sprite sheet
   public static String blockSheet = modDir + "pc_terrain.png"; // block sprite sheet
+  public static mod_PlasticCraft instance;
   
   // Handlers
   private net.minecraft.src.plasticcraft.HandlerOre oreHandler = new HandlerOre();
@@ -105,10 +106,17 @@ public class mod_PlasticCraft extends BaseModMp {
     Item.swordDiamond, Item.shovelDiamond, Item.pickaxeDiamond, Item.axeDiamond, Item.hoeDiamond, Item.helmetDiamond, Item.plateDiamond, Item.legsDiamond, Item.bootsDiamond
   }));
   
+  public mod_PlasticCraft() {
+  	instance = this;
+  }
+  
+  public void ModsLoaded() {
+  	MinecraftForgeClient.preloadTexture(itemSheet);
+    MinecraftForgeClient.preloadTexture(blockSheet);
+  }
+  
   public void load() {
     MinecraftForge.versionDetect("PlasticCraft", 1, 2, 3);
-    MinecraftForgeClient.preloadTexture(itemSheet);
-    MinecraftForgeClient.preloadTexture(blockSheet);
     
     registerItems();
     console("Registering items.");
@@ -418,6 +426,19 @@ public class mod_PlasticCraft extends BaseModMp {
   public void RegisterAnimation(Minecraft minecraft) {
     ModLoader.addAnimation(new TextureFrameAnimFX(BlockPlasticMachine.microwaveAnim, modDir + "blockMicrowaveAnim.png"));
   }
+  
+  public GuiScreen HandleGUI(int invType) {
+  	InventoryPlayer inventory = ModLoader.getMinecraftInstance().thePlayer.inventory;
+  	TileEntityMicrowave microwave = new TileEntityMicrowave();
+  	TileEntityExtract extractor = new TileEntityExtract();
+  	
+  	if (invType == 250)
+  		return new GuiMicrowave(inventory, microwave);
+  	else if (invType == 251)
+  		return new GuiExtract(inventory, extractor);
+  	
+  	return null;
+  }
 
   public boolean DispenseEntity(World world, double d, double d1, double d2, int i, int j, ItemStack itemstack) {
     int k = itemstack.itemID;
@@ -443,19 +464,6 @@ public class mod_PlasticCraft extends BaseModMp {
       return true;
     } else
     return false;
-  }
-  
-  public GuiScreen HandleGUI(int invType) {
-  	InventoryPlayer inventory = ModLoader.getMinecraftInstance().thePlayer.inventory;
-  	TileEntityMicrowave microwave = new TileEntityMicrowave();
-  	TileEntityExtract extractor = new TileEntityExtract();
-  	
-  	if (invType == 250)
-  		return new GuiMicrowave(inventory, microwave);
-  	else if (invType == 251)
-  		return new GuiExtract(inventory, extractor);
-  	
-  	return null;
   }
   
   public boolean OnTickInGame(float f, Minecraft minecraft) {

@@ -47,14 +47,24 @@ public class ItemC4Remote extends Item_PC {
       if (mop != null && mop.typeOfHit == EnumMovingObjectType.TILE) {
         int id = world.getBlockId(mop.blockX, mop.blockY, mop.blockZ);
         
-        if (id == mod_PlasticCraft.blockC4.blockID) {
-          c4.onBlockDestroyedByPlayer(world, mop.blockX, mop.blockY, mop.blockZ, 1);
-          world.setBlockWithNotify(mop.blockX, mop.blockY, mop.blockZ, 0);
-          ModLoader.getMinecraftInstance().ingameGUI.addChatMessage("Detonated C4.");
-        } else if (id == Block.tnt.blockID) {
-        	tnt.onBlockDestroyedByPlayer(world, mop.blockX, mop.blockY, mop.blockZ, 1);
-          world.setBlockWithNotify(mop.blockX, mop.blockY, mop.blockZ, 0);
-        	ModLoader.getMinecraftInstance().ingameGUI.addChatMessage("Detonated TNT.");
+        if (!world.multiplayerWorld) {
+          if (id == mod_PlasticCraft.blockC4.blockID) {
+            c4.onBlockDestroyedByPlayer(world, mop.blockX, mop.blockY, mop.blockZ, 1);
+            world.setBlockWithNotify(mop.blockX, mop.blockY, mop.blockZ, 0);
+            ModLoader.getMinecraftInstance().ingameGUI.addChatMessage("Detonated C4.");
+          } else if (id == Block.tnt.blockID) {
+        	  tnt.onBlockDestroyedByPlayer(world, mop.blockX, mop.blockY, mop.blockZ, 1);
+            world.setBlockWithNotify(mop.blockX, mop.blockY, mop.blockZ, 0);
+        	  ModLoader.getMinecraftInstance().ingameGUI.addChatMessage("Detonated TNT.");
+          }
+        } else if (world.multiplayerWorld) {
+        	Packet230ModLoader packet = new Packet230ModLoader();
+          packet.modId = mod_PlasticCraft.instance.getId();
+          packet.dataFloat = new float[3];
+          packet.dataFloat[0] = mop.blockX;
+          packet.dataFloat[1] = mop.blockY;
+          packet.dataFloat[2] = mop.blockZ;
+          ModLoaderMp.SendPacket(mod_PlasticCraft.instance, packet);
         }
       }
     }

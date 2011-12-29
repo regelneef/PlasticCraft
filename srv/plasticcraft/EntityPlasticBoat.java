@@ -11,9 +11,6 @@ public class EntityPlasticBoat extends Entity {
   private double boatZ;
   private double boatYaw;
   private double boatPitch;
-  private double velocityX;
-  private double velocityY;
-  private double velocityZ;
 
   public EntityPlasticBoat(World world) {
     super(world);
@@ -63,12 +60,12 @@ public class EntityPlasticBoat extends Entity {
     if (worldObj.singleplayerWorld || isDead)
       return true;
        
-    func_41017_d(-func_41016_i());
-    func_41019_c(10);
-    func_41015_b(func_41020_g() + i * 10);
+    setForwardDirection(-getForwardDirection());
+    setTimeSinceHit(10);
+    setDamageTaken(getDamageTaken() + i * 10);
     setBeenAttacked();
         
-    if(func_41020_g() > 40) {
+    if (getDamageTaken() > 40) {
       dropItemWithOffset(mod_PlasticCraft.itemPlasticBoat.shiftedIndex, 1, 0.0F);
       setEntityDead();
     }
@@ -83,11 +80,11 @@ public class EntityPlasticBoat extends Entity {
   public void onUpdate() {
     super.onUpdate();
     
-    if (func_41018_h() > 0)
-      func_41019_c(func_41018_h() - 1);
+    if (getTimeSinceHit() > 0)
+    	setTimeSinceHit(getTimeSinceHit() - 1);
         
-    if (func_41020_g() > 0)
-      func_41015_b(func_41020_g() - 1);
+    if (getDamageTaken() > 0)
+    	setDamageTaken(getDamageTaken() - 1);
     
     prevPosX = posX;
     prevPosY = posY;
@@ -259,10 +256,6 @@ public class EntityPlasticBoat extends Entity {
 
   protected void readEntityFromNBT(NBTTagCompound nbttagcompound) {}
 
-  public float getShadowSize() {
-    return 0.0F;
-  }
-
   public boolean interact(EntityPlayer entityplayer) {
     if (riddenByEntity != null && (riddenByEntity instanceof EntityPlayer) && riddenByEntity != entityplayer)
       return true;
@@ -272,27 +265,27 @@ public class EntityPlasticBoat extends Entity {
     return true;
   }
 
-  public void func_41015_b(int i) {
+  public void setDamageTaken(int i) {
     dataWatcher.updateObject(19, Integer.valueOf(i));
   }
 
-  public int func_41020_g() {
+  public int getDamageTaken() {
     return dataWatcher.getWatchableObjectInt(19);
   }
 
-  public void func_41019_c(int i) {
+  public void setTimeSinceHit(int i) {
     dataWatcher.updateObject(17, Integer.valueOf(i));
   }
 
-  public int func_41018_h() {
+  public int getTimeSinceHit() {
     return dataWatcher.getWatchableObjectInt(17);
   }
 
-  public void func_41017_d(int i) {
+  public void setForwardDirection(int i) {
     dataWatcher.updateObject(18, Integer.valueOf(i));
   }
 
-  public int func_41016_i() {
+  public int getForwardDirection() {
     return dataWatcher.getWatchableObjectInt(18);
   }
 }
