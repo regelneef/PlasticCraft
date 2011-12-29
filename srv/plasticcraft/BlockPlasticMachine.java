@@ -74,12 +74,12 @@ public class BlockPlasticMachine extends BlockContainer {
       if (type == 0) {
     	  TileEntityMicrowave tileentity = (TileEntityMicrowave)world.getBlockTileEntity(i, j, k);
     	  ContainerMicrowave container = new ContainerMicrowave(entityplayer.inventory, tileentity);
-        ModLoader.OpenGUI(entityplayer, 300, entityplayer.inventory, container);
+        ModLoader.OpenGUI(entityplayer, 250, entityplayer.inventory, container);
         return true;
       } else {
       	TileEntityExtract tileentity = (TileEntityExtract)world.getBlockTileEntity(i, j, k);
         ContainerExtract container = new ContainerExtract(entityplayer.inventory, tileentity);
-        ModLoader.OpenGUI(entityplayer, 301, entityplayer.inventory, container);
+        ModLoader.OpenGUI(entityplayer, 251, entityplayer.inventory, container);
         return true;
       }
     }

@@ -10,7 +10,7 @@ import net.minecraft.src.plasticcraft.*;
 import org.lwjgl.opengl.GL11;
 
 public class mod_PlasticCraft extends BaseModMp {
-  public String getVersion() { return "v2.4 (for 1.0.0)"; }
+  public String getVersion() { return "v2.4a (for 1.0.0)"; }
   public static String modDir = "/plasticcraft/images/";
   private static String getAppdata() { return Minecraft.getMinecraftDir().getPath(); }
   private static Props props = new Props(new File(getAppdata() + "/config/" + "mod_PlasticCraft.props").getPath());
@@ -136,10 +136,10 @@ public class mod_PlasticCraft extends BaseModMp {
     ModLoader.RegisterTileEntity(TileEntityExtract.class, "Extracting Furnace");
     ModLoader.RegisterEntityID(EntityC4Primed.class, "C4", 300);
     ModLoader.RegisterEntityID(EntityPlasticBoat.class, "Plastic Boat", 301);
-    ModLoaderMp.RegisterNetClientHandlerEntity(EntityC4Primed.class, 300);
-    ModLoaderMp.RegisterNetClientHandlerEntity(EntityPlasticBoat.class, 301);
-    ModLoaderMp.RegisterGUI(this, 300); // microwave
-    ModLoaderMp.RegisterGUI(this, 301); // extractor
+    ModLoaderMp.RegisterNetClientHandlerEntity(EntityC4Primed.class, 250);
+    ModLoaderMp.RegisterNetClientHandlerEntity(EntityPlasticBoat.class, 251);
+    ModLoaderMp.RegisterGUI(this, 250); // microwave
+    ModLoaderMp.RegisterGUI(this, 251); // extractor
     
     ModLoader.RemoveSpawn("Cow", EnumCreatureType.creature);
     ModLoader.RegisterEntityID(EntityPlasticCow.class, "Cow", 92);
@@ -450,9 +450,9 @@ public class mod_PlasticCraft extends BaseModMp {
   	TileEntityMicrowave microwave = new TileEntityMicrowave();
   	TileEntityExtract extractor = new TileEntityExtract();
   	
-  	if (invType == 300)
+  	if (invType == 250)
   		return new GuiMicrowave(inventory, microwave);
-  	else if (invType == 301)
+  	else if (invType == 251)
   		return new GuiExtract(inventory, extractor);
   	
   	return null;

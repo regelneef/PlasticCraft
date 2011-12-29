@@ -9,7 +9,7 @@ import net.minecraft.src.forge.*;
 import net.minecraft.src.plasticcraft.*;
 
 public class mod_PlasticCraft extends BaseModMp {
-  public String Version() { return "v2.4 (for 1.0.0)"; }
+  public String Version() { return "v2.4a (for 1.0.0)"; }
   private static Props props = new Props(new File("config/" + "mod_PlasticCraft.props").getPath());
   private static void console(String s) { System.out.println("[PlasticCraft] " + s); }
   private static int iOff = 256; // item id offset
