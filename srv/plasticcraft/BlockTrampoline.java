@@ -8,13 +8,15 @@ public class BlockTrampoline extends Block {
   private static double initfac = 0.80000000000000004D;
   private static double horizDamp = 0.29999999999999999D;
   private static double bounceCap = 3.25D;
-  private static int spr[] = new int[2];
+  public static int rubberIndex = 5;
+  private static int trampolineSide = 6;
   
   public BlockTrampoline(int i) {
     super(i, Material.cloth);
     setHardness(1.0F);
     setStepSound(soundClothFootstep);
     setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 0.5F, 1.0F);
+    blockIndexInTexture = rubberIndex;
   }
 
   public void onEntityCollidedWithBlock(World world, int i, int j, int k, Entity entity) {
@@ -80,6 +82,10 @@ public class BlockTrampoline extends Block {
 
   public int quantityDropped(Random random) {
     return 1;
+  }
+  
+  public int getBlockTextureFromSide(int i) {
+    return i != 1 ? i != 0 ? trampolineSide : Block.wood.blockIndexInTexture : rubberIndex;
   }
 
   public double getBounceFactor(int i) {

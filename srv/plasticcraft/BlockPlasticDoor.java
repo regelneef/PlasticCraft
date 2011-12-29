@@ -9,6 +9,7 @@ public class BlockPlasticDoor extends BlockDoor {
     setHardness(1.0F);
     setResistance(1500F);
     setStepSound(soundGlassFootstep);
+    blockIndexInTexture = mod_PlasticCraft.blockPlexiglass.blockIndexInTexture;
   }
 
   public boolean shouldSideBeRendered(IBlockAccess iblockaccess, int i, int j, int k, int l) {

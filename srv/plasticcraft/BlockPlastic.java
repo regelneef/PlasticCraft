@@ -9,6 +9,7 @@ public class BlockPlastic extends Block {
     setHardness(1.5F);
     setResistance(1500F);
     setStepSound(soundWoodFootstep);
+    blockIndexInTexture = 1;
   }
 
   public void onNeighborBlockChange(World world, int i, int j, int k, int l) {

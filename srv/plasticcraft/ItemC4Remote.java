@@ -17,8 +17,7 @@ public class ItemC4Remote extends Item {
   public ItemStack onItemRightClick(ItemStack itemstack, World world, EntityPlayer entityplayer) {
     if (itemstack.getItemDamage() == 0) { // defuser
       List list = world.loadedEntityList;
-      int i = 0;
-    	
+      
       for (int j=0; j<list.size(); j++) {
         Entity entity = (Entity)list.get(j);
         if (!(entity instanceof EntityC4Primed)) continue;
@@ -33,8 +32,6 @@ public class ItemC4Remote extends Item {
           i1 = k >= l ? l : k;
           entityplayer.dropItem(mod_PlasticCraft.blockC4.blockID, i1);
         }
-
-        i += entityc4primed.connectedCount;
       }
     } else if (itemstack.getItemDamage() == 1) { // detonator
       MovingObjectPosition mop = rayTrace(world, 150.0D, 1.0F, entityplayer);

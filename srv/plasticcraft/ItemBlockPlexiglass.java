@@ -10,11 +10,11 @@ public class ItemBlockPlexiglass extends ItemBlock {
     setItemName("pPlexiglass");
   }
 
-  public int getPlacedBlockMetadata(int i) {
+  public int getMetadata(int i) {
     return i;
   }
   
-  public String getItemNameIS(ItemStack itemstack) {
+  public String func_35407_a(ItemStack itemstack) {
     if (itemstack.getItemDamage() == 1) return "plastic.glowplexiglass";
   	return "plastic.plexiglass";
   }

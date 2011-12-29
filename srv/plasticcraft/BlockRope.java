@@ -7,6 +7,7 @@ public class BlockRope extends Block {
   public BlockRope(int i) {
     super(i, Material.circuits);
     setHardness(0.3F);
+    blockIndexInTexture = 19;
   }
   
   public AxisAlignedBB getCollisionBoundingBoxFromPool(World world, int i, int j, int k) {
@@ -19,6 +20,12 @@ public class BlockRope extends Block {
   
   public boolean isLadder() {
     return true;
+  }
+  
+  public int getBlockTextureFromSideAndMetadata(int side, int meta) {
+    if (meta == 0) return blockIndexInTexture - 1;
+    
+    return blockIndexInTexture;
   }
 
   public void onNeighborBlockChange(World world, int i, int j, int k, int l) {

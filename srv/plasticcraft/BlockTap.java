@@ -8,6 +8,7 @@ public class BlockTap extends Block {
     super(i, Material.circuits);
     setHardness(0.0F);
     setStepSound(soundWoodFootstep);
+    blockIndexInTexture = 12;
   }
 
   public AxisAlignedBB getCollisionBoundingBoxFromPool(World world, int i, int j, int k) {

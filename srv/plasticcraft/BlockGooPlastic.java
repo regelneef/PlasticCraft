@@ -9,6 +9,7 @@ public class BlockGooPlastic extends Block {
     setHardness(0.5F);
     setResistance(500F);
     setStepSound(soundClothFootstep);
+    blockIndexInTexture = 11;
     setTickOnLoad(true);
   }
 
@@ -34,7 +35,8 @@ public class BlockGooPlastic extends Block {
   }
 
   public void freeze(Entity entity) {
-    entity.attackEntityFrom(DamageSource.cactus, 1);
+    if (!mod_PlasticCraft.isWearingFallBoots)
+      entity.attackEntityFrom(DamageSource.cactus, 1);
     if (entity instanceof EntityLiving) {
       EntityLiving entityliving = (EntityLiving)entity;
       mod_PlasticCraft.Stun.shockMob(entityliving, 6D, 4D);

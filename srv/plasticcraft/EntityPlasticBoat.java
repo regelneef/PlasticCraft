@@ -76,32 +76,8 @@ public class EntityPlasticBoat extends Entity {
     return true;
   }
 
-  public void performHurtAnimation() {
-    func_41017_d(-func_41016_i());
-    func_41019_c(10);
-    func_41015_b(func_41020_g() * 11);
-  }
-
   public boolean canBeCollidedWith() {
     return !isDead;
-  }
-
-  public void setPositionAndRotation2(double d, double d1, double d2, float f, float f1, int i) {
-    boatX = d;
-    boatY = d1;
-    boatZ = d2;
-    boatYaw = f;
-    boatPitch = f1;
-    boatPosRotationIncrements = i + 4;
-    motionX = velocityX;
-    motionY = velocityY;
-    motionZ = velocityZ;
-  }
-
-  public void setVelocity(double d, double d1, double d2) {
-    velocityX = motionX = d;
-    velocityY = motionY = d1;
-    velocityZ = motionZ = d2;
   }
 
   public void onUpdate() {

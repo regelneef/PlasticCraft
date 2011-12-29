@@ -10,11 +10,11 @@ public class ItemBlockPlasticMachine extends ItemBlock {
     setItemName("pPlasticMachine");
   }
 
-  public int getPlacedBlockMetadata(int i) {
+  public int getMetadata(int i) {
     return i;
   }
 
-  public String getItemNameIS(ItemStack itemstack) {
+  public String func_35407_a(ItemStack itemstack) {
     if (itemstack.getItemDamage() == 8) return "plastic.extractor";
     return "plastic.microwave";
   }

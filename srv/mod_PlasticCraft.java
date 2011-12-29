@@ -81,6 +81,7 @@ public class mod_PlasticCraft extends BaseModMp {
   public static int c4Power = props.getInt("c4Power");
   public static int c4Fuse = props.getInt("c4Fuse") * 20;
   public static boolean c4Enhanced = props.getBoolean("c4Enhanced");
+  public static boolean isWearingFallBoots;
   static { props.save(); }
   
   // Repair Lists
@@ -101,8 +102,8 @@ public class mod_PlasticCraft extends BaseModMp {
   public void ModsLoaded() {
     MinecraftForge.versionDetect("PlasticCraft", 1, 2, 3);
     
-    registerItems();
-    console("Registering items.");
+    registerBlocks();
+    console("Registering blocks.");
     addRecipes();
     console("Registering recipes.");
     
@@ -127,13 +128,17 @@ public class mod_PlasticCraft extends BaseModMp {
     ModLoader.RegisterTileEntity(TileEntityExtract.class, "Extracting Furnace");
     ModLoader.RegisterEntityID(EntityC4Primed.class, "C4", 300);
     ModLoader.RegisterEntityID(EntityPlasticBoat.class, "Plastic Boat", 301);
+    ModLoaderMp.RegisterEntityTrackerEntry(EntityC4Primed.class, 300);
+    ModLoaderMp.RegisterEntityTracker(EntityC4Primed.class, 160, 5);
+    ModLoaderMp.RegisterEntityTrackerEntry(EntityPlasticBoat.class, 301);
+    ModLoaderMp.RegisterEntityTracker(EntityPlasticBoat.class, 160, 5);
     
     ModLoader.RemoveSpawn("Cow", EnumCreatureType.creature);
     ModLoader.RegisterEntityID(EntityPlasticCow.class, "Cow", 92);
     ModLoader.AddSpawn(EntityPlasticCow.class, 8, 4, 4, EnumCreatureType.creature);
   }
   
-  public static void registerItems() {
+  public static void registerBlocks() {
     ModLoader.RegisterBlock(blockPlastic, ItemBlockPlastic.class);
     ModLoader.RegisterBlock(blockPlasticGoo);
     ModLoader.RegisterBlock(blockC4);
@@ -355,6 +360,22 @@ public class mod_PlasticCraft extends BaseModMp {
       return true;
     } else
     return false;
+  }
+  
+  public void OnTickInGame(MinecraftServer game) {
+    enableShockAbsorbing(game);
+    Stun.tick();
+  }
+
+  private void enableShockAbsorbing(MinecraftServer game) {   
+    for (EntityPlayerMP player : (EntityPlayerMP[])(EntityPlayerMP[])game.configManager.playerEntities.toArray(new EntityPlayerMP[game.configManager.playerEntities.size()])) {
+      ItemStack itemstack = player.inventory.armorInventory[0];
+      if (itemstack != null && itemstack.itemID == armorFallBoots.shiftedIndex) {
+        player.fallDistance = -1F;
+        isWearingFallBoots = true;
+      } else
+        isWearingFallBoots = false;
+    }
   }
 
   private static void prepareProps() {

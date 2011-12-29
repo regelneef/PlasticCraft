@@ -10,6 +10,13 @@ public class BlockC4 extends Block {
     super(i, Material.tnt);
     setHardness(0.3F);
     setStepSound(soundGrassFootstep);
+    blockIndexInTexture = 13;
+  }
+  
+  public int getBlockTextureFromSide(int i) {
+  	if (i == 0) return blockIndexInTexture + 2;
+    if (i == 1) return blockIndexInTexture + 1;
+    return blockIndexInTexture;
   }
 
   public void onBlockAdded(World world, int i, int j, int k) {

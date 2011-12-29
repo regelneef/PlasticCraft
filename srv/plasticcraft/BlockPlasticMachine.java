@@ -16,6 +16,7 @@ public class BlockPlasticMachine extends BlockContainer {
     setHardness(2.0F);
     setResistance(1500F);
     setStepSound(soundPowderFootstep);
+    blockIndexInTexture = plasticIndex;
     setRequiresSelfNotify();
     setTickOnLoad(true);
   }
@@ -50,10 +51,38 @@ public class BlockPlasticMachine extends BlockContainer {
     world.setBlockMetadataWithNotify(i, j, k, byte0);
   }
   
+  public int getBlockTextureFromSideAndMetadata(int side, int meta) {
+    int type = meta & 8;
+    if (side == 3 && type == 0) return microwaveFront;
+    if (side == 3 && type == 8) return extractorFront;
+    if (side == 1 && type == 8) return extractorTop;
+    
+    return plasticIndex;
+  }
+  
   public int getLightValue(IBlockAccess iblockaccess, int i, int j, int k) {
     int meta = iblockaccess.getBlockMetadata(i, j, k);
     if ((meta & 4) == 4) return 13;
     return 0;
+  }
+  
+  public boolean blockActivated(World world, int i, int j, int k, EntityPlayer entityplayer) {
+    int type = world.getBlockMetadata(i, j, k) & 8;
+    if (world.singleplayerWorld)
+      return true;
+    else {
+      if (type == 0) {
+    	  TileEntityMicrowave tileentity = (TileEntityMicrowave)world.getBlockTileEntity(i, j, k);
+    	  ContainerMicrowave container = new ContainerMicrowave(entityplayer.inventory, tileentity);
+        ModLoader.OpenGUI(entityplayer, 300, entityplayer.inventory, container);
+        return true;
+      } else {
+      	TileEntityExtract tileentity = (TileEntityExtract)world.getBlockTileEntity(i, j, k);
+        ContainerExtract container = new ContainerExtract(entityplayer.inventory, tileentity);
+        ModLoader.OpenGUI(entityplayer, 301, entityplayer.inventory, container);
+        return true;
+      }
+    }
   }
 
   public static void updateBlockState(boolean flag, World world, int i, int j, int k) {

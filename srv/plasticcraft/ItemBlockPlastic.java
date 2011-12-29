@@ -10,11 +10,11 @@ public class ItemBlockPlastic extends ItemBlock {
     setItemName("pPlasticBlock");
   }
 
-  public int getPlacedBlockMetadata(int i) {
+  public int getMetadata(int i) {
     return i;
   }
 
-  public String getItemNameIS(ItemStack itemstack) {
+  public String func_35407_a(ItemStack itemstack) {
     if (itemstack.getItemDamage() == 1) return "plastic.orange";
     else if (itemstack.getItemDamage() == 2) return "plastic.magenta";
     else if (itemstack.getItemDamage() == 3) return "plastic.lblue";

@@ -136,6 +136,10 @@ public class mod_PlasticCraft extends BaseModMp {
     ModLoader.RegisterTileEntity(TileEntityExtract.class, "Extracting Furnace");
     ModLoader.RegisterEntityID(EntityC4Primed.class, "C4", 300);
     ModLoader.RegisterEntityID(EntityPlasticBoat.class, "Plastic Boat", 301);
+    ModLoaderMp.RegisterNetClientHandlerEntity(EntityC4Primed.class, 300);
+    ModLoaderMp.RegisterNetClientHandlerEntity(EntityPlasticBoat.class, 301);
+    ModLoaderMp.RegisterGUI(this, 300); // microwave
+    ModLoaderMp.RegisterGUI(this, 301); // extractor
     
     ModLoader.RemoveSpawn("Cow", EnumCreatureType.creature);
     ModLoader.RegisterEntityID(EntityPlasticCow.class, "Cow", 92);
@@ -441,6 +445,19 @@ public class mod_PlasticCraft extends BaseModMp {
     return false;
   }
   
+  public GuiScreen HandleGUI(int invType) {
+  	InventoryPlayer inventory = ModLoader.getMinecraftInstance().thePlayer.inventory;
+  	TileEntityMicrowave microwave = new TileEntityMicrowave();
+  	TileEntityExtract extractor = new TileEntityExtract();
+  	
+  	if (invType == 300)
+  		return new GuiMicrowave(inventory, microwave);
+  	else if (invType == 301)
+  		return new GuiExtract(inventory, extractor);
+  	
+  	return null;
+  }
+  
   public boolean OnTickInGame(float f, Minecraft minecraft) {
     if (minecraft.currentScreen == null)
       renderNightvisionOverlay(minecraft);
@@ -464,7 +481,7 @@ public class mod_PlasticCraft extends BaseModMp {
     ItemStack itemstack = minecraft.thePlayer.inventory.armorItemInSlot(3);
         
     if (!minecraft.gameSettings.hideGUI && itemstack != null && itemstack.itemID == armorNightGoggles.shiftedIndex)
-      renderTextureOverlay(minecraft, "%blur%/TehKrush/PlasticCraft/guiNightVision" + nightvisionStyle + ".png", 1.0F);
+      renderTextureOverlay(minecraft, "%blur%" + modDir + "guiNightVision" + nightvisionStyle + ".png", 1.0F);
   }
 
   private void renderTextureOverlay(Minecraft minecraft, String s, float f) {

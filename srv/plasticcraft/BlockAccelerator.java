@@ -9,6 +9,7 @@ public class BlockAccelerator extends Block {
     setHardness(1.0F);
     setStepSound(soundClothFootstep);
     setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 0.25F, 1.0F);
+    blockIndexInTexture = 7;
   }
 
   public void onEntityWalking(World world, int i, int j, int k, Entity entity) {

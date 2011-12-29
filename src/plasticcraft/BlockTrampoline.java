@@ -11,7 +11,6 @@ public class BlockTrampoline extends Block_PC {
   private static double bounceCap = 3.25D;
   public static int rubberIndex = 5;
   private static int trampolineSide = 6;
-  private static int spr[] = new int[2];
   
   public BlockTrampoline(int i) {
     super(i, Material.cloth);
