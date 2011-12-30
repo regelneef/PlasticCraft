@@ -40,15 +40,17 @@ public class BlockC4 extends Block {
   }
 
   public void onBlockDestroyedByExplosion(World world, int i, int j, int k) {
-    EntityC4Primed entityc4primed = spawnC4(world, i, j, k);
-    entityc4primed.fuse = world.rand.nextInt(entityc4primed.fuse / 4) + entityc4primed.fuse / 8;
+  	if (!mod_PlasticCraft.c4Disabled) {
+      EntityC4Primed entityc4primed = spawnC4(world, i, j, k);
+      entityc4primed.fuse = world.rand.nextInt(entityc4primed.fuse / 4) + entityc4primed.fuse / 8;
+  	}
   }
 
   public void onBlockDestroyedByPlayer(World world, int i, int j, int k, int l) {
     if (world.singleplayerWorld)
       return;
     else {
-      spawnC4(world, i, j, k);
+      if (!mod_PlasticCraft.c4Disabled) spawnC4(world, i, j, k);
       return;
     }
   }

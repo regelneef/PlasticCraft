@@ -78,10 +78,17 @@ public class mod_PlasticCraft extends BaseModMp {
   public static final Item toolPlasticPickaxe = new ItemPlasticPickaxe(props.getInt("toolPlasticPickaxe") - iOff, PLASTIC).setIconIndex(32).setItemName("pPickaxe");
   public static final Item toolPlasticAxe = new ItemPlasticAxe(props.getInt("toolPlasticAxe") - iOff, PLASTIC).setIconIndex(33).setItemName("pAxe");
   
+  // Entity / GUI ids
+  public static int entityC4Id = props.getInt("entityC4ID");
+  public static int entityC4NetId = props.getInt("entityC4NetID");
+  public static int entityPlasticBoatId = props.getInt("entityPlasticBoatID");
+  public static int entityPlasticBoatNetId = props.getInt("entityPlasticBoatNetID");
+  
   // Booleans
   public static int c4Power = props.getInt("c4Power");
   public static int c4Fuse = props.getInt("c4Fuse") * 20;
   public static boolean c4Enhanced = props.getBoolean("c4Enhanced");
+  public static boolean c4Disabled = props.getBoolean("c4Disabled"); // for server admins to disable C4
   public static boolean isWearingFallBoots;
   static { props.save(); }
   
@@ -131,11 +138,12 @@ public class mod_PlasticCraft extends BaseModMp {
     
     ModLoader.RegisterTileEntity(TileEntityMicrowave.class, "Microwave");
     ModLoader.RegisterTileEntity(TileEntityExtract.class, "Extracting Furnace");
-    ModLoader.RegisterEntityID(EntityC4Primed.class, "C4", 300);
-    ModLoader.RegisterEntityID(EntityPlasticBoat.class, "Plastic Boat", 301);
-    ModLoaderMp.RegisterEntityTrackerEntry(EntityC4Primed.class, 300);
+    
+    ModLoader.RegisterEntityID(EntityC4Primed.class, "C4", entityC4Id);
+    ModLoaderMp.RegisterEntityTrackerEntry(EntityC4Primed.class, entityC4NetId);
     ModLoaderMp.RegisterEntityTracker(EntityC4Primed.class, 160, 5);
-    ModLoaderMp.RegisterEntityTrackerEntry(EntityPlasticBoat.class, 301);
+    ModLoader.RegisterEntityID(EntityPlasticBoat.class, "Plastic Boat", entityPlasticBoatId);
+    ModLoaderMp.RegisterEntityTrackerEntry(EntityPlasticBoat.class, entityPlasticBoatNetId);
     ModLoaderMp.RegisterEntityTracker(EntityPlasticBoat.class, 160, 5);
     
     ModLoader.RemoveSpawn("Cow", EnumCreatureType.creature);
@@ -455,9 +463,15 @@ public class mod_PlasticCraft extends BaseModMp {
     props.getInt("toolPlasticPickaxe", 1051);
     props.getInt("toolPlasticAxe", 1052);
     
+    props.getInt("entityC4ID", 250);
+    props.getInt("entityC4NetID", 250);
+    props.getInt("entityPlasticBoatID", 251);
+    props.getInt("entityPlasticBoatNetID", 251);
+    
     props.getInt("c4Power", 10);
     props.getInt("c4Fuse", 6);
     props.getBoolean("c4Enhanced", true);
+    props.getBoolean("c4Disabled", false);
   }
   
   public static boolean getIsJumping(EntityLiving entityliving) {

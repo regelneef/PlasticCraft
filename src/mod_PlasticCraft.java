@@ -83,6 +83,14 @@ public class mod_PlasticCraft extends BaseModMp {
   public static final Item toolPlasticPickaxe = new ItemPlasticPickaxe(props.getInt("toolPlasticPickaxe") - iOff, PLASTIC).setIconIndex(32).setItemName("pPickaxe");
   public static final Item toolPlasticAxe = new ItemPlasticAxe(props.getInt("toolPlasticAxe") - iOff, PLASTIC).setIconIndex(33).setItemName("pAxe");
   
+  // Entity / GUI ids
+  public static int entityC4Id = props.getInt("entityC4ID");
+  public static int entityC4NetId = props.getInt("entityC4NetID");
+  public static int entityPlasticBoatId = props.getInt("entityPlasticBoatID");
+  public static int entityPlasticBoatNetId = props.getInt("entityPlasticBoatNetID");
+  public static int guiMicrowaveId = props.getInt("guiMicrowaveID");
+  public static int guiExtractorId = props.getInt("guiExtractorID");
+  
   // Booleans
   public static int c4Power = props.getInt("c4Power");
   public static int c4Fuse = props.getInt("c4Fuse") * 20;
@@ -141,13 +149,14 @@ public class mod_PlasticCraft extends BaseModMp {
     ModLoader.SetInGameHook(this, true, false);
     
     ModLoader.RegisterTileEntity(TileEntityMicrowave.class, "Microwave");
+    ModLoaderMp.RegisterGUI(this, guiMicrowaveId); // microwave
     ModLoader.RegisterTileEntity(TileEntityExtract.class, "Extracting Furnace");
-    ModLoader.RegisterEntityID(EntityC4Primed.class, "C4", 300);
-    ModLoader.RegisterEntityID(EntityPlasticBoat.class, "Plastic Boat", 301);
-    ModLoaderMp.RegisterNetClientHandlerEntity(EntityC4Primed.class, 250);
-    ModLoaderMp.RegisterNetClientHandlerEntity(EntityPlasticBoat.class, 251);
-    ModLoaderMp.RegisterGUI(this, 250); // microwave
-    ModLoaderMp.RegisterGUI(this, 251); // extractor
+    ModLoaderMp.RegisterGUI(this, guiExtractorId); // extractor
+    
+    ModLoader.RegisterEntityID(EntityC4Primed.class, "C4", entityC4Id);
+    ModLoaderMp.RegisterNetClientHandlerEntity(EntityC4Primed.class, entityC4NetId);
+    ModLoader.RegisterEntityID(EntityPlasticBoat.class, "Plastic Boat", entityPlasticBoatId);
+    ModLoaderMp.RegisterNetClientHandlerEntity(EntityPlasticBoat.class, entityPlasticBoatNetId);
     
     ModLoader.RemoveSpawn("Cow", EnumCreatureType.creature);
     ModLoader.RegisterEntityID(EntityPlasticCow.class, "Cow", 92);
@@ -569,6 +578,13 @@ public class mod_PlasticCraft extends BaseModMp {
     props.getInt("toolPlasticShovel", 1050);
     props.getInt("toolPlasticPickaxe", 1051);
     props.getInt("toolPlasticAxe", 1052);
+    
+    props.getInt("entityC4ID", 250);
+    props.getInt("entityC4NetID", 250);
+    props.getInt("entityPlasticBoatID", 251);
+    props.getInt("entityPlasticBoatNetID", 251);
+    props.getInt("guiMicrowaveID", 250);
+    props.getInt("guiExtractorID", 251);
     
     props.getInt("c4Power", 10);
     props.getInt("c4Fuse", 6);
