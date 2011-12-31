@@ -43,8 +43,9 @@ public class TileEntityMicrowave extends TileEntity implements IInventory, ISide
         microwaveItemStacks[i] = null;
         return itemstack;
       }
+      
       ItemStack itemstack1 = microwaveItemStacks[i].splitStack(j);
-      if(microwaveItemStacks[i].stackSize == 0)
+      if (microwaveItemStacks[i].stackSize == 0)
         microwaveItemStacks[i] = null;
       
       return itemstack1;

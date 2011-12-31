@@ -15,16 +15,16 @@ public class ContainerExtract extends Container {
     lastItemBurnTime = 0;
     extract = tileentityextract;
         
-    addSlot(new Slot(tileentityextract, 0, 56, 17)); 
-    addSlot(new Slot(tileentityextract, 1, 56, 53));
-    addSlot(new SlotFurnace(inventoryplayer.player, tileentityextract, 2, 116, 24));
-    addSlot(new SlotFurnace(inventoryplayer.player, tileentityextract, 3, 116, 44));
+    addSlot(new Slot(tileentityextract, 0, 56, 17)); // item
+    addSlot(new Slot(tileentityextract, 1, 56, 53)); // fuel
+    addSlot(new SlotFurnace(inventoryplayer.player, tileentityextract, 2, 116, 24)); // smelt
+    addSlot(new SlotFurnace(inventoryplayer.player, tileentityextract, 3, 116, 44)); // extract
         
     for (int i=0; i<3; i++)
-      for(int k = 0; k < 9; k++)
+      for (int k = 0; k < 9; k++)
         addSlot(new Slot(inventoryplayer, k + i * 9 + 9, 8 + k * 18, 84 + i * 18));
 
-    for(int j = 0; j < 9; j++)
+    for (int j = 0; j < 9; j++)
       addSlot(new Slot(inventoryplayer, j, 8 + j * 18, 142));
   }
 

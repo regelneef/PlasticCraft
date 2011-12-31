@@ -25,12 +25,12 @@ public class TileEntityExtract extends TileEntity implements IInventory, ISidedI
   public int getStartInventorySide(int side) {
     if (side == 0) return 1;
     if (side == 1) return 0;
-    if (side == 3) return 2;
-    return 3;
+    return 2;
   }
 
   public int getSizeInventorySide(int side) {
-    return 1;
+  	if (side == 0 || side == 1) return 1;
+    return 2;
   }
 
   public ItemStack getStackInSlot(int i) {
@@ -44,8 +44,9 @@ public class TileEntityExtract extends TileEntity implements IInventory, ISidedI
         extractorItemStacks[i] = null;
         return itemstack;
       }
+      
       ItemStack itemstack1 = extractorItemStacks[i].splitStack(j);
-      if(extractorItemStacks[i].stackSize == 0)
+      if (extractorItemStacks[i].stackSize == 0)
         extractorItemStacks[i] = null;
       
       return itemstack1;
@@ -190,6 +191,7 @@ public class TileEntityExtract extends TileEntity implements IInventory, ISidedI
       else if(extractorItemStacks[3].itemID == itemstack1.itemID)
         extractorItemStacks[3].stackSize += itemstack1.stackSize;
     }
+    
     if (extractorItemStacks[0].getItem().hasContainerItem())
       extractorItemStacks[0] = new ItemStack(extractorItemStacks[0].getItem().getContainerItem());
     else
