@@ -24,11 +24,14 @@ public class GuiExtract extends GuiContainer {
     drawTexturedModalRect(guiLeft, guiTop, 0, 0, xSize, ySize);
         
     if (extractorInventory.isBurning()) {
-      int j1 = extractorInventory.getBurnTimeRemainingScaled(12);
-      drawTexturedModalRect(guiLeft + 56, (guiTop + 36 + 12) - j1, 176, 12 - j1, 14, j1 + 2);
+      int burn = extractorInventory.getBurnTimeRemainingScaled(12);
+      drawTexturedModalRect(guiLeft + 8, (guiTop + 28 + 12) - burn, 176, 12 - burn, 14, burn + 2);
     }
         
-    int k1 = extractorInventory.getCookProgressScaled(24);
-    drawTexturedModalRect(guiLeft + 79, guiTop + 34, 176, 14, k1 + 1, 16);
+    int cook1 = extractorInventory.getCookProgressScaledOne(24);
+    drawTexturedModalRect(guiLeft + 53, guiTop + 34, 176, 14, cook1 + 1, 16);
+    
+    int cook2 = extractorInventory.getCookProgressScaledTwo(24);
+    drawTexturedModalRect(guiLeft + 125, guiTop + 34, 176, 14, cook2 + 1, 16);
   }
 }

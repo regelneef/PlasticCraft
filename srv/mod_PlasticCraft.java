@@ -2,7 +2,6 @@ package net.minecraft.src;
 
 import java.io.File;
 import java.io.PrintStream;
-import java.lang.reflect.Field;
 import java.util.*;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.src.forge.*;

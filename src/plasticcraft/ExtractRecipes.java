@@ -3,6 +3,7 @@ package net.minecraft.src.plasticcraft;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 import net.minecraft.src.*;
 
 public class ExtractRecipes {
@@ -22,8 +23,8 @@ public class ExtractRecipes {
     addSmelting(Block.oreIron.blockID, new ItemStack(Item.ingotIron));
     addSmelting(Block.oreGold.blockID, new ItemStack(Item.ingotGold));
     addSmelting(Block.oreDiamond.blockID, new ItemStack(Item.diamond));
-    addSmelting(Block.oreRedstone.blockID, new ItemStack(Item.redstone));
-    addSmelting(Block.oreLapis.blockID, new ItemStack(Item.dyePowder, 1, 4));
+    addSmelting(Block.oreRedstone.blockID, new ItemStack(Item.redstone, 3));
+    addSmelting(Block.oreLapis.blockID, new ItemStack(Item.dyePowder, 2, 4));
     addSmelting(Block.sand.blockID, new ItemStack(Block.glass));
     addSmelting(Item.porkRaw.shiftedIndex, new ItemStack(Item.porkCooked));
     addSmelting(Item.beefRaw.shiftedIndex, new ItemStack(Item.beefCooked));
@@ -33,6 +34,9 @@ public class ExtractRecipes {
     addSmelting(Item.clay.shiftedIndex, new ItemStack(Item.brick));
     addSmelting(Block.cactus.blockID, new ItemStack(Item.dyePowder, 1, 2));
     addSmelting(Block.wood.blockID, new ItemStack(Item.coal, 1, 1));
+    addSmelting(Block.netherBrick.blockID, new ItemStack(Block.brick));
+    addSmelting(Block.netherFence.blockID, new ItemStack(Block.fence));
+    addSmelting(Block.stairsNetherBrick.blockID, new ItemStack(Block.stairsStoneBrickSmooth));
     
     addExtraction(Block.oreCoal.blockID, new ItemStack(Block.stone));
     addExtraction(Block.oreIron.blockID, new ItemStack(Block.stone));
@@ -41,9 +45,20 @@ public class ExtractRecipes {
     addExtraction(Block.oreRedstone.blockID, new ItemStack(Block.stone));
     addExtraction(Block.oreLapis.blockID, new ItemStack(Block.stone));
     addExtraction(Item.porkRaw.shiftedIndex, new ItemStack(mod_PlasticCraft.itemGelatin, 2));
-    addExtraction(Item.beefRaw.shiftedIndex, new ItemStack(mod_PlasticCraft.itemGelatin, 2));
-    addExtraction(Item.chickenRaw.shiftedIndex, new ItemStack(mod_PlasticCraft.itemGelatin, 2));
+    addExtraction(Item.beefRaw.shiftedIndex, new ItemStack(mod_PlasticCraft.itemGelatin));
+    addExtraction(Item.chickenRaw.shiftedIndex, new ItemStack(mod_PlasticCraft.itemGelatin));
+    addExtraction(Item.fishRaw.shiftedIndex, new ItemStack(Item.dyePowder, 1, 15));
+    addExtraction(Item.clay.shiftedIndex, new ItemStack(Block.sand));
+    addExtraction(Block.cactus.blockID, new ItemStack(Item.sugar, 2));
     addExtraction(Block.wood.blockID, new ItemStack(mod_PlasticCraft.itemWoodDust, 3));
+    addExtraction(Block.netherBrick.blockID, new ItemStack(Block.netherrack, 3));
+    addExtraction(Block.netherFence.blockID, new ItemStack(Block.netherrack));
+    addExtraction(Block.stairsNetherBrick.blockID, new ItemStack(Block.netherrack, 2));
+    
+    for (int i = 0; i < 15; i++) { // extracting dyes from wool
+      addSmelting(Block.cloth.blockID, BlockCloth.getDyeFromBlock(i), new ItemStack(Block.cloth, 1, 0));
+      addExtraction(Block.cloth.blockID, BlockCloth.getDyeFromBlock(i), new ItemStack(Item.dyePowder, 1, i));
+    }
   }
 
   public static ExtractRecipes smelting() {

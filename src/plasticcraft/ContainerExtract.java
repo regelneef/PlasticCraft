@@ -5,20 +5,27 @@ import net.minecraft.src.*;
 
 public class ContainerExtract extends Container {
   private TileEntityExtract extract;
-  private int lastCookTime;
+  private int lastCookTime1;
+  private int lastCookTime2;
   private int lastBurnTime;
   private int lastItemBurnTime;
   
   public ContainerExtract(InventoryPlayer inventoryplayer, TileEntityExtract tileentityextract) {
-    lastCookTime = 0;
+    lastCookTime1 = 0;
+    lastCookTime2 = 0;
     lastBurnTime = 0;
     lastItemBurnTime = 0;
     extract = tileentityextract;
         
-    addSlot(new Slot(tileentityextract, 0, 56, 17)); // item
-    addSlot(new Slot(tileentityextract, 1, 56, 53)); // fuel
-    addSlot(new SlotFurnace(inventoryplayer.player, tileentityextract, 2, 116, 24)); // smelt
-    addSlot(new SlotFurnace(inventoryplayer.player, tileentityextract, 3, 116, 44)); // extract
+    addSlot(new Slot(tileentityextract, 0, 8, 45)); // fuel
+    
+    addSlot(new Slot(tileentityextract, 1, 34, 35)); // itemOne
+    addSlot(new SlotFurnace(inventoryplayer.player, tileentityextract, 3, 80, 25)); // smeltOne
+    addSlot(new SlotFurnace(inventoryplayer.player, tileentityextract, 4, 80, 44)); // extractOne
+    
+    addSlot(new Slot(tileentityextract, 2, 106, 35)); // itemTwo
+    addSlot(new SlotFurnace(inventoryplayer.player, tileentityextract, 5, 152, 25)); // smeltTwo
+    addSlot(new SlotFurnace(inventoryplayer.player, tileentityextract, 6, 152, 44)); // extractTwo
         
     for (int i=0; i<3; i++)
       for (int k = 0; k < 9; k++)
@@ -34,25 +41,30 @@ public class ContainerExtract extends Container {
     for (int i=0; i<crafters.size(); i++) {
       ICrafting icrafting = (ICrafting)crafters.get(i);
             
-      if(lastCookTime != extract.extractorCookTime)
-        icrafting.updateCraftingInventoryInfo(this, 0, extract.extractorCookTime);
-      if(lastBurnTime != extract.extractorBurnTime)
-        icrafting.updateCraftingInventoryInfo(this, 1, extract.extractorBurnTime);
-      if(lastItemBurnTime != extract.currentItemBurnTime);
-        icrafting.updateCraftingInventoryInfo(this, 2, extract.currentItemBurnTime);
+      if (lastCookTime1 != extract.extractorCookTime1)
+        icrafting.updateCraftingInventoryInfo(this, 0, extract.extractorCookTime1);
+      if (lastCookTime2 != extract.extractorCookTime2)
+        icrafting.updateCraftingInventoryInfo(this, 1, extract.extractorCookTime2);
+      if (lastBurnTime != extract.extractorBurnTime)
+        icrafting.updateCraftingInventoryInfo(this, 2, extract.extractorBurnTime);
+      if (lastItemBurnTime != extract.currentItemBurnTime);
+        icrafting.updateCraftingInventoryInfo(this, 3, extract.currentItemBurnTime);
     }
 
-    lastCookTime = extract.extractorCookTime;
+    lastCookTime1 = extract.extractorCookTime1;
+    lastCookTime2 = extract.extractorCookTime2;
     lastBurnTime = extract.extractorBurnTime;
     lastItemBurnTime = extract.currentItemBurnTime;
   }
 
   public void updateProgressBar(int i, int j) {
     if (i == 0)
-      extract.extractorCookTime = j;
-    if(i == 1)
+      extract.extractorCookTime1 = j;
+    if (i == 1)
+      extract.extractorCookTime2 = j;
+    if (i == 2)
       extract.extractorBurnTime = j;
-    if(i == 2)
+    if (i == 3)
       extract.currentItemBurnTime = j;
   }
 
