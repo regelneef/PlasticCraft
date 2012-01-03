@@ -17,7 +17,7 @@ public class TileEntityPlastic extends TileEntity {
     nbttagcompound.setShort("Direction", direction);
     nbttagcompound.setBoolean("Active", active);
   }
-	
+
   public void setDirection(short direction) {
     this.direction = direction;
   }
@@ -38,18 +38,23 @@ public class TileEntityPlastic extends TileEntity {
     this.active = active;
   }
   
+  public void setActiveByState(int state) {
+  	this.active = (state == 1);
+  }
+  
   public boolean getActive() {
     return this.active;
   }
   
+  public int getActiveByState() {
+  	if (!this.active) return 0;
+  	return 1;
+  }
+  
   public Packet getDescriptionPacket() {
-  	int isActive;
-    if (getActive()) isActive = 1;
-    else isActive = 0;
-    
     int[] data = new int[2];
     data[0] = getDirection();
-    data[1] = isActive;
+    data[1] = getActiveByState();
     Packet p = PlasticCraftCore.proxy.getTileEntityPacket(this, data, null, null);
     return p;
   }

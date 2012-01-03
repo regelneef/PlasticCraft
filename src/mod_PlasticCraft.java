@@ -132,8 +132,7 @@ public class mod_PlasticCraft extends BaseModMp {
     TileEntity te = world.getBlockTileEntity(i, j, k);
     if (te != null && te instanceof TileEntityPlastic) {
       ((TileEntityPlastic)te).setDirection((short)ai[0]); // direction
-      if (ai[1] == 1) ((TileEntityPlastic)te).setActive(true); // state
-      else ((TileEntityPlastic)te).setActive(false);
+      ((TileEntityPlastic)te).setActiveByState(ai[1]); // active state
 	  }
   }
   

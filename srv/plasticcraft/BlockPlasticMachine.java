@@ -24,7 +24,7 @@ public class BlockPlasticMachine extends BlockContainer implements ITextureProvi
   public int getBlockTexture(IBlockAccess iblockaccess, int i, int j, int k, int side) {
     TileEntity te = iblockaccess.getBlockTileEntity(i, j, k);
     int meta = iblockaccess.getBlockMetadata(i, j, k);
-    int direction = getDirection(iblockaccess, i, j, k);
+    int direction = getDirection(iblockaccess, i, j, k, false);
     boolean active = isActive(iblockaccess, i, j, k);
     
     if (meta == PlasticCraftCore.machineMetadataMappings.get(EnumPlasticMachine.Microwave)) {
@@ -143,11 +143,13 @@ public class BlockPlasticMachine extends BlockContainer implements ITextureProvi
     return false;
   }
   
-  private static short getDirection(IBlockAccess iblockaccess, int i, int j, int k) {
+  private static short getDirection(IBlockAccess iblockaccess, int i, int j, int k, boolean opp) {
     TileEntity te = iblockaccess.getBlockTileEntity(i, j, k);
   	
-    if (te instanceof TileEntityPlastic)
-      return ((TileEntityPlastic)te).getDirection();
+    if (te instanceof TileEntityPlastic) {
+      if (!opp) return ((TileEntityPlastic)te).getDirection();
+      else return ((TileEntityPlastic)te).getOppositeDirection();
+    }
   	
     return 3;
   }

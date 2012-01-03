@@ -301,6 +301,11 @@ public class PlasticCraftCore {
     ModLoader.AddShapelessRecipe(new ItemStack(Block.pistonStickyBase), new Object[] { 
       new ItemStack(Block.pistonBase), new ItemStack(itemPlasticGoo) });
     
+    //TODO: Remove test recipes.
+    ModLoader.AddRecipe(new ItemStack(blockPlasticMachine, 1, machineMetadataMappings.get(EnumPlasticMachine.Microwave)), new Object[] { "DDD", 
+      'D', Block.dirt });
+    ModLoader.AddRecipe(new ItemStack(blockPlasticMachine, 1, machineMetadataMappings.get(EnumPlasticMachine.Extractor)), new Object[] { "DD", 
+      'D', Block.dirt });
     ModLoader.AddRecipe(new ItemStack(blockPlasticMachine, 1, machineMetadataMappings.get(EnumPlasticMachine.Uncrafter)), new Object[] { "D", 
       'D', Block.dirt });
     

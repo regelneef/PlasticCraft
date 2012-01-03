@@ -186,8 +186,8 @@ public class TileEntityExtractor extends TileEntityPlastic implements IInventory
     ItemStack itemstack1 = RecipesExtractor.smelting().getExtractionResult(extractorItemStacks[1]);
         
     if (itemstack == null) return false;
-    if (extractorItemStacks[3] == null && extractorItemStacks[4] == null) return true;
-    if (!extractorItemStacks[3].isItemEqual(itemstack) && !extractorItemStacks[4].isItemEqual(itemstack1)) return false;
+    if (extractorItemStacks[3] == null || extractorItemStacks[4] == null) return true;
+    if (!extractorItemStacks[3].isItemEqual(itemstack) || !extractorItemStacks[4].isItemEqual(itemstack1)) return false;
     if (extractorItemStacks[3].stackSize < getInventoryStackLimit() && extractorItemStacks[3].stackSize < extractorItemStacks[3].getMaxStackSize() 
       && extractorItemStacks[4].stackSize < getInventoryStackLimit() && extractorItemStacks[4].stackSize < extractorItemStacks[4].getMaxStackSize())
       return true;
@@ -201,8 +201,8 @@ public class TileEntityExtractor extends TileEntityPlastic implements IInventory
     ItemStack itemstack1 = RecipesExtractor.smelting().getExtractionResult(extractorItemStacks[2]);
         
     if (itemstack == null) return false;
-    if (extractorItemStacks[5] == null && extractorItemStacks[6] == null) return true;
-    if (!extractorItemStacks[5].isItemEqual(itemstack) && !extractorItemStacks[6].isItemEqual(itemstack1)) return false;
+    if (extractorItemStacks[5] == null || extractorItemStacks[6] == null) return true;
+    if (!extractorItemStacks[5].isItemEqual(itemstack) || !extractorItemStacks[6].isItemEqual(itemstack1)) return false;
     if (extractorItemStacks[5].stackSize < getInventoryStackLimit() && extractorItemStacks[5].stackSize < extractorItemStacks[5].getMaxStackSize() 
       && extractorItemStacks[6].stackSize < getInventoryStackLimit() && extractorItemStacks[6].stackSize < extractorItemStacks[6].getMaxStackSize())
       return true;
