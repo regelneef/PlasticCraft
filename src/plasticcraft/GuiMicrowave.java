@@ -18,7 +18,7 @@ public class GuiMicrowave extends GuiContainer {
   }
 
   protected void drawGuiContainerBackgroundLayer(float f, int i, int j) {
-    int texture = mc.renderEngine.getTexture(mod_PlasticCraft.modDir + "guiMicrowave.png");
+    int texture = mc.renderEngine.getTexture(PlasticCraftCore.modDir + "guiMicrowave.png");
     GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
     mc.renderEngine.bindTexture(texture);
     drawTexturedModalRect(guiLeft, guiTop, 0, 0, xSize, ySize);

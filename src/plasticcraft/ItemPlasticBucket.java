@@ -2,6 +2,7 @@ package net.minecraft.src.plasticcraft;
 
 import java.util.Random;
 import net.minecraft.src.*;
+import net.minecraft.src.plasticcraft.core.Item_PC;
 
 public class ItemPlasticBucket extends Item_PC {
   private int isFull;
@@ -39,34 +40,34 @@ public class ItemPlasticBucket extends Item_PC {
       if (!world.canMineBlock(entityplayer, i, j, k))
         return itemstack;
             
-      if (world.getBlockId(i, j, k) == mod_PlasticCraft.blockTap.blockID) {
-        if (itemstack.itemID == mod_PlasticCraft.itemPlasticBottle.shiftedIndex)
-          return new ItemStack(mod_PlasticCraft.itemPlasticBottle);
-        if (itemstack.itemID == mod_PlasticCraft.itemPlasticBucket.shiftedIndex)
-          return new ItemStack(mod_PlasticCraft.itemPlasticBucketL);
+      if (world.getBlockId(i, j, k) == PlasticCraftCore.blockTap.blockID) {
+        if (itemstack.itemID == PlasticCraftCore.itemPlasticBottle.shiftedIndex)
+          return new ItemStack(PlasticCraftCore.itemPlasticBottle);
+        if (itemstack.itemID == PlasticCraftCore.itemPlasticBucket.shiftedIndex)
+          return new ItemStack(PlasticCraftCore.itemPlasticBucketL);
       }
             
       if (isFull == 0) {
         if (world.getBlockMaterial(i, j, k) == Material.water && world.getBlockMetadata(i, j, k) == 0) {
           world.setBlockWithNotify(i, j, k, 0);
-          if (itemstack.itemID == mod_PlasticCraft.itemPlasticBottle.shiftedIndex)
-            return new ItemStack(mod_PlasticCraft.itemPlasticBottleW);
-          if (itemstack.itemID == mod_PlasticCraft.itemPlasticBucket.shiftedIndex)
-            return new ItemStack(mod_PlasticCraft.itemPlasticBucketW);
+          if (itemstack.itemID == PlasticCraftCore.itemPlasticBottle.shiftedIndex)
+            return new ItemStack(PlasticCraftCore.itemPlasticBottleW);
+          if (itemstack.itemID == PlasticCraftCore.itemPlasticBucket.shiftedIndex)
+            return new ItemStack(PlasticCraftCore.itemPlasticBucketW);
         }
         if (world.getBlockMaterial(i, j, k) == Material.lava && world.getBlockMetadata(i, j, k) == 0) {
           world.setBlockWithNotify(i, j, k, 0);
-          if (itemstack.itemID == mod_PlasticCraft.itemPlasticBottle.shiftedIndex)
-            return new ItemStack(mod_PlasticCraft.itemPlasticGoo);
-          if (itemstack.itemID == mod_PlasticCraft.itemPlasticBucket.shiftedIndex)
-            return new ItemStack(mod_PlasticCraft.itemPlasticGoo);
+          if (itemstack.itemID == PlasticCraftCore.itemPlasticBottle.shiftedIndex)
+            return new ItemStack(PlasticCraftCore.itemPlasticGoo);
+          if (itemstack.itemID == PlasticCraftCore.itemPlasticBucket.shiftedIndex)
+            return new ItemStack(PlasticCraftCore.itemPlasticGoo);
         }
       } else { 
       	if (isFull < 0) {
-          if (itemstack.itemID == mod_PlasticCraft.itemPlasticBucketM.shiftedIndex)
-            return new ItemStack(mod_PlasticCraft.itemPlasticBucket);
-          if (itemstack.itemID == mod_PlasticCraft.itemPlasticBucketL.shiftedIndex)
-            return new ItemStack(mod_PlasticCraft.itemPlasticBucket);
+          if (itemstack.itemID == PlasticCraftCore.itemPlasticBucketM.shiftedIndex)
+            return new ItemStack(PlasticCraftCore.itemPlasticBucket);
+          if (itemstack.itemID == PlasticCraftCore.itemPlasticBucketL.shiftedIndex)
+            return new ItemStack(PlasticCraftCore.itemPlasticBucket);
         }
       	
         if (movingobjectposition.sideHit == 0) j--;
@@ -84,14 +85,14 @@ public class ItemPlasticBucket extends Item_PC {
           } else
           	world.setBlockAndMetadataWithNotify(i, j, k, isFull, 0);
           
-          return new ItemStack(mod_PlasticCraft.itemPlasticBucket);
+          return new ItemStack(PlasticCraftCore.itemPlasticBucket);
         }
       }
     } else if (isFull == 0 && (movingobjectposition.entityHit instanceof EntityCow)) {
-      if (itemstack.itemID == mod_PlasticCraft.itemPlasticBucket.shiftedIndex)
-        return new ItemStack(mod_PlasticCraft.itemPlasticBucketM);
-      if (itemstack.itemID == mod_PlasticCraft.itemPlasticBottle.shiftedIndex)
-        return new ItemStack(mod_PlasticCraft.itemPlasticBottle);
+      if (itemstack.itemID == PlasticCraftCore.itemPlasticBucket.shiftedIndex)
+        return new ItemStack(PlasticCraftCore.itemPlasticBucketM);
+      if (itemstack.itemID == PlasticCraftCore.itemPlasticBottle.shiftedIndex)
+        return new ItemStack(PlasticCraftCore.itemPlasticBottle);
     }
     
   return itemstack;

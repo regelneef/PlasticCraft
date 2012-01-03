@@ -25,7 +25,7 @@ public class RenderPlasticBoat extends Render {
     float f5 = 0.75F;
     GL11.glScalef(f5, f5, f5);
     GL11.glScalef(1.0F / f5, 1.0F / f5, 1.0F / f5);
-    loadTexture((new StringBuilder()).append(mod_PlasticCraft.modDir).append("entityPlasticBoat.png").toString());
+    loadTexture(PlasticCraftCore.modDir + "entityPlasticBoat.png");
     GL11.glScalef(-1F, -1F, 1.0F);
     boat.render(entityplasticboat, 0.0F, 0.0F, -0.1F, 0.0F, 0.0F, 0.0625F);
     GL11.glPopMatrix();

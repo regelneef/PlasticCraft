@@ -1,8 +1,9 @@
 package net.minecraft.src.plasticcraft;
 
 import net.minecraft.src.*;
+import net.minecraft.src.forge.ITextureProvider;
 
-public class ItemPlasticSpade extends ItemTool {
+public class ItemPlasticSpade extends ItemTool implements ITextureProvider {
   private static Block blocksEffectiveAgainst[] = new Block[] {
     Block.grass, Block.dirt, Block.sand, Block.gravel, Block.snow, Block.blockSnow, Block.blockClay, Block.tilledField, Block.slowSand, Block.mycelium
   };
@@ -16,5 +17,9 @@ public class ItemPlasticSpade extends ItemTool {
       return true;
     
     return block == Block.blockSnow;
+  }
+  
+  public String getTextureFile() {
+    return PlasticCraftCore.itemSheet;
   }
 }

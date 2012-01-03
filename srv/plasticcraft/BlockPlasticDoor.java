@@ -2,14 +2,20 @@ package net.minecraft.src.plasticcraft;
 
 import java.util.Random;
 import net.minecraft.src.*;
+import net.minecraft.src.forge.ITextureProvider;
 
-public class BlockPlasticDoor extends BlockDoor {
+public class BlockPlasticDoor extends BlockDoor implements ITextureProvider {
   public BlockPlasticDoor(int i) {
     super(i, Material.glass);
     setHardness(1.0F);
     setResistance(1500F);
     setStepSound(soundGlassFootstep);
-    blockIndexInTexture = mod_PlasticCraft.blockPlexiglass.blockIndexInTexture;
+    setBlockName("pPlasticDoor");
+    blockIndexInTexture = PlasticCraftCore.blockPlexiglass.blockIndexInTexture;
+  }
+
+  public int getRenderBlockPass() {
+    return 1;
   }
 
   public boolean shouldSideBeRendered(IBlockAccess iblockaccess, int i, int j, int k, int l) {
@@ -22,7 +28,11 @@ public class BlockPlasticDoor extends BlockDoor {
   }
 
   public int idDropped(int data, Random rand, int j) {
-  	if ((data & 0x8) != 0) return 0;
-    return mod_PlasticCraft.itemPlexidoor.shiftedIndex;
+  	if ((data & 8) != 0) return 0;
+    return PlasticCraftCore.itemPlexidoor.shiftedIndex;
+  }
+  
+  public String getTextureFile() {
+    return PlasticCraftCore.blockSheet;
   }
 }

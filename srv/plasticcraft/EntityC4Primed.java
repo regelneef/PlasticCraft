@@ -6,13 +6,15 @@ public class EntityC4Primed extends Entity {
   public int fuse;
   public int power;
   public int connectedCount;
+  public float renderScale;
   
   public EntityC4Primed(World world) {
     super(world);
-    power = mod_PlasticCraft.c4Power;
-    fuse = mod_PlasticCraft.c4Fuse;
+    power = PlasticCraftCore.c4Power;
+    fuse = PlasticCraftCore.c4Fuse;
     preventEntitySpawning = true;
     setSize(0.98F, 0.98F);
+    renderScale = 1.0F;
     yOffset = height / 2.0F;
     connectedCount = 1;
   }
@@ -24,7 +26,7 @@ public class EntityC4Primed extends Entity {
     motionX = -MathHelper.sin((f * 3.141593F) / 180F) * 0.02F;
     motionY = 0.20000000298023221D;
     motionZ = -MathHelper.cos((f * 3.141593F) / 180F) * 0.02F;
-    fuse = mod_PlasticCraft.c4Fuse;
+    fuse = PlasticCraftCore.c4Fuse;
     prevPosX = posX;
     prevPosY = posY;
     prevPosZ = posZ;
@@ -35,7 +37,7 @@ public class EntityC4Primed extends Entity {
   protected boolean canTriggerWalking() {
     return false;
   }
-  
+
   public boolean canBeCollidedWith() {
     return !isDead;
   }
@@ -77,5 +79,9 @@ public class EntityC4Primed extends Entity {
 
   protected void readEntityFromNBT(NBTTagCompound nbttagcompound) {
     fuse = nbttagcompound.getByte("Fuse");
+  }
+
+  public float getShadowSize() {
+    return 0.0F;
   }
 }

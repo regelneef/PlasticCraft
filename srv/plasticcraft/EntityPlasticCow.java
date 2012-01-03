@@ -15,8 +15,8 @@ public class EntityPlasticCow extends EntityCow {
         entityplayer.inventory.setInventorySlotContents(entityplayer.inventory.currentItem, new ItemStack(Item.bucketMilk));
         return true;
       }
-      if(itemstack.itemID == mod_PlasticCraft.itemPlasticBucket.shiftedIndex) {
-        entityplayer.inventory.setInventorySlotContents(entityplayer.inventory.currentItem, new ItemStack(mod_PlasticCraft.itemPlasticBucketM));
+      if(itemstack.itemID == PlasticCraftCore.itemPlasticBucket.shiftedIndex) {
+        entityplayer.inventory.setInventorySlotContents(entityplayer.inventory.currentItem, new ItemStack(PlasticCraftCore.itemPlasticBucketM));
         return true;
       }
     }

@@ -2,8 +2,9 @@ package net.minecraft.src.plasticcraft;
 
 import java.util.*;
 import net.minecraft.src.*;
+import net.minecraft.src.plasticcraft.core.Block_PC;
 
-public class BlockTrampoline extends Block {
+public class BlockTrampoline extends Block_PC {
   private static double expfac = 1.0800000000000001D;
   private static double initfac = 0.80000000000000004D;
   private static double horizDamp = 0.29999999999999999D;
@@ -16,6 +17,7 @@ public class BlockTrampoline extends Block {
     setHardness(1.0F);
     setStepSound(soundClothFootstep);
     setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 0.5F, 1.0F);
+    setBlockName("pTrampoline");
     blockIndexInTexture = rubberIndex;
   }
 
@@ -37,7 +39,7 @@ public class BlockTrampoline extends Block {
       double d = getBounceFactor(l);
       double d1;
             
-      if (entity instanceof EntityPlayer)
+      if (entity instanceof EntityPlayer && !PlasticCraftCore.isWearingFallBoots)
         d1 = 1.0D;
       else if (entity instanceof EntityLiving && !mod_PlasticCraft.getIsJumping((EntityLiving)entity))
         d1 = 1.3999999999999999D;
@@ -83,7 +85,7 @@ public class BlockTrampoline extends Block {
   public int quantityDropped(Random random) {
     return 1;
   }
-  
+
   public int getBlockTextureFromSide(int i) {
     return i != 1 ? i != 0 ? trampolineSide : Block.wood.blockIndexInTexture : rubberIndex;
   }

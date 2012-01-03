@@ -2,6 +2,7 @@ package net.minecraft.src.plasticcraft;
 
 import java.util.Random;
 import net.minecraft.src.*;
+import net.minecraft.src.plasticcraft.core.Block_PC;
 import net.minecraft.client.Minecraft;
 
 public class BlockAccelerator extends Block_PC {

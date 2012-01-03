@@ -11,7 +11,7 @@ public class BlockPlasticDoor extends BlockDoor implements ITextureProvider {
     setResistance(1500F);
     setStepSound(soundGlassFootstep);
     setBlockName("pPlasticDoor");
-    blockIndexInTexture = mod_PlasticCraft.blockPlexiglass.blockIndexInTexture;
+    blockIndexInTexture = PlasticCraftCore.blockPlexiglass.blockIndexInTexture;
   }
 
   public int getRenderBlockPass() {
@@ -28,11 +28,11 @@ public class BlockPlasticDoor extends BlockDoor implements ITextureProvider {
   }
 
   public int idDropped(int data, Random rand, int j) {
-  	if ((data & 0x8) != 0) return 0;
-    return mod_PlasticCraft.itemPlexidoor.shiftedIndex;
+  	if ((data & 8) != 0) return 0;
+    return PlasticCraftCore.itemPlexidoor.shiftedIndex;
   }
   
   public String getTextureFile() {
-    return mod_PlasticCraft.blockSheet;
+    return PlasticCraftCore.blockSheet;
   }
 }

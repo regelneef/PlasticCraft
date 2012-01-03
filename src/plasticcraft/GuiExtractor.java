@@ -4,11 +4,11 @@ import net.minecraft.src.*;
 import net.minecraft.client.Minecraft;
 import org.lwjgl.opengl.GL11;
 
-public class GuiExtract extends GuiContainer {
-  private TileEntityExtract extractorInventory;
+public class GuiExtractor extends GuiContainer {
+  private TileEntityExtractor extractorInventory;
 	
-  public GuiExtract(InventoryPlayer inventoryplayer, TileEntityExtract tileentityextract) {
-    super(new ContainerExtract(inventoryplayer, tileentityextract));
+  public GuiExtractor(InventoryPlayer inventoryplayer, TileEntityExtractor tileentityextract) {
+    super(new ContainerExtractor(inventoryplayer, tileentityextract));
     extractorInventory = tileentityextract;
   }
 
@@ -18,7 +18,7 @@ public class GuiExtract extends GuiContainer {
   }
 
   protected void drawGuiContainerBackgroundLayer(float f, int i, int j) {
-    int texture = mc.renderEngine.getTexture(mod_PlasticCraft.modDir + "guiExtractor.png");
+    int texture = mc.renderEngine.getTexture(PlasticCraftCore.modDir + "guiExtractor.png");
     GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
     mc.renderEngine.bindTexture(texture);
     drawTexturedModalRect(guiLeft, guiTop, 0, 0, xSize, ySize);

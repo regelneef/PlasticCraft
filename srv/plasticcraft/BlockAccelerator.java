@@ -2,13 +2,15 @@ package net.minecraft.src.plasticcraft;
 
 import java.util.Random;
 import net.minecraft.src.*;
+import net.minecraft.src.plasticcraft.core.Block_PC;
 
-public class BlockAccelerator extends Block {
+public class BlockAccelerator extends Block_PC {
   public BlockAccelerator(int i) {
     super(i, Material.sponge);
     setHardness(1.0F);
     setStepSound(soundClothFootstep);
     setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 0.25F, 1.0F);
+    setBlockName("pAccelerator");
     blockIndexInTexture = 7;
   }
 

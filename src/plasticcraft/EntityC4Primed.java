@@ -10,8 +10,8 @@ public class EntityC4Primed extends Entity {
   
   public EntityC4Primed(World world) {
     super(world);
-    power = mod_PlasticCraft.c4Power;
-    fuse = mod_PlasticCraft.c4Fuse;
+    power = PlasticCraftCore.c4Power;
+    fuse = PlasticCraftCore.c4Fuse;
     preventEntitySpawning = true;
     setSize(0.98F, 0.98F);
     renderScale = 1.0F;
@@ -26,7 +26,7 @@ public class EntityC4Primed extends Entity {
     motionX = -MathHelper.sin((f * 3.141593F) / 180F) * 0.02F;
     motionY = 0.20000000298023221D;
     motionZ = -MathHelper.cos((f * 3.141593F) / 180F) * 0.02F;
-    fuse = mod_PlasticCraft.c4Fuse;
+    fuse = PlasticCraftCore.c4Fuse;
     prevPosX = posX;
     prevPosY = posY;
     prevPosZ = posZ;

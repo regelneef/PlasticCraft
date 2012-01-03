@@ -69,7 +69,7 @@ public class EntityPlasticBoat extends Entity {
     setBeenAttacked();
         
     if (getDamageTaken() > 40) {
-      dropItemWithOffset(mod_PlasticCraft.itemPlasticBoat.shiftedIndex, 1, 0.0F);
+      dropItemWithOffset(PlasticCraftCore.itemPlasticBoat.shiftedIndex, 1, 0.0F);
       setEntityDead();
     }
         
@@ -217,7 +217,7 @@ public class EntityPlasticBoat extends Entity {
       if(!worldObj.multiplayerWorld) {
         setEntityDead();
         
-        dropItemWithOffset(mod_PlasticCraft.itemPlasticBoat.shiftedIndex, 1, 0.0F);
+        dropItemWithOffset(PlasticCraftCore.itemPlasticBoat.shiftedIndex, 1, 0.0F);
       }
     }
         

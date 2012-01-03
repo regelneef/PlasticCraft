@@ -6,14 +6,14 @@ import java.util.Map;
 import java.util.Random;
 import net.minecraft.src.*;
 
-public class ExtractRecipes {
-  private static final ExtractRecipes smeltingBase = new ExtractRecipes();
+public class RecipesExtractor {
+  private static final RecipesExtractor smeltingBase = new RecipesExtractor();
   private Map smeltingList;
   private Map extractionList;
   private Map metaSmeltingList;
   private Map metaExtractionList;
   
-  private ExtractRecipes() {
+  private RecipesExtractor() {
     smeltingList = new HashMap();
     extractionList = new HashMap();
     metaSmeltingList = new HashMap();
@@ -44,13 +44,13 @@ public class ExtractRecipes {
     addExtraction(Block.oreDiamond.blockID, new ItemStack(Block.stone));
     addExtraction(Block.oreRedstone.blockID, new ItemStack(Block.stone));
     addExtraction(Block.oreLapis.blockID, new ItemStack(Block.stone));
-    addExtraction(Item.porkRaw.shiftedIndex, new ItemStack(mod_PlasticCraft.itemGelatin, 2));
-    addExtraction(Item.beefRaw.shiftedIndex, new ItemStack(mod_PlasticCraft.itemGelatin));
-    addExtraction(Item.chickenRaw.shiftedIndex, new ItemStack(mod_PlasticCraft.itemGelatin));
+    addExtraction(Item.porkRaw.shiftedIndex, new ItemStack(PlasticCraftCore.itemGelatin, 2));
+    addExtraction(Item.beefRaw.shiftedIndex, new ItemStack(PlasticCraftCore.itemGelatin));
+    addExtraction(Item.chickenRaw.shiftedIndex, new ItemStack(PlasticCraftCore.itemGelatin));
     addExtraction(Item.fishRaw.shiftedIndex, new ItemStack(Item.dyePowder, 1, 15));
     addExtraction(Item.clay.shiftedIndex, new ItemStack(Block.sand));
     addExtraction(Block.cactus.blockID, new ItemStack(Item.sugar, 2));
-    addExtraction(Block.wood.blockID, new ItemStack(mod_PlasticCraft.itemWoodDust, 3));
+    addExtraction(Block.wood.blockID, new ItemStack(PlasticCraftCore.itemWoodDust, 3));
     addExtraction(Block.netherBrick.blockID, new ItemStack(Block.netherrack, 3));
     addExtraction(Block.netherFence.blockID, new ItemStack(Block.netherrack));
     addExtraction(Block.stairsNetherBrick.blockID, new ItemStack(Block.netherrack, 2));
@@ -61,7 +61,7 @@ public class ExtractRecipes {
     }
   }
 
-  public static ExtractRecipes smelting() {
+  public static RecipesExtractor smelting() {
     return smeltingBase;
   }
 

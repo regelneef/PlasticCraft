@@ -3,14 +3,14 @@ package net.minecraft.src.plasticcraft;
 import java.util.List;
 import net.minecraft.src.*;
 
-public class ContainerExtract extends Container {
-  private TileEntityExtract extract;
+public class ContainerExtractor extends Container {
+  private TileEntityExtractor extract;
   private int lastCookTime1;
   private int lastCookTime2;
   private int lastBurnTime;
   private int lastItemBurnTime;
   
-  public ContainerExtract(InventoryPlayer inventoryplayer, TileEntityExtract tileentityextract) {
+  public ContainerExtractor(InventoryPlayer inventoryplayer, TileEntityExtractor tileentityextract) {
     lastCookTime1 = 0;
     lastCookTime2 = 0;
     lastBurnTime = 0;
@@ -26,7 +26,8 @@ public class ContainerExtract extends Container {
     addSlot(new Slot(tileentityextract, 2, 106, 35)); // itemTwo
     addSlot(new SlotFurnace(inventoryplayer.player, tileentityextract, 5, 152, 25)); // smeltTwo
     addSlot(new SlotFurnace(inventoryplayer.player, tileentityextract, 6, 152, 44)); // extractTwo
-        
+    
+    // player inventory stuff
     for (int i=0; i<3; i++)
       for (int k = 0; k < 9; k++)
         addSlot(new Slot(inventoryplayer, k + i * 9 + 9, 8 + k * 18, 84 + i * 18));

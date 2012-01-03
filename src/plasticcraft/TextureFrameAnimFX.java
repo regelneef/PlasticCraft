@@ -76,6 +76,6 @@ public class TextureFrameAnimFX extends TextureFX {
   }
 
   public void bindImage(RenderEngine renderengine) {
-    MinecraftForgeClient.bindTexture(mod_PlasticCraft.blockSheet);
+    MinecraftForgeClient.bindTexture(PlasticCraftCore.blockSheet);
   }
 }

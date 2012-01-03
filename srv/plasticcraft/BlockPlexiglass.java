@@ -2,14 +2,16 @@ package net.minecraft.src.plasticcraft;
 
 import java.util.Random;
 import net.minecraft.src.*;
+import net.minecraft.src.forge.ITextureProvider;
 
-public class BlockPlexiglass extends BlockBreakable {
+public class BlockPlexiglass extends BlockBreakable implements ITextureProvider {
   public BlockPlexiglass(int i) {
     super(i, 2, Material.glass, false);
     setHardness(1.0F);
     setResistance(1500F);
     setLightOpacity(1);
     setStepSound(soundGlassFootstep);
+    setBlockName("pPlexiglass");
     setTickOnLoad(true);
   }
   
@@ -23,7 +25,11 @@ public class BlockPlexiglass extends BlockBreakable {
   	if (meta == 1) return 17;
   	return 2;
   }
-  
+
+  public int getRenderBlockPass() {
+    return 1;
+  }
+
   public boolean shouldSideBeRendered(IBlockAccess iblockaccess, int i, int j, int k, int l) {
     return super.shouldSideBeRendered(iblockaccess, i, j, k, 1 - l);
   }
@@ -34,5 +40,9 @@ public class BlockPlexiglass extends BlockBreakable {
   
   protected int damageDropped(int i) {
     return i;
+  }
+  
+  public String getTextureFile() {
+    return PlasticCraftCore.blockSheet;
   }
 }

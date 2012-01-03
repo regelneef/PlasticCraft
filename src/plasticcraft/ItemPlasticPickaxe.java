@@ -41,6 +41,6 @@ public class ItemPlasticPickaxe extends ItemTool implements ITextureProvider {
   }
   
   public String getTextureFile() {
-    return mod_PlasticCraft.itemSheet;
+    return PlasticCraftCore.itemSheet;
   }
 }

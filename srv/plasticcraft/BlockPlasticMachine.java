@@ -2,23 +2,23 @@ package net.minecraft.src.plasticcraft;
 
 import java.util.Random;
 import net.minecraft.src.*;
+import net.minecraft.src.forge.ITextureProvider;
+import net.minecraft.src.plasticcraft.PlasticCraftCore.EnumPlasticMachine;
 
-public class BlockPlasticMachine extends BlockContainer {
-  public static int plasticIndex = 0;
-  private static int microwaveFront = 8;
-  private static int extractorFront = 9;
-  private static int extractorTop = 10;
+public class BlockPlasticMachine extends BlockContainer implements ITextureProvider {
+  public static int[][] textures = new int[16][6];
+  public static int microwaveFront = 8;
   public static int microwaveAnim = 255;
-  private static boolean keepInventory = false;
+  public static int extractorFront = 9;
+  public static int extractorTop = 10;
+  public static int uncrafterFront = 18;
   
   public BlockPlasticMachine(int i) {
     super(i, Material.sponge);
     setHardness(2.0F);
     setResistance(1500F);
-    setStepSound(soundPowderFootstep);
-    blockIndexInTexture = plasticIndex;
-    setRequiresSelfNotify();
-    setTickOnLoad(true);
+    setStepSound(soundMetalFootstep);
+    setBlockName("pPlasticMachine");
   }
 
   public void onBlockAdded(World world, int i, int j, int k) {
@@ -30,88 +30,114 @@ public class BlockPlasticMachine extends BlockContainer {
     if (world.singleplayerWorld)
       return;
     
+    TileEntityPlastic te = (TileEntityPlastic)world.getBlockTileEntity(i, j, k);
     int l = world.getBlockId(i, j, k - 1);
     int i1 = world.getBlockId(i, j, k + 1);
     int j1 = world.getBlockId(i - 1, j, k);
     int k1 = world.getBlockId(i + 1, j, k);
-    int m = world.getBlockMetadata(i, j, k) & 8;
-    byte byte0 = 3;
-          
-    if (Block.opaqueCubeLookup[l] && !Block.opaqueCubeLookup[i1])
-      byte0 = 1;
-    if (Block.opaqueCubeLookup[i1] && !Block.opaqueCubeLookup[l])
-      byte0 = 0;
-    if (Block.opaqueCubeLookup[j1] && !Block.opaqueCubeLookup[k1])
-      byte0 = 3;
-    if (Block.opaqueCubeLookup[k1] && !Block.opaqueCubeLookup[j1])
-      byte0 = 2;
     
-    byte0 |= m;
-      
-    world.setBlockMetadataWithNotify(i, j, k, byte0);
+    if (Block.opaqueCubeLookup[l] && !Block.opaqueCubeLookup[i1])
+      te.setDirection((short)3);
+    if (Block.opaqueCubeLookup[i1] && !Block.opaqueCubeLookup[l])
+      te.setDirection((short)2);
+    if (Block.opaqueCubeLookup[j1] && !Block.opaqueCubeLookup[k1])
+      te.setDirection((short)5);
+    if (Block.opaqueCubeLookup[k1] && !Block.opaqueCubeLookup[j1])
+      te.setDirection((short)4);
   }
   
-  public int getBlockTextureFromSideAndMetadata(int side, int meta) {
-    int type = meta & 8;
-    if (side == 3 && type == 0) return microwaveFront;
-    if (side == 3 && type == 8) return extractorFront;
-    if (side == 1 && type == 8) return extractorTop;
+  public int getBlockTexture(IBlockAccess iblockaccess, int i, int j, int k, int side) {
+    TileEntity te = iblockaccess.getBlockTileEntity(i, j, k);
+    int meta = iblockaccess.getBlockMetadata(i, j, k);
+    int direction = getDirection(iblockaccess, i, j, k);
+    boolean active = isActive(iblockaccess, i, j, k);
     
-    return plasticIndex;
+    if (meta == PlasticCraftCore.machineMetadataMappings.get(EnumPlasticMachine.Microwave)) {
+      if (side != direction) return 0; // all else
+      if (active) return microwaveAnim; // front, when active
+    	
+      return microwaveFront; // front
+    } else if (meta == PlasticCraftCore.machineMetadataMappings.get(EnumPlasticMachine.Extractor)) {
+      if (side == 1) return extractorTop; // top
+      if (side != direction) return 0; // all else
+    	
+      return extractorFront; // front
+    } else if (meta == PlasticCraftCore.machineMetadataMappings.get(EnumPlasticMachine.Uncrafter)) {
+      if (side == 1) return extractorTop; // top
+      if (side != direction) return 0; // all else
+    	
+      return uncrafterFront; // front
+    }
+  	
+    return 0;
+  }
+
+  public int getBlockTextureFromSideAndMetadata(int side, int meta) {
+    return textures[meta][side];
   }
   
   public int getLightValue(IBlockAccess iblockaccess, int i, int j, int k) {
-    int meta = iblockaccess.getBlockMetadata(i, j, k);
-    if ((meta & 4) == 4) return 13;
+    if (isActive(iblockaccess, i, j, k)) return 13;
     return 0;
   }
-  
+
   public boolean blockActivated(World world, int i, int j, int k, EntityPlayer entityplayer) {
-    int type = world.getBlockMetadata(i, j, k) & 8;
+    int meta = world.getBlockMetadata(i, j, k);
     if (world.singleplayerWorld)
       return true;
     else {
-      if (type == 0) {
-    	  TileEntityMicrowave tileentity = (TileEntityMicrowave)world.getBlockTileEntity(i, j, k);
-    	  ContainerMicrowave container = new ContainerMicrowave(entityplayer.inventory, tileentity);
-        ModLoader.OpenGUI(entityplayer, 250, entityplayer.inventory, container);
+      if (meta == PlasticCraftCore.machineMetadataMappings.get(EnumPlasticMachine.Microwave)) {
+        TileEntityMicrowave tileentity = (TileEntityMicrowave)world.getBlockTileEntity(i, j, k);
+        ContainerMicrowave container = new ContainerMicrowave(entityplayer.inventory, tileentity);
+        ModLoader.OpenGUI(entityplayer, PlasticCraftCore.guiMicrowaveId, entityplayer.inventory, container);
         return true;
-      } else {
-      	TileEntityExtract tileentity = (TileEntityExtract)world.getBlockTileEntity(i, j, k);
-        ContainerExtract container = new ContainerExtract(entityplayer.inventory, tileentity);
-        ModLoader.OpenGUI(entityplayer, 251, entityplayer.inventory, container);
+      } else if (meta == PlasticCraftCore.machineMetadataMappings.get(EnumPlasticMachine.Extractor)) {
+      	TileEntityExtractor tileentity = (TileEntityExtractor)world.getBlockTileEntity(i, j, k);
+        ContainerExtractor container = new ContainerExtractor(entityplayer.inventory, tileentity);
+        ModLoader.OpenGUI(entityplayer, PlasticCraftCore.guiExtractorId, entityplayer.inventory, container);
         return true;
-      }
+      } else if (meta == PlasticCraftCore.machineMetadataMappings.get(EnumPlasticMachine.Uncrafter)) {
+      	TileEntityUncrafter tileentity = (TileEntityUncrafter)world.getBlockTileEntity(i, j, k);
+        ContainerUncrafter container = new ContainerUncrafter(entityplayer.inventory, tileentity);
+        ModLoader.OpenGUI(entityplayer, PlasticCraftCore.guiUncrafterId, entityplayer.inventory, container);
+        return true;
+      } else 
+        return true;
     }
   }
 
   public static void updateBlockState(boolean flag, World world, int i, int j, int k) {
-    int m = world.getBlockMetadata(i, j, k);
-    TileEntity tileentity = world.getBlockTileEntity(i, j, k);
-    keepInventory = true;
+    TileEntityPlastic te = (TileEntityPlastic)world.getBlockTileEntity(i, j, k);
 
     if (flag)
-      m |= 4;
+      te.setActive(true);
     else
-      m &= 11;
-        
-    keepInventory = false;
-        
-    world.setBlockMetadataWithNotify(i, j, k, m);
-        
-    if (tileentity != null) {
-      tileentity.validate();
-      world.setBlockTileEntity(i, j, k, tileentity);
+      te.setActive(false);
+    
+    if (te != null) {
+      te.validate();
+      world.setBlockTileEntity(i, j, k, te);
     }
   }
   
   public void onBlockPlacedBy(World world, int i, int j, int k, EntityLiving entityliving) {
-  	int m = world.getBlockMetadata(i, j, k) & 8;
+    TileEntityPlastic te = (TileEntityPlastic)world.getBlockTileEntity(i, j, k);
+
     int l = MathHelper.floor_double((double)((entityliving.rotationYaw * 4F) / 360F) + 0.5D) & 3;
-    if (l == 0) world.setBlockMetadataWithNotify(i, j, k, 0 + m);
-    if (l == 1) world.setBlockMetadataWithNotify(i, j, k, 3 + m);
-    if (l == 2) world.setBlockMetadataWithNotify(i, j, k, 1 + m);
-    if (l == 3) world.setBlockMetadataWithNotify(i, j, k, 2 + m);
+
+    switch (l) {
+    case 0:
+      te.setDirection((short)2);
+      break;
+    case 1:
+      te.setDirection((short)5);
+      break;
+    case 2:
+      te.setDirection((short)3);
+      break;
+    case 3:
+      te.setDirection((short)4);
+    }
   }
   
   public TileEntity getBlockEntity() {
@@ -119,82 +145,10 @@ public class BlockPlasticMachine extends BlockContainer {
   }
 
   public TileEntity getBlockEntity(int m) {
-    if ((m & 8) == 8)
-      return new TileEntityExtract();
-  	
-    return new TileEntityMicrowave();
-  }
-
-  public void onBlockRemoval(World world, int i, int j, int k) {
-  	int type = world.getBlockMetadata(i, j, k) & 8;
-  	
-    if (type == 0) {
-      if (!keepInventory) {
-        TileEntityMicrowave tileentity = (TileEntityMicrowave)world.getBlockTileEntity(i, j, k);
-    	
-        label0:
-        for (int l=0; l < tileentity.getSizeInventory(); l++) {
-          ItemStack itemstack = tileentity.getStackInSlot(l);
-          if(itemstack == null)
-            continue;
-        
-          float f = world.rand.nextFloat() * 0.8F + 0.1F;
-          float f1 = world.rand.nextFloat() * 0.8F + 0.1F;
-          float f2 = world.rand.nextFloat() * 0.8F + 0.1F;
-        
-          do {
-            if (itemstack.stackSize <= 0)
-              continue label0;
-                    
-            int i1 = world.rand.nextInt(21) + 10;
-            if(i1 > itemstack.stackSize)
-              i1 = itemstack.stackSize;
-                    
-            itemstack.stackSize -= i1;
-            EntityItem entityitem = new EntityItem(world, (float)i + f, (float)j + f1, (float)k + f2, new ItemStack(itemstack.itemID, i1, itemstack.getItemDamage()));
-            float f3 = 0.05F;
-            entityitem.motionX = (float)world.rand.nextGaussian() * f3;
-            entityitem.motionY = (float)world.rand.nextGaussian() * f3 + 0.2F;
-            entityitem.motionZ = (float)world.rand.nextGaussian() * f3;
-            world.spawnEntityInWorld(entityitem);
-          } while (true);
-        }
-      }
-    } else {
-      if (!keepInventory) {
-        TileEntityExtract tileentity = (TileEntityExtract)world.getBlockTileEntity(i, j, k);
-    	
-        label0:
-        for (int l=0; l < tileentity.getSizeInventory(); l++) {
-          ItemStack itemstack = tileentity.getStackInSlot(l);
-          if(itemstack == null)
-            continue;
-        
-          float f = world.rand.nextFloat() * 0.8F + 0.1F;
-          float f1 = world.rand.nextFloat() * 0.8F + 0.1F;
-          float f2 = world.rand.nextFloat() * 0.8F + 0.1F;
-        
-          do {
-            if (itemstack.stackSize <= 0)
-              continue label0;
-                    
-            int i1 = world.rand.nextInt(21) + 10;
-            if(i1 > itemstack.stackSize)
-              i1 = itemstack.stackSize;
-                    
-            itemstack.stackSize -= i1;
-            EntityItem entityitem = new EntityItem(world, (float)i + f, (float)j + f1, (float)k + f2, new ItemStack(itemstack.itemID, i1, itemstack.getItemDamage()));
-            float f3 = 0.05F;
-            entityitem.motionX = (float)world.rand.nextGaussian() * f3;
-            entityitem.motionY = (float)world.rand.nextGaussian() * f3 + 0.2F;
-            entityitem.motionZ = (float)world.rand.nextGaussian() * f3;
-            world.spawnEntityInWorld(entityitem);
-          } while (true);
-        }
-      }
-    }
-    
-    super.onBlockRemoval(world, i, j, k);
+    if (m == PlasticCraftCore.machineMetadataMappings.get(EnumPlasticMachine.Microwave)) return new TileEntityMicrowave();
+    if (m == PlasticCraftCore.machineMetadataMappings.get(EnumPlasticMachine.Extractor)) return new TileEntityExtractor();
+    if (m == PlasticCraftCore.machineMetadataMappings.get(EnumPlasticMachine.Uncrafter)) return new TileEntityUncrafter();
+    return getBlockEntity();
   }
   
   public int quantityDropped(Random random) {
@@ -202,6 +156,90 @@ public class BlockPlasticMachine extends BlockContainer {
   }
   
   protected int damageDropped(int i) {
-    return i & 8;
+    return i;
+  }
+  
+  private static boolean isActive(IBlockAccess iblockaccess, int i, int j, int k) {
+    TileEntity te = iblockaccess.getBlockTileEntity(i, j, k);
+  	
+    if (te instanceof TileEntityPlastic)
+      return ((TileEntityPlastic)te).getActive();
+  	
+    return false;
+  }
+  
+  private static short getDirection(IBlockAccess iblockaccess, int i, int j, int k) {
+    TileEntity te = iblockaccess.getBlockTileEntity(i, j, k);
+  	
+    if (te instanceof TileEntityPlastic)
+      return ((TileEntityPlastic)te).getDirection();
+  	
+    return 3;
+  }
+  
+  public void onBlockRemoval(World world, int i, int j, int k) {
+    TileEntity te = world.getBlockTileEntity(i, j, k);
+  	
+    if (te == null || !(te instanceof IInventory))
+			return;
+  	
+    IInventory inventory = ((IInventory)te);
+  	
+    label0:
+    for (int l=0; l < inventory.getSizeInventory(); l++) {
+      ItemStack itemstack = inventory.getStackInSlot(l);
+      if(itemstack == null)
+        continue;
+        
+      float f = world.rand.nextFloat() * 0.8F + 0.1F;
+      float f1 = world.rand.nextFloat() * 0.8F + 0.1F;
+      float f2 = world.rand.nextFloat() * 0.8F + 0.1F;
+        
+      do {
+        if (itemstack.stackSize <= 0)
+          continue label0;
+                    
+        int i1 = world.rand.nextInt(21) + 10;
+        if (i1 > itemstack.stackSize)
+          i1 = itemstack.stackSize;
+        
+        itemstack.stackSize -= i1;
+        EntityItem entityitem = new EntityItem(world, (float)i + f, (float)j + f1, (float)k + f2, new ItemStack(itemstack.itemID, i1, itemstack.getItemDamage()));
+        float f3 = 0.05F;
+        entityitem.motionX = (float)world.rand.nextGaussian() * f3;
+        entityitem.motionY = (float)world.rand.nextGaussian() * f3 + 0.2F;
+        entityitem.motionZ = (float)world.rand.nextGaussian() * f3;
+        world.spawnEntityInWorld(entityitem);
+      } while (true);
+    }
+    
+    super.onBlockRemoval(world, i, j, k);
+  }
+  
+  public String getTextureFile() {
+    return PlasticCraftCore.blockSheet;
+  }
+  
+  public static void setupTextures() {
+    BlockPlasticMachine.textures[PlasticCraftCore.machineMetadataMappings.get(EnumPlasticMachine.Microwave)][0] = 0;
+    BlockPlasticMachine.textures[PlasticCraftCore.machineMetadataMappings.get(EnumPlasticMachine.Microwave)][1] = 0;
+    BlockPlasticMachine.textures[PlasticCraftCore.machineMetadataMappings.get(EnumPlasticMachine.Microwave)][2] = 0;
+    BlockPlasticMachine.textures[PlasticCraftCore.machineMetadataMappings.get(EnumPlasticMachine.Microwave)][3] = microwaveFront;
+    BlockPlasticMachine.textures[PlasticCraftCore.machineMetadataMappings.get(EnumPlasticMachine.Microwave)][4] = 0;
+    BlockPlasticMachine.textures[PlasticCraftCore.machineMetadataMappings.get(EnumPlasticMachine.Microwave)][5] = 0;
+  	
+    BlockPlasticMachine.textures[PlasticCraftCore.machineMetadataMappings.get(EnumPlasticMachine.Extractor)][0] = 0;
+    BlockPlasticMachine.textures[PlasticCraftCore.machineMetadataMappings.get(EnumPlasticMachine.Extractor)][1] = extractorTop;
+    BlockPlasticMachine.textures[PlasticCraftCore.machineMetadataMappings.get(EnumPlasticMachine.Extractor)][2] = 0;
+    BlockPlasticMachine.textures[PlasticCraftCore.machineMetadataMappings.get(EnumPlasticMachine.Extractor)][3] = extractorFront;
+    BlockPlasticMachine.textures[PlasticCraftCore.machineMetadataMappings.get(EnumPlasticMachine.Extractor)][4] = 0;
+    BlockPlasticMachine.textures[PlasticCraftCore.machineMetadataMappings.get(EnumPlasticMachine.Extractor)][5] = 0;
+  	
+    BlockPlasticMachine.textures[PlasticCraftCore.machineMetadataMappings.get(EnumPlasticMachine.Uncrafter)][0] = 0;
+    BlockPlasticMachine.textures[PlasticCraftCore.machineMetadataMappings.get(EnumPlasticMachine.Uncrafter)][1] = extractorTop;
+    BlockPlasticMachine.textures[PlasticCraftCore.machineMetadataMappings.get(EnumPlasticMachine.Uncrafter)][2] = 0;
+    BlockPlasticMachine.textures[PlasticCraftCore.machineMetadataMappings.get(EnumPlasticMachine.Uncrafter)][3] = uncrafterFront;
+    BlockPlasticMachine.textures[PlasticCraftCore.machineMetadataMappings.get(EnumPlasticMachine.Uncrafter)][4] = 0;
+    BlockPlasticMachine.textures[PlasticCraftCore.machineMetadataMappings.get(EnumPlasticMachine.Uncrafter)][5] = 0;
   }
 }

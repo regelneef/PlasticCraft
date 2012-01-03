@@ -1,6 +1,7 @@
 package net.minecraft.src.plasticcraft;
 
 import net.minecraft.src.*;
+import net.minecraft.src.plasticcraft.core.Item_PC;
 
 public class ItemPlasticDoor extends Item_PC {
   public ItemPlasticDoor(int i) {
@@ -11,7 +12,7 @@ public class ItemPlasticDoor extends Item_PC {
   public boolean onItemUse(ItemStack itemstack, EntityPlayer entityplayer, World world, int i, int j, int k, int l) {
     if (l != 1) return false;
     j++;
-    Block block = mod_PlasticCraft.blockPlexidoor;
+    Block block = PlasticCraftCore.blockPlexidoor;
     if (!block.canPlaceBlockAt(world, i, j, k)) return false;
         
     int i1 = MathHelper.floor_double((double)(((entityplayer.rotationYaw + 180F) * 4F) / 360F) - 0.5D) & 3;

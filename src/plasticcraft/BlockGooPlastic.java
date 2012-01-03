@@ -2,6 +2,7 @@ package net.minecraft.src.plasticcraft;
 
 import java.util.Random;
 import net.minecraft.src.*;
+import net.minecraft.src.plasticcraft.core.Block_PC;
 
 public class BlockGooPlastic extends Block_PC {
   public BlockGooPlastic(int i) {
@@ -27,7 +28,7 @@ public class BlockGooPlastic extends Block_PC {
   public void onNeighborBlockChange(World world, int i, int j, int k, int l) {
     if (l == Block.waterMoving.blockID || l == Block.waterStill.blockID) {
       int i1 = colors[world.rand.nextInt(colors.length)];
-      world.setBlockAndMetadataWithNotify(i, j, k, mod_PlasticCraft.blockPlastic.blockID, i1);
+      world.setBlockAndMetadataWithNotify(i, j, k, PlasticCraftCore.blockPlastic.blockID, i1);
     }
   }
 
@@ -43,7 +44,7 @@ public class BlockGooPlastic extends Block_PC {
   }
 
   public void freeze(Entity entity) {
-    if (!mod_PlasticCraft.isWearingFallBoots)
+    if (!PlasticCraftCore.isWearingFallBoots)
       entity.attackEntityFrom(DamageSource.cactus, 1);
     if (entity instanceof EntityLiving) {
       EntityLiving entityliving = (EntityLiving)entity;

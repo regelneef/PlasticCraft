@@ -2,8 +2,13 @@ package net.minecraft.src.plasticcraft;
 
 import java.util.Random;
 import net.minecraft.src.*;
+import net.minecraft.src.plasticcraft.core.Block_PC;
 
 public class BlockPlastic extends Block_PC {
+  public static String[] plasticNames = new String[] {
+    "Plain", "Orange", "Magenta", "Light Blue", "Yellow", "Lime", "Pink", "Grey", "Teal", "Cyan", "Purple", "Blue", "Brown", "Green", "Red", "Black"
+  };
+	
   public BlockPlastic(int i) {
     super(i, Material.sponge);
     setHardness(1.5F);
@@ -56,7 +61,7 @@ public class BlockPlastic extends Block_PC {
 
   public void onNeighborBlockChange(World world, int i, int j, int k, int l) {
     if (l == Block.fire.blockID || l == Block.lavaMoving.blockID || l == Block.lavaStill.blockID)
-      world.setBlockWithNotify(i, j, k, mod_PlasticCraft.blockPlasticGoo.blockID);
+      world.setBlockWithNotify(i, j, k, PlasticCraftCore.blockPlasticGoo.blockID);
   }
 
   public int quantityDropped(Random random) {
@@ -68,53 +73,53 @@ public class BlockPlastic extends Block_PC {
   }
 
   public static void recipes() {
-    ModLoader.AddShapelessRecipe(new ItemStack(mod_PlasticCraft.blockPlastic, 1, 0), new Object[] {
-      new ItemStack(Item.dyePowder, 1, 15), new ItemStack(Item.itemsList[mod_PlasticCraft.blockPlastic.blockID], 1, 0)
+    ModLoader.AddShapelessRecipe(new ItemStack(PlasticCraftCore.blockPlastic, 1, 0), new Object[] {
+      new ItemStack(Item.dyePowder, 1, 15), new ItemStack(Item.itemsList[PlasticCraftCore.blockPlastic.blockID], 1, 0)
     });
-    ModLoader.AddShapelessRecipe(new ItemStack(mod_PlasticCraft.blockPlastic, 1, 1), new Object[] {
-      new ItemStack(Item.dyePowder, 1, 14), new ItemStack(Item.itemsList[mod_PlasticCraft.blockPlastic.blockID], 1, 0)
+    ModLoader.AddShapelessRecipe(new ItemStack(PlasticCraftCore.blockPlastic, 1, 1), new Object[] {
+      new ItemStack(Item.dyePowder, 1, 14), new ItemStack(Item.itemsList[PlasticCraftCore.blockPlastic.blockID], 1, 0)
     });
-    ModLoader.AddShapelessRecipe(new ItemStack(mod_PlasticCraft.blockPlastic, 1, 2), new Object[] {
-      new ItemStack(Item.dyePowder, 1, 13), new ItemStack(Item.itemsList[mod_PlasticCraft.blockPlastic.blockID], 1, 0)
+    ModLoader.AddShapelessRecipe(new ItemStack(PlasticCraftCore.blockPlastic, 1, 2), new Object[] {
+      new ItemStack(Item.dyePowder, 1, 13), new ItemStack(Item.itemsList[PlasticCraftCore.blockPlastic.blockID], 1, 0)
     });
-    ModLoader.AddShapelessRecipe(new ItemStack(mod_PlasticCraft.blockPlastic, 1, 3), new Object[] {
-      new ItemStack(Item.dyePowder, 1, 12), new ItemStack(Item.itemsList[mod_PlasticCraft.blockPlastic.blockID], 1, 0)
+    ModLoader.AddShapelessRecipe(new ItemStack(PlasticCraftCore.blockPlastic, 1, 3), new Object[] {
+      new ItemStack(Item.dyePowder, 1, 12), new ItemStack(Item.itemsList[PlasticCraftCore.blockPlastic.blockID], 1, 0)
     });
-    ModLoader.AddShapelessRecipe(new ItemStack(mod_PlasticCraft.blockPlastic, 1, 4), new Object[] {
-      new ItemStack(Item.dyePowder, 1, 11), new ItemStack(Item.itemsList[mod_PlasticCraft.blockPlastic.blockID], 1, 0)
+    ModLoader.AddShapelessRecipe(new ItemStack(PlasticCraftCore.blockPlastic, 1, 4), new Object[] {
+      new ItemStack(Item.dyePowder, 1, 11), new ItemStack(Item.itemsList[PlasticCraftCore.blockPlastic.blockID], 1, 0)
     });
-    ModLoader.AddShapelessRecipe(new ItemStack(mod_PlasticCraft.blockPlastic, 1, 5), new Object[] {
-      new ItemStack(Item.dyePowder, 1, 10), new ItemStack(Item.itemsList[mod_PlasticCraft.blockPlastic.blockID], 1, 0)
+    ModLoader.AddShapelessRecipe(new ItemStack(PlasticCraftCore.blockPlastic, 1, 5), new Object[] {
+      new ItemStack(Item.dyePowder, 1, 10), new ItemStack(Item.itemsList[PlasticCraftCore.blockPlastic.blockID], 1, 0)
     });
-    ModLoader.AddShapelessRecipe(new ItemStack(mod_PlasticCraft.blockPlastic, 1, 6), new Object[] {
-      new ItemStack(Item.dyePowder, 1, 9), new ItemStack(Item.itemsList[mod_PlasticCraft.blockPlastic.blockID], 1, 0)
+    ModLoader.AddShapelessRecipe(new ItemStack(PlasticCraftCore.blockPlastic, 1, 6), new Object[] {
+      new ItemStack(Item.dyePowder, 1, 9), new ItemStack(Item.itemsList[PlasticCraftCore.blockPlastic.blockID], 1, 0)
     });
-    ModLoader.AddShapelessRecipe(new ItemStack(mod_PlasticCraft.blockPlastic, 1, 7), new Object[] {
-      new ItemStack(Item.dyePowder, 1, 8), new ItemStack(Item.itemsList[mod_PlasticCraft.blockPlastic.blockID], 1, 0)
+    ModLoader.AddShapelessRecipe(new ItemStack(PlasticCraftCore.blockPlastic, 1, 7), new Object[] {
+      new ItemStack(Item.dyePowder, 1, 8), new ItemStack(Item.itemsList[PlasticCraftCore.blockPlastic.blockID], 1, 0)
     });
-    ModLoader.AddShapelessRecipe(new ItemStack(mod_PlasticCraft.blockPlastic, 1, 8), new Object[] {
-      new ItemStack(Item.dyePowder, 1, 4), new ItemStack(Item.dyePowder, 1, 6), new ItemStack(Item.itemsList[mod_PlasticCraft.blockPlastic.blockID], 1, 0)
+    ModLoader.AddShapelessRecipe(new ItemStack(PlasticCraftCore.blockPlastic, 1, 8), new Object[] {
+      new ItemStack(Item.dyePowder, 1, 4), new ItemStack(Item.dyePowder, 1, 6), new ItemStack(Item.itemsList[PlasticCraftCore.blockPlastic.blockID], 1, 0)
     });
-    ModLoader.AddShapelessRecipe(new ItemStack(mod_PlasticCraft.blockPlastic, 1, 9), new Object[] {
-      new ItemStack(Item.dyePowder, 1, 6), new ItemStack(Item.itemsList[mod_PlasticCraft.blockPlastic.blockID], 1, 0)
+    ModLoader.AddShapelessRecipe(new ItemStack(PlasticCraftCore.blockPlastic, 1, 9), new Object[] {
+      new ItemStack(Item.dyePowder, 1, 6), new ItemStack(Item.itemsList[PlasticCraftCore.blockPlastic.blockID], 1, 0)
     });
-    ModLoader.AddShapelessRecipe(new ItemStack(mod_PlasticCraft.blockPlastic, 1, 10), new Object[] {
-      new ItemStack(Item.dyePowder, 1, 5), new ItemStack(Item.itemsList[mod_PlasticCraft.blockPlastic.blockID], 1, 0)
+    ModLoader.AddShapelessRecipe(new ItemStack(PlasticCraftCore.blockPlastic, 1, 10), new Object[] {
+      new ItemStack(Item.dyePowder, 1, 5), new ItemStack(Item.itemsList[PlasticCraftCore.blockPlastic.blockID], 1, 0)
     });
-    ModLoader.AddShapelessRecipe(new ItemStack(mod_PlasticCraft.blockPlastic, 1, 11), new Object[] {
-      new ItemStack(Item.dyePowder, 1, 4), new ItemStack(Item.itemsList[mod_PlasticCraft.blockPlastic.blockID], 1, 0)
+    ModLoader.AddShapelessRecipe(new ItemStack(PlasticCraftCore.blockPlastic, 1, 11), new Object[] {
+      new ItemStack(Item.dyePowder, 1, 4), new ItemStack(Item.itemsList[PlasticCraftCore.blockPlastic.blockID], 1, 0)
     });
-    ModLoader.AddShapelessRecipe(new ItemStack(mod_PlasticCraft.blockPlastic, 1, 12), new Object[] {
-      new ItemStack(Item.dyePowder, 1, 3), new ItemStack(Item.itemsList[mod_PlasticCraft.blockPlastic.blockID], 1, 0)
+    ModLoader.AddShapelessRecipe(new ItemStack(PlasticCraftCore.blockPlastic, 1, 12), new Object[] {
+      new ItemStack(Item.dyePowder, 1, 3), new ItemStack(Item.itemsList[PlasticCraftCore.blockPlastic.blockID], 1, 0)
     });
-    ModLoader.AddShapelessRecipe(new ItemStack(mod_PlasticCraft.blockPlastic, 1, 13), new Object[] {
-      new ItemStack(Item.dyePowder, 1, 2), new ItemStack(Item.itemsList[mod_PlasticCraft.blockPlastic.blockID], 1, 0)
+    ModLoader.AddShapelessRecipe(new ItemStack(PlasticCraftCore.blockPlastic, 1, 13), new Object[] {
+      new ItemStack(Item.dyePowder, 1, 2), new ItemStack(Item.itemsList[PlasticCraftCore.blockPlastic.blockID], 1, 0)
     });
-    ModLoader.AddShapelessRecipe(new ItemStack(mod_PlasticCraft.blockPlastic, 1, 14), new Object[] {
-      new ItemStack(Item.dyePowder, 1, 1), new ItemStack(Item.itemsList[mod_PlasticCraft.blockPlastic.blockID], 1, 0)
+    ModLoader.AddShapelessRecipe(new ItemStack(PlasticCraftCore.blockPlastic, 1, 14), new Object[] {
+      new ItemStack(Item.dyePowder, 1, 1), new ItemStack(Item.itemsList[PlasticCraftCore.blockPlastic.blockID], 1, 0)
     });
-    ModLoader.AddShapelessRecipe(new ItemStack(mod_PlasticCraft.blockPlastic, 1, 15), new Object[] {
-      new ItemStack(Item.dyePowder, 1, 0), new ItemStack(Item.itemsList[mod_PlasticCraft.blockPlastic.blockID], 1, 0)
+    ModLoader.AddShapelessRecipe(new ItemStack(PlasticCraftCore.blockPlastic, 1, 15), new Object[] {
+      new ItemStack(Item.dyePowder, 1, 0), new ItemStack(Item.itemsList[PlasticCraftCore.blockPlastic.blockID], 1, 0)
     });
   }
 }

@@ -1,8 +1,9 @@
 package net.minecraft.src.plasticcraft;
 
 import net.minecraft.src.*;
+import net.minecraft.src.plasticcraft.core.Item_PC;
 
-public class ItemPlasticBoat extends Item {
+public class ItemPlasticBoat extends Item_PC {
   public ItemPlasticBoat(int i) {
     super(i);
     maxStackSize = 1;

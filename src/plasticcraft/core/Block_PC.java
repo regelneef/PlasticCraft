@@ -1,7 +1,8 @@
-package net.minecraft.src.plasticcraft;
+package net.minecraft.src.plasticcraft.core;
 
 import net.minecraft.src.*;
 import net.minecraft.src.forge.ITextureProvider;
+import net.minecraft.src.plasticcraft.PlasticCraftCore;
 
 public class Block_PC extends Block implements ITextureProvider {
   public Block_PC(int i, Material mat) {
@@ -13,6 +14,6 @@ public class Block_PC extends Block implements ITextureProvider {
   }
 
   public String getTextureFile() {
-    return mod_PlasticCraft.blockSheet;
+    return PlasticCraftCore.blockSheet;
   }
 }

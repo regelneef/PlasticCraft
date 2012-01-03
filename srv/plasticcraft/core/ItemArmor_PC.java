@@ -1,7 +1,8 @@
-package net.minecraft.src.plasticcraft;
+package net.minecraft.src.plasticcraft.core;
 
 import net.minecraft.src.*;
 import net.minecraft.src.forge.ITextureProvider;
+import net.minecraft.src.plasticcraft.PlasticCraftCore;
 
 public class ItemArmor_PC extends ItemArmor implements ITextureProvider {
 	boolean isKevlar;
@@ -17,6 +18,6 @@ public class ItemArmor_PC extends ItemArmor implements ITextureProvider {
   }
   
   public String getTextureFile() {
-    return mod_PlasticCraft.itemSheet;
+    return PlasticCraftCore.itemSheet;
   }
 }

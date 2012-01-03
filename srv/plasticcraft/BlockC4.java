@@ -2,17 +2,19 @@ package net.minecraft.src.plasticcraft;
 
 import java.util.*;
 import net.minecraft.src.*;
+import net.minecraft.src.plasticcraft.core.Block_PC;
 
-public class BlockC4 extends Block {
+public class BlockC4 extends Block_PC {
   public static double logbase = 10D;
   
   public BlockC4(int i) {
     super(i, Material.tnt);
     setHardness(0.3F);
     setStepSound(soundGrassFootstep);
+    setBlockName("pC4");
     blockIndexInTexture = 13;
   }
-  
+
   public int getBlockTextureFromSide(int i) {
   	if (i == 0) return blockIndexInTexture + 2;
     if (i == 1) return blockIndexInTexture + 1;
@@ -40,7 +42,7 @@ public class BlockC4 extends Block {
   }
 
   public void onBlockDestroyedByExplosion(World world, int i, int j, int k) {
-  	if (!mod_PlasticCraft.c4Disabled) {
+  	if (!PlasticCraftCore.c4Disabled) {
       EntityC4Primed entityc4primed = spawnC4(world, i, j, k);
       entityc4primed.fuse = world.rand.nextInt(entityc4primed.fuse / 4) + entityc4primed.fuse / 8;
   	}
@@ -50,7 +52,8 @@ public class BlockC4 extends Block {
     if (world.singleplayerWorld)
       return;
     else {
-      if (!mod_PlasticCraft.c4Disabled) spawnC4(world, i, j, k);
+    	if (!PlasticCraftCore.c4Disabled)
+        spawnC4(world, i, j, k);
       return;
     }
   }
@@ -58,9 +61,12 @@ public class BlockC4 extends Block {
   public EntityC4Primed spawnC4(World world, int i, int j, int k) {
     EntityC4Primed entityc4primed = new EntityC4Primed(world, (double)i + 0.5D, (double)j + 0.5D, (double)k + 0.5D);
     
-    if (mod_PlasticCraft.c4Enhanced) {
+    if (PlasticCraftCore.c4Enhanced) {
       entityc4primed.connectedCount = countAdjacent(world, i, j, k, true);
       entityc4primed.power = getPower(entityc4primed.connectedCount);
+      entityc4primed.renderScale = (float)Math.pow(entityc4primed.connectedCount, 0.3333333432674408D);
+      entityc4primed.height *= entityc4primed.renderScale;
+      entityc4primed.width *= entityc4primed.renderScale;
       entityc4primed.yOffset = entityc4primed.height / 2.0F;
     }
     
@@ -70,19 +76,8 @@ public class BlockC4 extends Block {
     return entityc4primed;
   }
 
-  public boolean blockActivated(World world, int i, int j, int k, EntityPlayer entityplayer) {
-    if (!mod_PlasticCraft.c4Enhanced)
-      return false;
-    
-    ItemStack itemstack = entityplayer.getCurrentEquippedItem();
-    if (itemstack != null && (itemstack.itemID == blockID || itemstack.itemID == mod_PlasticCraft.itemC4Remote.shiftedIndex))
-      return false;
-    
-    return true;
-  }
-
   public int getPower(int i) {
-    double d = 4.1887902047863905D * Math.pow(mod_PlasticCraft.c4Power, 3D);
+    double d = 4.1887902047863905D * Math.pow(PlasticCraftCore.c4Power, 3D);
     d *= i;
     double d1 = (1.0D + Math.log(i) / Math.log(logbase)) * Math.pow((0.75D * d) / 3.1415926535897931D, 0.33333333333333331D);
     return (int)Math.round(d1);

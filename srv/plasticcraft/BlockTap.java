@@ -2,12 +2,14 @@ package net.minecraft.src.plasticcraft;
 
 import java.util.Random;
 import net.minecraft.src.*;
+import net.minecraft.src.plasticcraft.core.Block_PC;
 
-public class BlockTap extends Block {
+public class BlockTap extends Block_PC {
   public BlockTap(int i) {
     super(i, Material.circuits);
     setHardness(0.0F);
     setStepSound(soundWoodFootstep);
+    setBlockName("pLatexTap");
     blockIndexInTexture = 12;
   }
 

@@ -18,7 +18,8 @@ public class ContainerMicrowave extends Container {
     addSlot(new Slot(tileentitymicrowave, 0, 56, 17)); // item
     addSlot(new Slot(tileentitymicrowave, 1, 56, 53)); // fuel
     addSlot(new SlotFurnace(inventoryplayer.player, tileentitymicrowave, 2, 116, 35)); // smelt
-        
+    
+    // player inventory stuff
     for (int i=0; i<3; i++)
       for (int k = 0; k < 9; k++)
         addSlot(new Slot(inventoryplayer, k + i * 9 + 9, 8 + k * 18, 84 + i * 18));

@@ -15,15 +15,16 @@ public class ContainerMicrowave extends Container {
     lastItemBurnTime = 0;
     microwave = tileentitymicrowave;
         
-    addSlot(new Slot(tileentitymicrowave, 0, 56, 17));
-    addSlot(new Slot(tileentitymicrowave, 1, 56, 53));
-    addSlot(new SlotFurnace(inventoryplayer.player, tileentitymicrowave, 2, 116, 35));
-        
+    addSlot(new Slot(tileentitymicrowave, 0, 56, 17)); // item
+    addSlot(new Slot(tileentitymicrowave, 1, 56, 53)); // fuel
+    addSlot(new SlotFurnace(inventoryplayer.player, tileentitymicrowave, 2, 116, 35)); // smelt
+    
+    // player inventory stuff
     for (int i=0; i<3; i++)
-      for(int k = 0; k < 9; k++)
+      for (int k = 0; k < 9; k++)
         addSlot(new Slot(inventoryplayer, k + i * 9 + 9, 8 + k * 18, 84 + i * 18));
 
-    for(int j = 0; j < 9; j++)
+    for (int j = 0; j < 9; j++)
       addSlot(new Slot(inventoryplayer, j, 8 + j * 18, 142));
   }
 
@@ -33,11 +34,11 @@ public class ContainerMicrowave extends Container {
     for (int i=0; i<crafters.size(); i++) {
       ICrafting icrafting = (ICrafting)crafters.get(i);
             
-      if(lastCookTime != microwave.microwaveCookTime)
+      if (lastCookTime != microwave.microwaveCookTime)
         icrafting.updateCraftingInventoryInfo(this, 0, microwave.microwaveCookTime);
-      if(lastBurnTime != microwave.microwaveBurnTime)
+      if (lastBurnTime != microwave.microwaveBurnTime)
         icrafting.updateCraftingInventoryInfo(this, 1, microwave.microwaveBurnTime);
-      if(lastItemBurnTime != microwave.currentItemBurnTime);
+      if (lastItemBurnTime != microwave.currentItemBurnTime);
         icrafting.updateCraftingInventoryInfo(this, 2, microwave.currentItemBurnTime);
     }
 
@@ -49,9 +50,9 @@ public class ContainerMicrowave extends Container {
   public void updateProgressBar(int i, int j) {
     if (i == 0)
       microwave.microwaveCookTime = j;
-    if(i == 1)
+    if (i == 1)
       microwave.microwaveBurnTime = j;
-    if(i == 2)
+    if (i == 2)
       microwave.currentItemBurnTime = j;
   }
 

@@ -2,6 +2,7 @@ package net.minecraft.src.plasticcraft;
 
 import java.util.*;
 import net.minecraft.src.*;
+import net.minecraft.src.plasticcraft.core.Block_PC;
 import net.minecraft.client.Minecraft;
 
 public class BlockTrampoline extends Block_PC {
@@ -39,11 +40,11 @@ public class BlockTrampoline extends Block_PC {
       double d = getBounceFactor(l);
       double d1;
             
-      if (entity instanceof EntityPlayer && !mod_PlasticCraft.isWearingFallBoots)
+      if (entity instanceof EntityPlayer && !PlasticCraftCore.isWearingFallBoots)
         d1 = 1.0D;
       else if (entity instanceof EntityLiving && !mod_PlasticCraft.getIsJumping((EntityLiving)entity))
         d1 = 1.3999999999999999D;
-      else if (entity instanceof EntityFallingSand || entity instanceof EntityTNTPrimed || entity instanceof EntityC4Primed || entity instanceof EntityExplodeFX)
+      else if (entity instanceof EntityFallingSand || entity instanceof EntityTNTPrimed || entity instanceof EntityC4Primed)
         d1 = 1.2D;
       else d1 = 2D;
             

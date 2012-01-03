@@ -2,13 +2,14 @@ package net.minecraft.src.plasticcraft;
 
 import java.util.Random;
 import net.minecraft.src.*;
+import net.minecraft.src.plasticcraft.core.Block_PC;
 import net.minecraft.client.Minecraft;
 
 public class BlockRope extends Block_PC {
   public BlockRope(int i) {
     super(i, Material.circuits);
     setHardness(0.3F);
-    blockIndexInTexture = 19;
+    blockIndexInTexture = 20;
   }
   
   public AxisAlignedBB getCollisionBoundingBoxFromPool(World world, int i, int j, int k) {
@@ -39,7 +40,7 @@ public class BlockRope extends Block_PC {
         double d = (double)(world.rand.nextFloat() * f) + (double)(1.0F - f) * 0.5D;
         double d1 = (double)(world.rand.nextFloat() * f) + (double)(1.0F - f) * 0.5D;
         double d2 = (double)(world.rand.nextFloat() * f) + (double)(1.0F - f) * 0.5D;
-        ItemStack itemstack = new ItemStack(mod_PlasticCraft.itemRope, 1);
+        ItemStack itemstack = new ItemStack(PlasticCraftCore.itemRope, 1);
         EntityItem entityitem = new EntityItem(world, (double)i + d, (double)j + d1, (double)k + d2, itemstack);
         entityitem.delayBeforeCanPickup = 10;
         world.spawnEntityInWorld(entityitem);
@@ -88,7 +89,7 @@ public class BlockRope extends Block_PC {
   }
   
   public int idDropped(int i, Random random, int meta) {
-    if (meta == 0) return mod_PlasticCraft.itemRope.shiftedIndex;
+    if (meta == 0) return PlasticCraftCore.itemRope.shiftedIndex;
     return 0;
   }
 }

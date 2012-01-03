@@ -2,10 +2,11 @@ package net.minecraft.src.plasticcraft;
 
 import java.util.List;
 import net.minecraft.src.*;
+import net.minecraft.src.plasticcraft.core.Item_PC;
 import net.minecraft.client.Minecraft;
 
 public class ItemC4Remote extends Item_PC {
-  public static BlockC4 c4 = (BlockC4)mod_PlasticCraft.blockC4;
+  public static BlockC4 c4 = (BlockC4)PlasticCraftCore.blockC4;
   public static BlockTNT tnt = (BlockTNT)Block.tnt;
 
   public ItemC4Remote(int i) {
@@ -27,12 +28,12 @@ public class ItemC4Remote extends Item_PC {
         EntityC4Primed entityc4primed = (EntityC4Primed)entity;
         entityc4primed.setEntityDead();
         int k = entityc4primed.connectedCount;
-        int l = mod_PlasticCraft.blockC4.tickRate();
+        int l = PlasticCraftCore.blockC4.tickRate();
         int i1;
       
         for (; k > 0; k -= i1) {
           i1 = k >= l ? l : k;
-          entityplayer.dropItem(mod_PlasticCraft.blockC4.blockID, i1);
+          entityplayer.dropItem(PlasticCraftCore.blockC4.blockID, i1);
         }
 
         i += entityc4primed.connectedCount;
@@ -44,11 +45,14 @@ public class ItemC4Remote extends Item_PC {
     } else if (itemstack.getItemDamage() == 1) { // detonator
       MovingObjectPosition mop = rayTrace(world, 150.0D, 1.0F, entityplayer);
     	
+      if (PlasticCraftCore.proxy.isServer(world))
+        return itemstack;
+      
       if (mop != null && mop.typeOfHit == EnumMovingObjectType.TILE) {
         int id = world.getBlockId(mop.blockX, mop.blockY, mop.blockZ);
         
-        if (!world.multiplayerWorld) {
-          if (id == mod_PlasticCraft.blockC4.blockID) {
+        if (PlasticCraftCore.proxy.isSingleplayer(world)) {
+          if (id == PlasticCraftCore.blockC4.blockID) {
             c4.onBlockDestroyedByPlayer(world, mop.blockX, mop.blockY, mop.blockZ, 1);
             world.setBlockWithNotify(mop.blockX, mop.blockY, mop.blockZ, 0);
             ModLoader.getMinecraftInstance().ingameGUI.addChatMessage("Detonated C4.");
@@ -57,14 +61,14 @@ public class ItemC4Remote extends Item_PC {
             world.setBlockWithNotify(mop.blockX, mop.blockY, mop.blockZ, 0);
         	  ModLoader.getMinecraftInstance().ingameGUI.addChatMessage("Detonated TNT.");
           }
-        } else if (world.multiplayerWorld) {
+        } else if (PlasticCraftCore.proxy.isClient(world)) {
         	Packet230ModLoader packet = new Packet230ModLoader();
-          packet.modId = mod_PlasticCraft.instance.getId();
+          packet.modId = PlasticCraftCore.proxy.getModId();
           packet.dataFloat = new float[3];
           packet.dataFloat[0] = mop.blockX;
           packet.dataFloat[1] = mop.blockY;
           packet.dataFloat[2] = mop.blockZ;
-          ModLoaderMp.SendPacket(mod_PlasticCraft.instance, packet);
+          PlasticCraftCore.proxy.sendPacketToServer(packet);
         }
       }
     }
@@ -74,8 +78,8 @@ public class ItemC4Remote extends Item_PC {
 
   public boolean onItemUse(ItemStack itemstack, EntityPlayer entityplayer, World world, int i, int j, int k, int l) {
     if (itemstack.getItemDamage() == 0) {
-      if (world.getBlockId(i, j, k) == mod_PlasticCraft.blockC4.blockID) {
-        entityplayer.dropItem(mod_PlasticCraft.blockC4.blockID, 1);
+      if (world.getBlockId(i, j, k) == PlasticCraftCore.blockC4.blockID) {
+        entityplayer.dropItem(PlasticCraftCore.blockC4.blockID, 1);
         world.setBlockAndMetadataWithNotify(i, j, k, 0, 0);
         itemstack.damageItem(1, entityplayer);
         return true;

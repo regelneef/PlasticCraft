@@ -1,6 +1,7 @@
 package net.minecraft.src.plasticcraft;
 
 import net.minecraft.src.*;
+import net.minecraft.src.plasticcraft.PlasticCraftCore.EnumPlasticMachine;
 
 public class ItemBlockPlasticMachine extends ItemBlock {
   public ItemBlockPlasticMachine(int i) {
@@ -15,7 +16,10 @@ public class ItemBlockPlasticMachine extends ItemBlock {
   }
 
   public String getItemNameIS(ItemStack itemstack) {
-    if (itemstack.getItemDamage() == 8) return "plastic.extractor";
+    int meta = itemstack.getItemDamage();
+    if (meta == PlasticCraftCore.machineMetadataMappings.get(EnumPlasticMachine.Microwave)) return "plastic.microwave";
+    if (meta == PlasticCraftCore.machineMetadataMappings.get(EnumPlasticMachine.Extractor)) return "plastic.extractor";
+    if (meta == PlasticCraftCore.machineMetadataMappings.get(EnumPlasticMachine.Uncrafter)) return "plastic.uncrafter";
     return "plastic.microwave";
   }
 }

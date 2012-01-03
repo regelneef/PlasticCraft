@@ -1,8 +1,9 @@
 package net.minecraft.src.plasticcraft;
 
 import net.minecraft.src.*;
+import net.minecraft.src.forge.ITextureProvider;
 
-public class ItemPlasticAxe extends ItemTool {
+public class ItemPlasticAxe extends ItemTool implements ITextureProvider {
   private static Block blocksEffectiveAgainst[] = new Block[] {
     Block.planks, Block.bookShelf, Block.wood, Block.chest, Block.stairDouble, Block.stairSingle, Block.pumpkin, Block.pumpkinLantern
   };
@@ -16,5 +17,9 @@ public class ItemPlasticAxe extends ItemTool {
       return efficiencyOnProperMaterial;
     
     return super.getStrVsBlock(itemstack, block);
+  }
+  
+  public String getTextureFile() {
+    return PlasticCraftCore.itemSheet;
   }
 }

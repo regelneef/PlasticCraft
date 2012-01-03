@@ -3,7 +3,7 @@ package net.minecraft.src.plasticcraft;
 import net.minecraft.src.*;
 import net.minecraft.src.forge.ISidedInventory;
 
-public class TileEntityMicrowave extends TileEntity implements IInventory, ISidedInventory {
+public class TileEntityMicrowave extends TileEntityPlastic implements IInventory, ISidedInventory {
   private ItemStack microwaveItemStacks[];
   public int microwaveBurnTime;
   public int currentItemBurnTime;
@@ -179,7 +179,7 @@ public class TileEntityMicrowave extends TileEntity implements IInventory, ISide
     ItemStack itemstack = FurnaceRecipes.smelting().getSmeltingResult(microwaveItemStacks[0]);
     if (microwaveItemStacks[2] == null)
       microwaveItemStacks[2] = itemstack.copy();
-    else if(microwaveItemStacks[2].itemID == itemstack.itemID)
+    else if (microwaveItemStacks[2].itemID == itemstack.itemID)
       microwaveItemStacks[2].stackSize += itemstack.stackSize;
     
     if (microwaveItemStacks[0].getItem().hasContainerItem())
@@ -196,7 +196,7 @@ public class TileEntityMicrowave extends TileEntity implements IInventory, ISide
     int i = itemstack.getItem().shiftedIndex;
     if (i == Item.redstone.shiftedIndex) return 2000;
     if (i == Item.lightStoneDust.shiftedIndex) return 4800;
-    return i != mod_PlasticCraft.itemBattery.shiftedIndex ? 0 : 25000;
+    return i != PlasticCraftCore.itemBattery.shiftedIndex ? 0 : 25000;
   }
 
   public boolean isUseableByPlayer(EntityPlayer entityplayer) {

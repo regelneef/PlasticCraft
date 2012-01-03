@@ -3,7 +3,7 @@ package net.minecraft.src.plasticcraft;
 import net.minecraft.src.*;
 import net.minecraft.src.forge.ISidedInventory;
 
-public class TileEntityExtract extends TileEntity implements IInventory, ISidedInventory {
+public class TileEntityExtractor extends TileEntityPlastic implements IInventory, ISidedInventory {
   private ItemStack extractorItemStacks[];
   public int extractorBurnTime;
   public int currentItemBurnTime;
@@ -11,7 +11,7 @@ public class TileEntityExtract extends TileEntity implements IInventory, ISidedI
   public int extractorCookTime2;
   public int cookTime;
   
-  public TileEntityExtract() {
+  public TileEntityExtractor() {
     extractorItemStacks = new ItemStack[7];
     extractorBurnTime = 0;
     currentItemBurnTime = 0;
@@ -182,12 +182,12 @@ public class TileEntityExtract extends TileEntity implements IInventory, ISidedI
 
   private boolean canSmeltOne() {
     if (extractorItemStacks[1] == null) return false;
-    ItemStack itemstack = ExtractRecipes.smelting().getSmeltingResult(extractorItemStacks[1]);
-    ItemStack itemstack1 = ExtractRecipes.smelting().getExtractionResult(extractorItemStacks[1]);
+    ItemStack itemstack = RecipesExtractor.smelting().getSmeltingResult(extractorItemStacks[1]);
+    ItemStack itemstack1 = RecipesExtractor.smelting().getExtractionResult(extractorItemStacks[1]);
         
     if (itemstack == null) return false;
-    if (extractorItemStacks[3] == null || extractorItemStacks[4] == null) return true;
-    if (!extractorItemStacks[3].isItemEqual(itemstack) || !extractorItemStacks[4].isItemEqual(itemstack1)) return false;
+    if (extractorItemStacks[3] == null && extractorItemStacks[4] == null) return true;
+    if (!extractorItemStacks[3].isItemEqual(itemstack) && !extractorItemStacks[4].isItemEqual(itemstack1)) return false;
     if (extractorItemStacks[3].stackSize < getInventoryStackLimit() && extractorItemStacks[3].stackSize < extractorItemStacks[3].getMaxStackSize() 
       && extractorItemStacks[4].stackSize < getInventoryStackLimit() && extractorItemStacks[4].stackSize < extractorItemStacks[4].getMaxStackSize())
       return true;
@@ -197,12 +197,12 @@ public class TileEntityExtract extends TileEntity implements IInventory, ISidedI
   
   private boolean canSmeltTwo() {
     if (extractorItemStacks[2] == null) return false;
-    ItemStack itemstack = ExtractRecipes.smelting().getSmeltingResult(extractorItemStacks[2]);
-    ItemStack itemstack1 = ExtractRecipes.smelting().getExtractionResult(extractorItemStacks[2]);
+    ItemStack itemstack = RecipesExtractor.smelting().getSmeltingResult(extractorItemStacks[2]);
+    ItemStack itemstack1 = RecipesExtractor.smelting().getExtractionResult(extractorItemStacks[2]);
         
     if (itemstack == null) return false;
-    if (extractorItemStacks[5] == null || extractorItemStacks[6] == null) return true;
-    if (!extractorItemStacks[5].isItemEqual(itemstack) || !extractorItemStacks[6].isItemEqual(itemstack1)) return false;
+    if (extractorItemStacks[5] == null && extractorItemStacks[6] == null) return true;
+    if (!extractorItemStacks[5].isItemEqual(itemstack) && !extractorItemStacks[6].isItemEqual(itemstack1)) return false;
     if (extractorItemStacks[5].stackSize < getInventoryStackLimit() && extractorItemStacks[5].stackSize < extractorItemStacks[5].getMaxStackSize() 
       && extractorItemStacks[6].stackSize < getInventoryStackLimit() && extractorItemStacks[6].stackSize < extractorItemStacks[6].getMaxStackSize())
       return true;
@@ -213,8 +213,8 @@ public class TileEntityExtract extends TileEntity implements IInventory, ISidedI
   public void smeltItemOne() {
   	if (!canSmeltOne()) return;
   	
-    ItemStack itemstack = ExtractRecipes.smelting().getSmeltingResult(extractorItemStacks[1]);
-    ItemStack itemstack1 = ExtractRecipes.smelting().getExtractionResult(extractorItemStacks[1]);
+    ItemStack itemstack = RecipesExtractor.smelting().getSmeltingResult(extractorItemStacks[1]);
+    ItemStack itemstack1 = RecipesExtractor.smelting().getExtractionResult(extractorItemStacks[1]);
         
     if (extractorItemStacks[3] == null)
       extractorItemStacks[3] = itemstack.copy();
@@ -224,7 +224,7 @@ public class TileEntityExtract extends TileEntity implements IInventory, ISidedI
     if (itemstack1 != null) {
       if (extractorItemStacks[4] == null)
         extractorItemStacks[4] = itemstack1.copy();
-      else if(extractorItemStacks[4].itemID == itemstack1.itemID)
+      else if (extractorItemStacks[4].itemID == itemstack1.itemID)
         extractorItemStacks[4].stackSize += itemstack1.stackSize;
     }
     
@@ -238,8 +238,8 @@ public class TileEntityExtract extends TileEntity implements IInventory, ISidedI
   }
   
   public void smeltItemTwo() {
-    ItemStack itemstack = ExtractRecipes.smelting().getSmeltingResult(extractorItemStacks[2]);
-    ItemStack itemstack1 = ExtractRecipes.smelting().getExtractionResult(extractorItemStacks[2]);
+    ItemStack itemstack = RecipesExtractor.smelting().getSmeltingResult(extractorItemStacks[2]);
+    ItemStack itemstack1 = RecipesExtractor.smelting().getExtractionResult(extractorItemStacks[2]);
         
     if (extractorItemStacks[5] == null)
       extractorItemStacks[5] = itemstack.copy();
@@ -271,7 +271,7 @@ public class TileEntityExtract extends TileEntity implements IInventory, ISidedI
     if (i == Block.sapling.blockID) return 100;
     if (i == Block.netherrack.blockID) return 120;
     if (i == Item.coal.shiftedIndex) return 1600;
-    return i != mod_PlasticCraft.itemBattery.shiftedIndex ? 0 : 25000;
+    return i != PlasticCraftCore.itemBattery.shiftedIndex ? 0 : 25000;
   }
 
   public boolean isUseableByPlayer(EntityPlayer entityplayer) {

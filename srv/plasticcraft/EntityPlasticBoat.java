@@ -11,6 +11,9 @@ public class EntityPlasticBoat extends Entity {
   private double boatZ;
   private double boatYaw;
   private double boatPitch;
+  private double velocityX;
+  private double velocityY;
+  private double velocityZ;
 
   public EntityPlasticBoat(World world) {
     super(world);
@@ -66,15 +69,39 @@ public class EntityPlasticBoat extends Entity {
     setBeenAttacked();
         
     if (getDamageTaken() > 40) {
-      dropItemWithOffset(mod_PlasticCraft.itemPlasticBoat.shiftedIndex, 1, 0.0F);
+      dropItemWithOffset(PlasticCraftCore.itemPlasticBoat.shiftedIndex, 1, 0.0F);
       setEntityDead();
     }
         
     return true;
   }
 
+  public void performHurtAnimation() {
+  	setForwardDirection(-getForwardDirection());
+    setTimeSinceHit(10);
+    setDamageTaken(getDamageTaken() * 11);
+  }
+
   public boolean canBeCollidedWith() {
     return !isDead;
+  }
+
+  public void setPositionAndRotation2(double d, double d1, double d2, float f, float f1, int i) {
+    boatX = d;
+    boatY = d1;
+    boatZ = d2;
+    boatYaw = f;
+    boatPitch = f1;
+    boatPosRotationIncrements = i + 4;
+    motionX = velocityX;
+    motionY = velocityY;
+    motionZ = velocityZ;
+  }
+
+  public void setVelocity(double d, double d1, double d2) {
+    velocityX = motionX = d;
+    velocityY = motionY = d1;
+    velocityZ = motionZ = d2;
   }
 
   public void onUpdate() {
@@ -190,7 +217,7 @@ public class EntityPlasticBoat extends Entity {
       if(!worldObj.singleplayerWorld) {
         setEntityDead();
         
-        dropItemWithOffset(mod_PlasticCraft.itemPlasticBoat.shiftedIndex, 1, 0.0F);
+        dropItemWithOffset(PlasticCraftCore.itemPlasticBoat.shiftedIndex, 1, 0.0F);
       }
     }
         
@@ -256,10 +283,14 @@ public class EntityPlasticBoat extends Entity {
 
   protected void readEntityFromNBT(NBTTagCompound nbttagcompound) {}
 
+  public float getShadowSize() {
+    return 0.0F;
+  }
+
   public boolean interact(EntityPlayer entityplayer) {
     if (riddenByEntity != null && (riddenByEntity instanceof EntityPlayer) && riddenByEntity != entityplayer)
       return true;
-    if(!worldObj.singleplayerWorld)
+    if (!worldObj.singleplayerWorld)
       entityplayer.mountEntity(this);
     
     return true;
