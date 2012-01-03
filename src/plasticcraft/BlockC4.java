@@ -85,7 +85,7 @@ public class BlockC4 extends Block_PC {
     int l = countAdjacent(world, i, j, k, false);
     int i1 = getPower(l);
     String s = String.format("%d connected C4, power = %d.", new Object[] { Integer.valueOf(l), Integer.valueOf(i1) });
-    if(l != 1) ModLoader.getMinecraftInstance().ingameGUI.addChatMessage(s);
+    if (l != 1) ModLoader.getMinecraftInstance().ingameGUI.addChatMessage(s);
     
     return true;
   }

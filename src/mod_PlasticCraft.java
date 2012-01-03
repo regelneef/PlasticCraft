@@ -100,8 +100,6 @@ public class mod_PlasticCraft extends BaseModMp {
     ModLoader.AddName(PlasticCraftCore.toolPlasticShovel, "Plastic Shovel");
     ModLoader.AddName(PlasticCraftCore.toolPlasticPickaxe, "Plastic Pickaxe");
     ModLoader.AddName(PlasticCraftCore.toolPlasticAxe, "Plastic Axe");
-    
-    BlockPlasticMachine.setupTextures();
   }
   
   public void AddRenderer(Map map) {
@@ -127,6 +125,16 @@ public class mod_PlasticCraft extends BaseModMp {
   		return new GuiUncrafter(inventory, uncrafter);
   	
   	return null;
+  }
+  
+  public void HandleTileEntityPacket(int i, int j, int k, int l, int ai[], float af[], String as[]) {
+    World world = ModLoader.getMinecraftInstance().theWorld;
+    TileEntity te = world.getBlockTileEntity(i, j, k);
+    if (te != null && te instanceof TileEntityPlastic) {
+      ((TileEntityPlastic)te).setDirection((short)ai[0]); // direction
+      if (ai[1] == 1) ((TileEntityPlastic)te).setActive(true); // state
+      else ((TileEntityPlastic)te).setActive(false);
+	  }
   }
   
   public boolean DispenseEntity(World world, double d, double d1, double d2, int i, int j, ItemStack itemstack) {

@@ -70,7 +70,7 @@ public class BlockTrampoline extends Block_PC {
     int l = countAdjacent(world, i, j, k);
     String s = String.format("%d connected trampolines.", new Object[] { Integer.valueOf(l) });
         
-    if(l != 1)
+    if (l != 1)
       ModLoader.getMinecraftInstance().ingameGUI.addChatMessage(s);
         
     return true;

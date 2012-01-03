@@ -5,12 +5,10 @@ import net.minecraft.src.*;
 public class TileEntityPlastic extends TileEntity {
   private short direction = 0;
   private boolean active = false;
-  public short prevDirection = 0;
-  public boolean prevActive = false;
   
   public void readFromNBT(NBTTagCompound nbttagcompound) {
     super.readFromNBT(nbttagcompound);
-    prevDirection = (direction = nbttagcompound.getShort("Direction"));
+    direction = nbttagcompound.getShort("Direction");
     active = nbttagcompound.getBoolean("Active");
   }
 
@@ -22,16 +20,22 @@ public class TileEntityPlastic extends TileEntity {
 	
   public void setDirection(short direction) {
     this.direction = direction;
-    this.prevDirection = direction;
   }
   
   public short getDirection() {
     return this.direction;
   }
   
+  public short getOppositeDirection() {
+    if (this.direction == 2) return 3;
+    if (this.direction == 3) return 2;
+    if (this.direction == 5) return 4;
+    if (this.direction == 4) return 5;
+    return 2;
+  }
+  
   public void setActive(boolean active) {
     this.active = active;
-    this.prevActive = active;
   }
   
   public boolean getActive() {

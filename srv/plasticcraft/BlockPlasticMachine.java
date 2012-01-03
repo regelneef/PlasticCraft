@@ -20,31 +20,6 @@ public class BlockPlasticMachine extends BlockContainer implements ITextureProvi
     setStepSound(soundMetalFootstep);
     setBlockName("pPlasticMachine");
   }
-
-  public void onBlockAdded(World world, int i, int j, int k) {
-    super.onBlockAdded(world, i, j, k);
-    setDefaultDirection(world, i, j, k);
-  }
-
-  private void setDefaultDirection(World world, int i, int j, int k) {
-    if (world.singleplayerWorld)
-      return;
-    
-    TileEntityPlastic te = (TileEntityPlastic)world.getBlockTileEntity(i, j, k);
-    int l = world.getBlockId(i, j, k - 1);
-    int i1 = world.getBlockId(i, j, k + 1);
-    int j1 = world.getBlockId(i - 1, j, k);
-    int k1 = world.getBlockId(i + 1, j, k);
-    
-    if (Block.opaqueCubeLookup[l] && !Block.opaqueCubeLookup[i1])
-      te.setDirection((short)3);
-    if (Block.opaqueCubeLookup[i1] && !Block.opaqueCubeLookup[l])
-      te.setDirection((short)2);
-    if (Block.opaqueCubeLookup[j1] && !Block.opaqueCubeLookup[k1])
-      te.setDirection((short)5);
-    if (Block.opaqueCubeLookup[k1] && !Block.opaqueCubeLookup[j1])
-      te.setDirection((short)4);
-  }
   
   public int getBlockTexture(IBlockAccess iblockaccess, int i, int j, int k, int side) {
     TileEntity te = iblockaccess.getBlockTileEntity(i, j, k);
@@ -127,16 +102,16 @@ public class BlockPlasticMachine extends BlockContainer implements ITextureProvi
 
     switch (l) {
     case 0:
-      te.setDirection((short)2);
+      te.setDirection((short)2); // -Z
       break;
     case 1:
-      te.setDirection((short)5);
+      te.setDirection((short)5); // +X
       break;
     case 2:
-      te.setDirection((short)3);
+      te.setDirection((short)3); // +Z
       break;
     case 3:
-      te.setDirection((short)4);
+      te.setDirection((short)4); // -X
     }
   }
   
