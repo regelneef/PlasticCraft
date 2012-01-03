@@ -19,10 +19,10 @@ public class BlockPlasticMachine extends BlockContainer implements ITextureProvi
     setResistance(1500F);
     setStepSound(soundMetalFootstep);
     setBlockName("pPlasticMachine");
+    setRequiresSelfNotify();
   }
   
   public int getBlockTexture(IBlockAccess iblockaccess, int i, int j, int k, int side) {
-    TileEntity te = iblockaccess.getBlockTileEntity(i, j, k);
     int meta = iblockaccess.getBlockMetadata(i, j, k);
     int direction = getDirection(iblockaccess, i, j, k, false);
     boolean active = isActive(iblockaccess, i, j, k);
@@ -84,10 +84,7 @@ public class BlockPlasticMachine extends BlockContainer implements ITextureProvi
   public static void updateBlockState(boolean flag, World world, int i, int j, int k) {
     TileEntityPlastic te = (TileEntityPlastic)world.getBlockTileEntity(i, j, k);
 
-    if (flag)
-      te.setActive(true);
-    else
-      te.setActive(false);
+    te.setActive(flag);
     
     if (te != null) {
       te.validate();
