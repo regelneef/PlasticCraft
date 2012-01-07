@@ -11,7 +11,7 @@ public class BlockPlasticMachine extends BlockContainer implements ITextureProvi
   public static int microwaveAnim = 255;
   public static int extractorFront = 9;
   public static int extractorTop = 10;
-  public static int uncrafterFront = 18;
+  public static int disassemblerFront = 18;
   
   public BlockPlasticMachine(int i) {
     super(i, Material.sponge);
@@ -37,11 +37,11 @@ public class BlockPlasticMachine extends BlockContainer implements ITextureProvi
       if (side != direction) return 0; // all else
     	
       return extractorFront; // front
-    } else if (meta == PlasticCraftCore.machineMetadataMappings.get(EnumPlasticMachine.Uncrafter)) {
+    } else if (meta == PlasticCraftCore.machineMetadataMappings.get(EnumPlasticMachine.Disassembler)) {
       if (side == 1) return extractorTop; // top
       if (side != direction) return 0; // all else
     	
-      return uncrafterFront; // front
+      return disassemblerFront; // front
     }
   	
     return 0;
@@ -69,9 +69,9 @@ public class BlockPlasticMachine extends BlockContainer implements ITextureProvi
         TileEntityExtractor tileentity = (TileEntityExtractor)world.getBlockTileEntity(i, j, k);
         ModLoader.OpenGUI(entityplayer, new GuiExtractor(entityplayer.inventory, tileentity));
         return true;
-      } else if (meta == PlasticCraftCore.machineMetadataMappings.get(EnumPlasticMachine.Uncrafter)) {
-      	TileEntityUncrafter tileentity = (TileEntityUncrafter)world.getBlockTileEntity(i, j, k);
-        ModLoader.OpenGUI(entityplayer, new GuiUncrafter(entityplayer.inventory, tileentity));
+      } else if (meta == PlasticCraftCore.machineMetadataMappings.get(EnumPlasticMachine.Disassembler)) {
+      	TileEntityDisassembler tileentity = (TileEntityDisassembler)world.getBlockTileEntity(i, j, k);
+        ModLoader.OpenGUI(entityplayer, new GuiDisassembler(entityplayer.inventory, tileentity));
         return true;
       } else 
         return true;
@@ -116,7 +116,7 @@ public class BlockPlasticMachine extends BlockContainer implements ITextureProvi
   public TileEntity getBlockEntity(int m) {
     if (m == PlasticCraftCore.machineMetadataMappings.get(EnumPlasticMachine.Microwave)) return new TileEntityMicrowave();
     if (m == PlasticCraftCore.machineMetadataMappings.get(EnumPlasticMachine.Extractor)) return new TileEntityExtractor();
-    if (m == PlasticCraftCore.machineMetadataMappings.get(EnumPlasticMachine.Uncrafter)) return new TileEntityUncrafter();
+    if (m == PlasticCraftCore.machineMetadataMappings.get(EnumPlasticMachine.Disassembler)) return new TileEntityDisassembler();
     return getBlockEntity();
   }
   
@@ -206,11 +206,11 @@ public class BlockPlasticMachine extends BlockContainer implements ITextureProvi
     BlockPlasticMachine.textures[PlasticCraftCore.machineMetadataMappings.get(EnumPlasticMachine.Extractor)][4] = 0;
     BlockPlasticMachine.textures[PlasticCraftCore.machineMetadataMappings.get(EnumPlasticMachine.Extractor)][5] = 0;
   	
-    BlockPlasticMachine.textures[PlasticCraftCore.machineMetadataMappings.get(EnumPlasticMachine.Uncrafter)][0] = 0;
-    BlockPlasticMachine.textures[PlasticCraftCore.machineMetadataMappings.get(EnumPlasticMachine.Uncrafter)][1] = extractorTop;
-    BlockPlasticMachine.textures[PlasticCraftCore.machineMetadataMappings.get(EnumPlasticMachine.Uncrafter)][2] = 0;
-    BlockPlasticMachine.textures[PlasticCraftCore.machineMetadataMappings.get(EnumPlasticMachine.Uncrafter)][3] = uncrafterFront;
-    BlockPlasticMachine.textures[PlasticCraftCore.machineMetadataMappings.get(EnumPlasticMachine.Uncrafter)][4] = 0;
-    BlockPlasticMachine.textures[PlasticCraftCore.machineMetadataMappings.get(EnumPlasticMachine.Uncrafter)][5] = 0;
+    BlockPlasticMachine.textures[PlasticCraftCore.machineMetadataMappings.get(EnumPlasticMachine.Disassembler)][0] = 0;
+    BlockPlasticMachine.textures[PlasticCraftCore.machineMetadataMappings.get(EnumPlasticMachine.Disassembler)][1] = extractorTop;
+    BlockPlasticMachine.textures[PlasticCraftCore.machineMetadataMappings.get(EnumPlasticMachine.Disassembler)][2] = 0;
+    BlockPlasticMachine.textures[PlasticCraftCore.machineMetadataMappings.get(EnumPlasticMachine.Disassembler)][3] = disassemblerFront;
+    BlockPlasticMachine.textures[PlasticCraftCore.machineMetadataMappings.get(EnumPlasticMachine.Disassembler)][4] = 0;
+    BlockPlasticMachine.textures[PlasticCraftCore.machineMetadataMappings.get(EnumPlasticMachine.Disassembler)][5] = 0;
   }
 }

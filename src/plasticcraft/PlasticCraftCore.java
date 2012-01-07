@@ -6,7 +6,6 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
-
 import net.minecraft.src.*;
 import net.minecraft.src.forge.*;
 import net.minecraft.src.plasticcraft.core.*;
@@ -91,7 +90,7 @@ public class PlasticCraftCore {
   public static int entityPlasticBoatNetId = props.getInt("entityPlasticBoatNetID");
   public static int guiMicrowaveId = props.getInt("guiMicrowaveID");
   public static int guiExtractorId = props.getInt("guiExtractorID");
-  public static int guiUncrafterId = props.getInt("guiUncrafterID");
+  public static int guiDisassemblerId = props.getInt("guiUncrafterID");
   
   // Booleans
   public static int c4Power = props.getInt("c4Power");
@@ -147,7 +146,7 @@ public class PlasticCraftCore {
     
     ModLoader.RegisterTileEntity(TileEntityMicrowave.class, "Microwave");
     ModLoader.RegisterTileEntity(TileEntityExtractor.class, "Extracting Furnace");
-    ModLoader.RegisterTileEntity(TileEntityUncrafter.class, "Uncrafter");
+    ModLoader.RegisterTileEntity(TileEntityDisassembler.class, "Uncrafter");
     
     ModLoader.RegisterEntityID(EntityC4Primed.class, "C4", entityC4Id);
     ModLoader.RegisterEntityID(EntityPlasticBoat.class, "Plastic Boat", entityPlasticBoatId);
@@ -161,7 +160,7 @@ public class PlasticCraftCore {
   	machineMetadataMappings = new HashMap<EnumPlasticMachine, Integer>(); // metadata mappings for plastic machines
   	machineMetadataMappings.put(EnumPlasticMachine.Microwave, 0);
   	machineMetadataMappings.put(EnumPlasticMachine.Extractor, 1);
-  	machineMetadataMappings.put(EnumPlasticMachine.Uncrafter, 2);
+  	machineMetadataMappings.put(EnumPlasticMachine.Disassembler, 2);
   	
   	// Register the blocks
     ModLoader.RegisterBlock(blockPlastic, ItemBlockPlastic.class);
@@ -306,7 +305,7 @@ public class PlasticCraftCore {
       'D', Block.dirt });
     ModLoader.AddRecipe(new ItemStack(blockPlasticMachine, 1, machineMetadataMappings.get(EnumPlasticMachine.Extractor)), new Object[] { "DD", 
       'D', Block.dirt });
-    ModLoader.AddRecipe(new ItemStack(blockPlasticMachine, 1, machineMetadataMappings.get(EnumPlasticMachine.Uncrafter)), new Object[] { "D", 
+    ModLoader.AddRecipe(new ItemStack(blockPlasticMachine, 1, machineMetadataMappings.get(EnumPlasticMachine.Disassembler)), new Object[] { "D", 
       'D', Block.dirt });
     
     // Misc
@@ -356,19 +355,35 @@ public class PlasticCraftCore {
   }
   
   /** Method for adding items to the extractor recipes. **/
-  public static void addExtractorSmelting(int id, ItemStack... itemstack) {
-    RecipesExtractor.smelting().addSmelting(id, itemstack[0]);
+  public static void addExtractorSmelting(int id, ItemStack... itemstacks) {
+    RecipesExtractor.smelting().addSmelting(id, itemstacks[0]);
     try {
-      RecipesExtractor.smelting().addExtraction(id, itemstack[1]);
+      RecipesExtractor.smelting().addExtraction(id, itemstacks[1]);
     } catch (Exception e) {}
   }
   
   /** Metadata-aware method for adding items to the extractor recipes. **/
-  public static void addExtractorSmelting(int id, int meta, ItemStack... itemstack) {
-    RecipesExtractor.smelting().addSmelting(id, meta, itemstack[0]);
+  public static void addExtractorSmelting(int id, int meta, ItemStack... itemstacks) {
+    RecipesExtractor.smelting().addSmelting(id, meta, itemstacks[0]);
     try {
-      RecipesExtractor.smelting().addExtraction(id, meta, itemstack[1]);
+      RecipesExtractor.smelting().addExtraction(id, meta, itemstacks[1]);
     } catch (Exception e) {}
+  }
+  
+  /** Method for adding items to the disassembler recipes. **/
+  public static void addDisassembling(int id, ItemStack... itemstacks) {
+    RecipesDisassembler.uncrafting().addUncrafting(id, 
+      itemstacks[0], itemstacks[1], itemstacks[2],
+      itemstacks[3], itemstacks[4], itemstacks[5],
+      itemstacks[6], itemstacks[7], itemstacks[8]);
+  }
+  
+  /** Metadata-aware method for adding items to the disassembler recipes. **/
+  public static void addDisassembling(int id, int meta, ItemStack... itemstacks) {
+    RecipesDisassembler.uncrafting().addUncrafting(id, meta,
+      itemstacks[0], itemstacks[1], itemstacks[2],
+      itemstacks[3], itemstacks[4], itemstacks[5],
+      itemstacks[6], itemstacks[7], itemstacks[8]);
   }
   
   public static boolean DispenseEntity(World world, double d, double d1, double d2, int i, int j, ItemStack itemstack) {
@@ -469,6 +484,6 @@ public class PlasticCraftCore {
   public enum EnumPlasticMachine {
   	Microwave,
   	Extractor,
-  	Uncrafter
+  	Disassembler
   }
 }

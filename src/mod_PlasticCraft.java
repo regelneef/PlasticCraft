@@ -37,7 +37,7 @@ public class mod_PlasticCraft extends BaseModMp {
     
     ModLoaderMp.RegisterGUI(this, PlasticCraftCore.guiMicrowaveId);
     ModLoaderMp.RegisterGUI(this, PlasticCraftCore.guiExtractorId);
-    ModLoaderMp.RegisterGUI(this, PlasticCraftCore.guiUncrafterId);
+    ModLoaderMp.RegisterGUI(this, PlasticCraftCore.guiDisassemblerId);
     
     ModLoaderMp.RegisterNetClientHandlerEntity(EntityC4Primed.class, PlasticCraftCore.entityC4NetId);
     ModLoaderMp.RegisterNetClientHandlerEntity(EntityPlasticBoat.class, PlasticCraftCore.entityPlasticBoatNetId);
@@ -53,7 +53,7 @@ public class mod_PlasticCraft extends BaseModMp {
     // Machines
     ModLoader.AddName(new ItemStack(PlasticCraftCore.blockPlasticMachine, 1, PlasticCraftCore.machineMetadataMappings.get(EnumPlasticMachine.Microwave)), "Microwave Oven");
     ModLoader.AddName(new ItemStack(PlasticCraftCore.blockPlasticMachine, 1, PlasticCraftCore.machineMetadataMappings.get(EnumPlasticMachine.Extractor)), "Extracting Furnace");
-    ModLoader.AddName(new ItemStack(PlasticCraftCore.blockPlasticMachine, 1, PlasticCraftCore.machineMetadataMappings.get(EnumPlasticMachine.Uncrafter)), "Uncrafter");
+    ModLoader.AddName(new ItemStack(PlasticCraftCore.blockPlasticMachine, 1, PlasticCraftCore.machineMetadataMappings.get(EnumPlasticMachine.Disassembler)), "Disassembler");
     // Other blocks w/o metadata
     ModLoader.AddName(PlasticCraftCore.blockPlasticGoo, "Gooey Plastic");
     ModLoader.AddName(PlasticCraftCore.blockC4, "C4 Explosive");
@@ -115,14 +115,14 @@ public class mod_PlasticCraft extends BaseModMp {
   	InventoryPlayer inventory = ModLoader.getMinecraftInstance().thePlayer.inventory;
   	TileEntityMicrowave microwave = new TileEntityMicrowave();
   	TileEntityExtractor extractor = new TileEntityExtractor();
-  	TileEntityUncrafter uncrafter = new TileEntityUncrafter();
+  	TileEntityDisassembler uncrafter = new TileEntityDisassembler();
   	
   	if (invType == PlasticCraftCore.guiMicrowaveId)
   		return new GuiMicrowave(inventory, microwave);
   	else if (invType == PlasticCraftCore.guiExtractorId)
   		return new GuiExtractor(inventory, extractor);
-  	else if (invType == PlasticCraftCore.guiUncrafterId)
-  		return new GuiUncrafter(inventory, uncrafter);
+  	else if (invType == PlasticCraftCore.guiDisassemblerId)
+  		return new GuiDisassembler(inventory, uncrafter);
   	
   	return null;
   }
