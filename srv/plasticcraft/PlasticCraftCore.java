@@ -37,9 +37,8 @@ public class PlasticCraftCore {
   public static final Block blockPlexiglass = new BlockPlexiglass(props.getInt("blockPlexiglass"));
   public static final Block blockPlexidoor = new BlockPlasticDoor(props.getInt("blockPlexiglassDoor"));
   public static final Block blockPlasticMachine = new BlockPlasticMachine(props.getInt("blockPlasticMachine"));
+  public static final Block blockFloorMat = new BlockFloorMat(props.getInt("blockFloorMat"));
   public static final Block blockTap = new BlockTap(props.getInt("blockLatexTap"));
-  public static final Block blockTrampoline = new BlockTrampoline(props.getInt("blockTrampoline"));
-  public static final Block blockAccelerator = new BlockAccelerator(props.getInt("blockAccelerator"));
   public static final Block blockRope = new BlockRope(props.getInt("blockRope"));
   // Items
   public static final Item itemPlastic = new Item_PC(props.getInt("itemPlasticBall") - iOff).setIconIndex(0).setItemName("pPlasticBall");
@@ -169,9 +168,8 @@ public class PlasticCraftCore {
     ModLoader.RegisterBlock(blockPlexiglass, ItemBlockPlexiglass.class);
     ModLoader.RegisterBlock(blockPlexidoor);
     ModLoader.RegisterBlock(blockPlasticMachine, ItemBlockPlasticMachine.class);
+    ModLoader.RegisterBlock(blockFloorMat, ItemBlockFloorMat.class);
     ModLoader.RegisterBlock(blockTap);
-    ModLoader.RegisterBlock(blockTrampoline);
-    ModLoader.RegisterBlock(blockAccelerator);
     ModLoader.RegisterBlock(blockRope);
     
     BlockPlasticMachine.setupTextures();
@@ -307,6 +305,10 @@ public class PlasticCraftCore {
       'D', Block.dirt });
     ModLoader.AddRecipe(new ItemStack(blockPlasticMachine, 1, machineMetadataMappings.get(EnumPlasticMachine.Disassembler)), new Object[] { "D", 
       'D', Block.dirt });
+    ModLoader.AddRecipe(new ItemStack(blockFloorMat, 1, 0), new Object[] { "D", "D", 
+      'D', Block.dirt });
+    ModLoader.AddRecipe(new ItemStack(blockFloorMat, 1, 1), new Object[] { "D ", "DD", 
+      'D', Block.dirt });
     
     // Misc
     BlockPlastic.recipes();
@@ -355,18 +357,18 @@ public class PlasticCraftCore {
   }
   
   /** Method for adding items to the extractor recipes. **/
-  public static void addExtractorSmelting(int id, ItemStack... itemstack) {
-    RecipesExtractor.smelting().addSmelting(id, itemstack[0]);
+  public static void addExtractorSmelting(int id, ItemStack... itemstacks) {
+    RecipesExtractor.smelting().addSmelting(id, itemstacks[0]);
     try {
-      RecipesExtractor.smelting().addExtraction(id, itemstack[1]);
+      RecipesExtractor.smelting().addExtraction(id, itemstacks[1]);
     } catch (Exception e) {}
   }
   
   /** Metadata-aware method for adding items to the extractor recipes. **/
-  public static void addExtractorSmelting(int id, int meta, ItemStack... itemstack) {
-    RecipesExtractor.smelting().addSmelting(id, meta, itemstack[0]);
+  public static void addExtractorSmelting(int id, int meta, ItemStack... itemstacks) {
+    RecipesExtractor.smelting().addSmelting(id, meta, itemstacks[0]);
     try {
-      RecipesExtractor.smelting().addExtraction(id, meta, itemstack[1]);
+      RecipesExtractor.smelting().addExtraction(id, meta, itemstacks[1]);
     } catch (Exception e) {}
   }
   
@@ -421,10 +423,9 @@ public class PlasticCraftCore {
     props.getInt("blockPlexiglass", 128);
     props.getInt("blockPlexiglassDoor", 129);
     props.getInt("blockPlasticMachine", 130);
-    props.getInt("blockLatexTap", 131);
-    props.getInt("blockTrampoline", 132);
-    props.getInt("blockAccelerator", 133);
-    props.getInt("blockRope", 135);
+    props.getInt("blockFloorMat", 131);
+    props.getInt("blockLatexTap", 132);
+    props.getInt("blockRope", 133);
     
     props.getInt("itemPlasticBall", 1001);
     props.getInt("itemClearBall", 1002);

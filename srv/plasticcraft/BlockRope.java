@@ -8,7 +8,7 @@ public class BlockRope extends Block_PC {
   public BlockRope(int i) {
     super(i, Material.circuits);
     setHardness(0.3F);
-    blockIndexInTexture = 20;
+    blockIndexInTexture = 21;
   }
   
   public AxisAlignedBB getCollisionBoundingBoxFromPool(World world, int i, int j, int k) {

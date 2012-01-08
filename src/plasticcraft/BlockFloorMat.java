@@ -3,34 +3,37 @@ package net.minecraft.src.plasticcraft;
 import java.util.*;
 import net.minecraft.src.*;
 import net.minecraft.src.plasticcraft.core.Block_PC;
+import net.minecraft.client.Minecraft;
 
-public class BlockTrampoline extends Block_PC {
-  private static double expfac = 1.0800000000000001D;
-  private static double initfac = 0.80000000000000004D;
-  private static double horizDamp = 0.29999999999999999D;
-  private static double bounceCap = 3.25D;
-  public static int rubberIndex = 5;
-  private static int trampolineSide = 6;
+public class BlockFloorMat extends Block_PC {
+  private double expfac = 1.0800000000000001D;
+  private double initfac = 0.80000000000000004D;
+  private double horizDamp = 0.29999999999999999D;
+  private double bounceCap = 3.25D;
+  private int trampolineIndex = 5;
+  private int acceleratorIndex = 17;
   
-  public BlockTrampoline(int i) {
-    super(i, Material.cloth);
-    setHardness(1.0F);
+  public BlockFloorMat(int i) {
+    super(i, Material.sponge);
+    setHardness(0.8F);
     setStepSound(soundClothFootstep);
-    setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 0.5F, 1.0F);
-    setBlockName("pTrampoline");
-    blockIndexInTexture = rubberIndex;
+    setBlockName("pFloorMatBlock");
+    setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 0.4F, 1.0F);
   }
 
   public void onEntityCollidedWithBlock(World world, int i, int j, int k, Entity entity) {
-    if (entity.posY > (double)j)
-      bounce(entity, i, j, k);
+  	if (world.getBlockMetadata(i, j, k) == 0)
+      if (entity.posY > (double)j)
+        bounce(entity, i, j, k);
   }
 
   public void onEntityWalking(World world, int i, int j, int k, Entity entity) {
-    bounce(entity, i, j, k);
+  	if (world.getBlockMetadata(i, j, k) == 0)
+      bounce(entity, i, j, k);
+  	else speedMult(entity, i, j, k);
   }
 
-  public void bounce(Entity entity, int i, int j, int k) {
+  private void bounce(Entity entity, int i, int j, int k) {
     if ((entity instanceof EntityLiving || entity instanceof EntityItem 
       || entity instanceof EntityFallingSand || entity instanceof EntityTNTPrimed 
       || entity instanceof EntityC4Primed) && entity.motionY < 2D && !entity.isSneaking()) {
@@ -59,6 +62,43 @@ public class BlockTrampoline extends Block_PC {
       entity.motionZ *= horizDamp * getBounceFactor(l);
     }
   }
+  
+  private void speedMult(Entity entity, int i, int j, int k) {
+  	double d = Math.abs(entity.motionX);
+    double d1 = Math.abs(entity.motionZ);
+    
+    if (entity instanceof EntityPlayer && !entity.isSneaking() && !mod_PlasticCraft.getIsJumping((EntityLiving)entity)) { // player
+      if (d < 0.29999999999999999D)
+        entity.motionX *= 3.1000000000000001D;
+      if(d1 < 0.29999999999999999D)
+        entity.motionZ *= 3.1000000000000001D;
+    }
+        
+    if (entity instanceof EntityCreature) { // mob
+      if (d < 0.29999999999999999D)
+        entity.motionX *= 2.7999999999999998D;
+      if (d1 < 0.29999999999999999D)
+        entity.motionZ *= 2.7999999999999998D;
+    }
+  }
+
+  public boolean blockActivated(World world, int i, int j, int k, EntityPlayer entityplayer) {
+  	if (world.getBlockMetadata(i, j, k) == 0) {
+      ItemStack itemstack = entityplayer.getCurrentEquippedItem();
+        
+      if (itemstack != null && itemstack.itemID == blockID)
+        return false;
+        
+      int l = countAdjacent(world, i, j, k);
+      String s = String.format("%d connected trampolines.", new Object[] { Integer.valueOf(l) });
+        
+      if (l != 1) ModLoader.getMinecraftInstance().ingameGUI.addChatMessage(s);
+      
+      return true;
+  	}
+        
+    return false;
+  }
 
   public boolean canPlaceBlockAt(World world, int i, int j, int k) {
     if (!world.isBlockNormalCube(i, j - 1, k))
@@ -85,20 +125,35 @@ public class BlockTrampoline extends Block_PC {
   public int quantityDropped(Random random) {
     return 1;
   }
-
-  public int getBlockTextureFromSide(int i) {
-    return i != 1 ? i != 0 ? trampolineSide : Block.wood.blockIndexInTexture : rubberIndex;
+  
+  protected int damageDropped(int i) {
+    return i;
   }
 
-  public double getBounceFactor(int i) {
+  public int getBlockTextureFromSideAndMetadata(int side, int meta) {
+  	if (meta == 0) {
+      if (side == 1) return trampolineIndex;
+      if (side == 0) return trampolineIndex + 2;
+      
+      return trampolineIndex + 1;
+  	} else if (meta == 1) {
+  		if (side == 1 || side == 0) return acceleratorIndex;
+  		
+  		return acceleratorIndex + 1;
+    }
+  	
+  	return trampolineIndex;
+  }
+
+  private double getBounceFactor(int i) {
     return Math.pow(expfac, i - 1);
   }
 
-  public double getHeightAtTick(double d, double d1, double d2) {
+  private double getHeightAtTick(double d, double d1, double d2) {
     return d2 != 0.0D ? getHeightAtTick(d + d1, 0.97999999999999998D * (d1 - 0.080000000000000002D), d2 - 1.0D) : d;
   }
 
-  public double getHeightForVelocity(double d) {
+  private double getHeightForVelocity(double d) {
     double d1 = (-1.0D / 0.0D);
     double d2 = 0.0D;
     
@@ -114,7 +169,7 @@ public class BlockTrampoline extends Block_PC {
     return d1;
   }
 
-  public double getTicksUntilRebound(double d) {
+  private double getTicksUntilRebound(double d) {
     double d1 = 0.0D;
     int i;
         
@@ -127,7 +182,7 @@ public class BlockTrampoline extends Block_PC {
     return (double)i;
   }
 
-  public int countAdjacent(World world, int i, int j, int k) {
+  private int countAdjacent(World world, int i, int j, int k) {
     ChunkCoordinates chunkcoordinates = new ChunkCoordinates(i, j, k);
     HashSet hashset = new HashSet();
     hashset.add(chunkcoordinates);
@@ -135,7 +190,7 @@ public class BlockTrampoline extends Block_PC {
     return hashset.size();
   }
 
-  public void countAdjacent(World world, ChunkCoordinates chunkcoordinates, Set set) {
+  private void countAdjacent(World world, ChunkCoordinates chunkcoordinates, Set set) {
     int ai[][] = adjdiffs;
     int i = ai.length;
         
@@ -154,5 +209,5 @@ public class BlockTrampoline extends Block_PC {
     }
   }
 
-  public static int adjdiffs[][] = { {1, 0}, {-1, 0}, {0, 1}, {0, -1} };
+  private static int adjdiffs[][] = { {1, 0}, {-1, 0}, {0, 1}, {0, -1} };
 }

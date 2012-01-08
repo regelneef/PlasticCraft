@@ -54,12 +54,13 @@ public class mod_PlasticCraft extends BaseModMp {
     ModLoader.AddName(new ItemStack(PlasticCraftCore.blockPlasticMachine, 1, PlasticCraftCore.machineMetadataMappings.get(EnumPlasticMachine.Microwave)), "Microwave Oven");
     ModLoader.AddName(new ItemStack(PlasticCraftCore.blockPlasticMachine, 1, PlasticCraftCore.machineMetadataMappings.get(EnumPlasticMachine.Extractor)), "Extracting Furnace");
     ModLoader.AddName(new ItemStack(PlasticCraftCore.blockPlasticMachine, 1, PlasticCraftCore.machineMetadataMappings.get(EnumPlasticMachine.Disassembler)), "Disassembler");
+    // Trampoline and Accelerator
+    ModLoader.AddName(new ItemStack(PlasticCraftCore.blockFloorMat, 1, 0), "Trampoline");
+    ModLoader.AddName(new ItemStack(PlasticCraftCore.blockFloorMat, 1, 1), "Accelerator");
     // Other blocks w/o metadata
     ModLoader.AddName(PlasticCraftCore.blockPlasticGoo, "Gooey Plastic");
     ModLoader.AddName(PlasticCraftCore.blockC4, "C4 Explosive");
     ModLoader.AddName(PlasticCraftCore.blockTap, "Latex Extractor");
-    ModLoader.AddName(PlasticCraftCore.blockTrampoline, "Trampoline");
-    ModLoader.AddName(PlasticCraftCore.blockAccelerator, "Accelerator");
     // Items
     ModLoader.AddName(PlasticCraftCore.itemPlastic, "Plastic Ball");
     ModLoader.AddName(PlasticCraftCore.itemPlasticClear, "Clear Plastic Ball");

@@ -39,7 +39,7 @@ public class TileEntityPlastic extends TileEntity {
   }
   
   public void setActiveByState(int state) {
-  	this.active = (state == 1);
+    this.active = (state == 1);
   }
   
   public boolean getActive() {
@@ -47,8 +47,8 @@ public class TileEntityPlastic extends TileEntity {
   }
   
   public int getActiveByState() {
-  	if (!this.active) return 0;
-  	return 1;
+    if (!this.active) return 0;
+    return 1;
   }
   
   public Packet getDescriptionPacket() {

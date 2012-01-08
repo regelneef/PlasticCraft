@@ -22,7 +22,7 @@ public class BlockPlexiglass extends BlockBreakable implements ITextureProvider 
   }
   
   public int getBlockTextureFromSideAndMetadata(int side, int meta) {
-  	if (meta == 1) return 17;
+  	if (meta == 1) return 16;
   	return 2;
   }
 

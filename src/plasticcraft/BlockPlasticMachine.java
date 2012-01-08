@@ -11,7 +11,7 @@ public class BlockPlasticMachine extends BlockContainer implements ITextureProvi
   public static int microwaveAnim = 255;
   public static int extractorFront = 9;
   public static int extractorTop = 10;
-  public static int disassemblerFront = 18;
+  public static int disassemblerFront = 11;
   
   public BlockPlasticMachine(int i) {
     super(i, Material.sponge);

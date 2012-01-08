@@ -10,7 +10,7 @@ public class BlockTap extends Block_PC {
     setHardness(0.0F);
     setStepSound(soundWoodFootstep);
     setBlockName("pLatexTap");
-    blockIndexInTexture = 12;
+    blockIndexInTexture = 19;
   }
 
   public AxisAlignedBB getCollisionBoundingBoxFromPool(World world, int i, int j, int k) {

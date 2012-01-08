@@ -11,7 +11,7 @@ public class BlockGooPlastic extends Block_PC {
     setResistance(500F);
     setStepSound(soundClothFootstep);
     setBlockName("pGooPlasticBlock");
-    blockIndexInTexture = 11;
+    blockIndexInTexture = 12;
     setTickOnLoad(true);
   }
 

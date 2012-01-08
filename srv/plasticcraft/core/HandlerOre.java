@@ -7,9 +7,9 @@ import net.minecraft.src.plasticcraft.PlasticCraftCore;
 public class HandlerOre implements IOreHandler {
   public void registerOre(String oreClass, ItemStack item) {
     if (oreClass.equals("itemRubber")) {
-      ModLoader.AddRecipe(new ItemStack(PlasticCraftCore.blockTrampoline), new Object[] { "RRR", "WWW", 
+      ModLoader.AddRecipe(new ItemStack(PlasticCraftCore.blockFloorMat, 1, 0), new Object[] { "RRR", "WWW", 
         'R', item, 'W', Block.planks });
-      ModLoader.AddRecipe(new ItemStack(PlasticCraftCore.blockAccelerator, 4), new Object[] { "RXR", "XSX", "RXR", 
+      ModLoader.AddRecipe(new ItemStack(PlasticCraftCore.blockFloorMat, 4, 1), new Object[] { "RXR", "XSX", "RXR", 
         'R', item, 'X', Item.redstone, 'S', PlasticCraftCore.itemIntegratedCircuit });
       ModLoader.AddRecipe(new ItemStack(PlasticCraftCore.itemDuctTape, 4), new Object[] { "RRR", "GGG", 
         'R', item, 'G', PlasticCraftCore.itemPlasticGoo });
