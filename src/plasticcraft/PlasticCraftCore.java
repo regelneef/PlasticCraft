@@ -11,7 +11,7 @@ import net.minecraft.src.forge.*;
 import net.minecraft.src.plasticcraft.core.*;
 
 public class PlasticCraftCore {
-	public static String version = "v3.0 (for 1.0.0)";
+	public static String version = "v3.0 (for 1.1.0)";
 	public static String modDir = "/plasticcraft/images/";
 	public static String itemSheet = modDir + "pc_items.png"; // item sprite sheet
   public static String blockSheet = modDir + "pc_terrain.png"; // block sprite sheet
@@ -89,6 +89,7 @@ public class PlasticCraftCore {
   public static int entityPlasticBoatNetId = props.getInt("entityPlasticBoatNetID");
   public static int guiMicrowaveId = props.getInt("guiMicrowaveID");
   public static int guiExtractorId = props.getInt("guiExtractorID");
+  public static int guiAdvExtractorId = props.getInt("guiAdvExtractorID");
   public static int guiDisassemblerId = props.getInt("guiUncrafterID");
   
   // Booleans
@@ -118,7 +119,7 @@ public class PlasticCraftCore {
   }));
 	
   public static void init(IProxy proxyParam) {
-  	MinecraftForge.versionDetect("PlasticCraft", 1, 2, 3);
+  	MinecraftForge.versionDetect("PlasticCraft", 1, 3, 0);
   	
   	proxy = proxyParam;
   	proxy.getModId();
@@ -145,6 +146,7 @@ public class PlasticCraftCore {
     
     ModLoader.RegisterTileEntity(TileEntityMicrowave.class, "Microwave");
     ModLoader.RegisterTileEntity(TileEntityExtractor.class, "Extracting Furnace");
+    ModLoader.RegisterTileEntity(TileEntityAdvExtractor.class, "Advanced Extractor");
     ModLoader.RegisterTileEntity(TileEntityDisassembler.class, "Uncrafter");
     
     ModLoader.RegisterEntityID(EntityC4Primed.class, "C4", entityC4Id);
@@ -159,7 +161,8 @@ public class PlasticCraftCore {
   	machineMetadataMappings = new HashMap<EnumPlasticMachine, Integer>(); // metadata mappings for plastic machines
   	machineMetadataMappings.put(EnumPlasticMachine.Microwave, 0);
   	machineMetadataMappings.put(EnumPlasticMachine.Extractor, 1);
-  	machineMetadataMappings.put(EnumPlasticMachine.Disassembler, 2);
+  	machineMetadataMappings.put(EnumPlasticMachine.AdvExtractor, 2);
+  	machineMetadataMappings.put(EnumPlasticMachine.Disassembler, 3);
   	
   	// Register the blocks
     ModLoader.RegisterBlock(blockPlastic, ItemBlockPlastic.class);
@@ -189,10 +192,12 @@ public class PlasticCraftCore {
       'P', new ItemStack(blockPlexiglass, 1, 0), 'L', Item.lightStoneDust });
     ModLoader.AddRecipe(new ItemStack(blockTap), new Object[] { "P", "P", "P",
       'P', itemPlastic, });
-    ModLoader.AddRecipe(new ItemStack(blockPlasticMachine, 1, 0), new Object[] { "IPI", "GSG", "IPI", // Microwave
+    ModLoader.AddRecipe(new ItemStack(blockPlasticMachine, 1, machineMetadataMappings.get(EnumPlasticMachine.Microwave)), new Object[] { "IPI", "GSG", "IPI", // Microwave
       'P', blockPlastic, 'I', Item.ingotIron, 'G', Block.glass, 'S', itemIntegratedCircuit });
-    ModLoader.AddRecipe(new ItemStack(blockPlasticMachine, 1, 8), new Object[] { "PXP", "PFP", "PEP", // Extractor
-      'P', blockPlastic, 'F', Block.stoneOvenIdle, 'E', blockTap, 'X', itemIntegratedCircuit });
+    ModLoader.AddRecipe(new ItemStack(blockPlasticMachine, 1, machineMetadataMappings.get(EnumPlasticMachine.Extractor)), new Object[] { "PCP", "PFP", "PEP", // Extractor
+      'P', blockPlastic, 'F', Block.stoneOvenIdle, 'E', blockTap, 'C', itemIntegratedCircuit });
+    ModLoader.AddRecipe(new ItemStack(blockPlasticMachine, 1, machineMetadataMappings.get(EnumPlasticMachine.AdvExtractor)), new Object[] { "ICI", "PEP", "IEI", // Advanced Extractor
+      'P', blockPlastic, 'I', Item.ingotIron, 'E', new ItemStack(blockPlasticMachine, 1, machineMetadataMappings.get(EnumPlasticMachine.Extractor)), 'C', itemIntegratedCircuit });
     
     // Items
     ModLoader.AddRecipe(new ItemStack(itemPlastic, 4), new Object[] { "X", 
@@ -275,6 +280,8 @@ public class PlasticCraftCore {
       'S', itemSynthCloth, '/', itemSynthString, 'I', Item.plateLeather });
     ModLoader.AddRecipe(new ItemStack(armorKevlarLegs), new Object[] { "SSS", "/I/", "SSS", 
       'S', itemSynthCloth, '/', itemSynthString, 'I', Item.legsLeather });
+    ModLoader.AddRecipe(new ItemStack(armorFallBoots), new Object[] { "OSO", "R R", 
+      'S', itemIntegratedCircuit, 'O', Block.obsidian, 'R', itemRubber });
     ModLoader.AddRecipe(new ItemStack(toolPlasticShovel), new Object[] { " P ", " / ", " / ", 
       'P', itemPlastic, '/', itemPlasticStick });
     ModLoader.AddRecipe(new ItemStack(toolPlasticPickaxe), new Object[] { "PPP", " / ", " / ", 
@@ -297,18 +304,6 @@ public class PlasticCraftCore {
       'M', itemPlasticBucketM, 'S', Item.sugar, 'E', Item.egg, 'W', Item.wheat });
     ModLoader.AddShapelessRecipe(new ItemStack(Block.pistonStickyBase), new Object[] { 
       new ItemStack(Block.pistonBase), new ItemStack(itemPlasticGoo) });
-    
-    //TODO: Remove test recipes.
-    ModLoader.AddRecipe(new ItemStack(blockPlasticMachine, 1, machineMetadataMappings.get(EnumPlasticMachine.Microwave)), new Object[] { "DDD", 
-      'D', Block.dirt });
-    ModLoader.AddRecipe(new ItemStack(blockPlasticMachine, 1, machineMetadataMappings.get(EnumPlasticMachine.Extractor)), new Object[] { "DD", 
-      'D', Block.dirt });
-    ModLoader.AddRecipe(new ItemStack(blockPlasticMachine, 1, machineMetadataMappings.get(EnumPlasticMachine.Disassembler)), new Object[] { "D", 
-      'D', Block.dirt });
-    ModLoader.AddRecipe(new ItemStack(blockFloorMat, 1, 0), new Object[] { "D", "D", 
-      'D', Block.dirt });
-    ModLoader.AddRecipe(new ItemStack(blockFloorMat, 1, 1), new Object[] { "D ", "DD", 
-      'D', Block.dirt });
     
     // Misc
     BlockPlastic.recipes();
@@ -473,7 +468,8 @@ public class PlasticCraftCore {
     props.getInt("entityPlasticBoatNetID", 251);
     props.getInt("guiMicrowaveID", 250);
     props.getInt("guiExtractorID", 251);
-    props.getInt("guiUncrafterID", 252);
+    props.getInt("guiAdvExtractorID", 252);
+    props.getInt("guiUncrafterID", 253);
     
     props.getInt("c4Power", 10);
     props.getInt("c4Fuse", 6);
@@ -485,6 +481,7 @@ public class PlasticCraftCore {
   public enum EnumPlasticMachine {
   	Microwave,
   	Extractor,
+  	AdvExtractor,
   	Disassembler
   }
 }

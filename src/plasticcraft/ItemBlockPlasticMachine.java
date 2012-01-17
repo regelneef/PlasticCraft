@@ -19,6 +19,7 @@ public class ItemBlockPlasticMachine extends ItemBlock {
     int meta = itemstack.getItemDamage();
     if (meta == PlasticCraftCore.machineMetadataMappings.get(EnumPlasticMachine.Microwave)) return "plastic.microwave";
     if (meta == PlasticCraftCore.machineMetadataMappings.get(EnumPlasticMachine.Extractor)) return "plastic.extractor";
+    if (meta == PlasticCraftCore.machineMetadataMappings.get(EnumPlasticMachine.AdvExtractor)) return "plastic.advextractor";
     if (meta == PlasticCraftCore.machineMetadataMappings.get(EnumPlasticMachine.Disassembler)) return "plastic.disassembler";
     return "plastic.microwave";
   }

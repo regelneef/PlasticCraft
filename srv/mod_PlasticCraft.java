@@ -8,7 +8,7 @@ import net.minecraft.src.forge.*;
 import net.minecraft.src.plasticcraft.*;
 
 public class mod_PlasticCraft extends BaseModMp {
-  public String Version() { return PlasticCraftCore.version; }
+  public String getVersion() { return PlasticCraftCore.version; }
   public static Props props = new Props(new File("config/" + "mod_PlasticCraft.props").getPath());
   private static void console(String s) { System.out.println("[PlasticCraft] " + s); }
   public static mod_PlasticCraft instance;
@@ -17,7 +17,7 @@ public class mod_PlasticCraft extends BaseModMp {
   	instance = this;
   }
   
-  public void ModsLoaded() {
+  public void load() {
   	PlasticCraftCore.init(new ServerProxy());
 
     ModLoader.SetInGameHook(this, true, false);
