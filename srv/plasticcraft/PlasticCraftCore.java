@@ -11,9 +11,9 @@ import net.minecraft.src.forge.*;
 import net.minecraft.src.plasticcraft.core.*;
 
 public class PlasticCraftCore {
-	public static String version = "v3.0 (for 1.1.0)";
-	public static String modDir = "/plasticcraft/images/";
-	public static String itemSheet = modDir + "pc_items.png"; // item sprite sheet
+  public static String version = "v3.0 (for 1.1.0)";
+  public static String modDir = "/plasticcraft/images/";
+  public static String itemSheet = modDir + "pc_items.png"; // item sprite sheet
   public static String blockSheet = modDir + "pc_terrain.png"; // block sprite sheet
   private static Props props = mod_PlasticCraft.props;
   private static int iOff = 256; // item id offset
@@ -117,14 +117,14 @@ public class PlasticCraftCore {
   private static ArrayList class4 = new ArrayList(Arrays.asList(new Item[] {
     Item.swordDiamond, Item.shovelDiamond, Item.pickaxeDiamond, Item.axeDiamond, Item.hoeDiamond, Item.helmetDiamond, Item.plateDiamond, Item.legsDiamond, Item.bootsDiamond
   }));
-	
+
   public static void init(IProxy proxyParam) {
-  	MinecraftForge.versionDetect("PlasticCraft", 1, 3, 0);
-  	
-  	proxy = proxyParam;
-  	proxy.getModId();
-  	
-  	registerItems();
+    MinecraftForge.versionDetect("PlasticCraft", 1, 3, 0);
+  
+    proxy = proxyParam;
+    proxy.getModId();
+  
+    registerItems();
     console("Registering items.");
     registerRecipes();
     console("Registering recipes.");
@@ -158,13 +158,13 @@ public class PlasticCraftCore {
   }
   
   private static void registerItems() {
-  	machineMetadataMappings = new HashMap<EnumPlasticMachine, Integer>(); // metadata mappings for plastic machines
-  	machineMetadataMappings.put(EnumPlasticMachine.Microwave, 0);
-  	machineMetadataMappings.put(EnumPlasticMachine.Extractor, 1);
-  	machineMetadataMappings.put(EnumPlasticMachine.AdvExtractor, 2);
-  	machineMetadataMappings.put(EnumPlasticMachine.Disassembler, 3);
-  	
-  	// Register the blocks
+    machineMetadataMappings = new HashMap<EnumPlasticMachine, Integer>(); // metadata mappings for plastic machines
+    machineMetadataMappings.put(EnumPlasticMachine.Microwave, 0);
+    machineMetadataMappings.put(EnumPlasticMachine.Extractor, 1);
+    machineMetadataMappings.put(EnumPlasticMachine.AdvExtractor, 2);
+    machineMetadataMappings.put(EnumPlasticMachine.Disassembler, 3);
+  
+    // Register the blocks
     ModLoader.RegisterBlock(blockPlastic, ItemBlockPlastic.class);
     ModLoader.RegisterBlock(blockPlasticGoo);
     ModLoader.RegisterBlock(blockC4);
@@ -179,7 +179,7 @@ public class PlasticCraftCore {
   }
   
   public static void registerRecipes() {
-  	// Blocks
+    // Blocks
     ModLoader.AddRecipe(new ItemStack(blockPlastic, 1, 0), new Object[] { "PP", "PP", 
       'P', itemPlastic });
     ModLoader.AddRecipe(new ItemStack(blockPlasticGoo), new Object[] { "PP", "PP", 
@@ -285,9 +285,9 @@ public class PlasticCraftCore {
     ModLoader.AddRecipe(new ItemStack(toolPlasticShovel), new Object[] { " P ", " / ", " / ", 
       'P', itemPlastic, '/', itemPlasticStick });
     ModLoader.AddRecipe(new ItemStack(toolPlasticPickaxe), new Object[] { "PPP", " / ", " / ", 
-    	'P', itemPlastic, '/', itemPlasticStick });
+    'P', itemPlastic, '/', itemPlasticStick });
     ModLoader.AddRecipe(new ItemStack(toolPlasticAxe), new Object[] { "PP ", "P/ ", " / ", 
-    	'P', itemPlastic, '/', itemPlasticStick });
+    'P', itemPlastic, '/', itemPlasticStick });
     
     // Other
     ModLoader.AddRecipe(new ItemStack(Item.bow), new Object[] { "S/ ", "S /", "S/ ", 
@@ -324,12 +324,12 @@ public class PlasticCraftCore {
     for (int i=0; i<class1.size(); i++) {
       Item item = (Item)class1.get(i);
       ModLoader.AddShapelessRecipe(new ItemStack(item), new Object[] { 
-      	new ItemStack(itemDuctTape), new ItemStack(item, 1, -1) });
+      new ItemStack(itemDuctTape), new ItemStack(item, 1, -1) });
     }
     for (int i=0; i<class2.size(); i++) {
       Item item1 = (Item)class2.get(i);
       ModLoader.AddShapelessRecipe(new ItemStack(item1), new Object[] { 
-      	new ItemStack(itemDuctTape), new ItemStack(itemDuctTape), new ItemStack(item1, 1, -1) });
+      new ItemStack(itemDuctTape), new ItemStack(itemDuctTape), new ItemStack(item1, 1, -1) });
     }  
     for (int i=0; i<class3.size(); i++) {
       Item item2 = (Item)class3.get(i);
@@ -389,15 +389,15 @@ public class PlasticCraftCore {
     Entity block = null;
         
     if (k == blockC4.blockID)
-    	block = new EntityC4Primed(world, d, d1, d2);
+    block = new EntityC4Primed(world, d, d1, d2);
     if (k == Block.tnt.blockID)
-    	block = new EntityTNTPrimed(world, d, d1, d2);
+    block = new EntityTNTPrimed(world, d, d1, d2);
     if (k == blockPlasticGoo.blockID)
-    	block = new EntityFallingSand(world, d, d1, d2, blockPlasticGoo.blockID);
+    block = new EntityFallingSand(world, d, d1, d2, blockPlasticGoo.blockID);
     if (k == Block.sand.blockID)
-    	block = new EntityFallingSand(world, d, d1, d2, Block.sand.blockID);
+    block = new EntityFallingSand(world, d, d1, d2, Block.sand.blockID);
     if (k == Block.gravel.blockID)
-    	block = new EntityFallingSand(world, d, d1, d2, Block.gravel.blockID);
+    block = new EntityFallingSand(world, d, d1, d2, Block.gravel.blockID);
     if (block != null) {
       block.posZ = (double)i * (random.nextDouble() * 3D + 2D) + (double)(random.nextFloat() - 0.5F);
       block.motionX = 1.0D;
@@ -479,9 +479,9 @@ public class PlasticCraftCore {
   }
   
   public enum EnumPlasticMachine {
-  	Microwave,
-  	Extractor,
-  	AdvExtractor,
-  	Disassembler
+    Microwave,
+    Extractor,
+    AdvExtractor,
+    Disassembler
   }
 }

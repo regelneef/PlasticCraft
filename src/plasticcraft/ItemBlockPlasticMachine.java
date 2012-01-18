@@ -11,7 +11,7 @@ public class ItemBlockPlasticMachine extends ItemBlock {
     setItemName("pPlasticMachine");
   }
 
-  public int getPlacedBlockMetadata(int i) {
+  public int getMetadata(int i) {
     return i;
   }
 
